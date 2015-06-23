@@ -2,13 +2,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=juci
-PKG_VERSION=15.6.15
+PKG_VERSION=1.0.18
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=d98157382a62d5e0953c076edbaaec1692bfcd7b
+PKG_SOURCE_VERSION:=master
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
 
@@ -29,19 +29,18 @@ define Package/juci
   SECTION:=juci
   CATEGORY:=JUCI
   TITLE:=JUCI Web Based Interface
-  DEPENDS:=+@JUCI_THEME_DEFAULT +rpcd +ubus-mod-juci +uhttpd +uhttpd-mod-ubus +libubox +libubus
+  DEPENDS:=+rpcd +ubus-mod-juci +uhttpd +uhttpd-mod-ubus +libubox +libubus
 endef
 
 define Package/juci/config 
-	config JUCI_THEME_DEFAULT
+	config JUCI_THEME_SELECTED
 		bool
 		default n
 endef
 
 define Build/Compile
-	echo "Using JUCI theme: $(CONFIG_PACKAGE_juci-theme-default)"
 	$(MAKE) -C $(PKG_BUILD_DIR) clean
-	$(MAKE) -C $(PKG_BUILD_DIR) DEFAULT_THEME=$(CONFIG_PACKAGE_juci-theme-default)
+	$(MAKE) -C $(PKG_BUILD_DIR) CONFIG_JUCI_UBUS_CORE=$(CONFIG_PACKAGE_juci-ubus-core) CONFIG_JUCI_THEME_INTENO=$(CONFIG_PACKAGE_juci-theme-inteno)
 endef
 
 define Package/juci/description
@@ -50,13 +49,11 @@ endef
 
 define Package/juci/install
 	$(INSTALL_DIR) $(1)/www
-	$(CP) $(PKG_BUILD_DIR)/bin/htdocs/* $(1)/www/
-	$(INSTALL_DIR) $(1)/usr/share/ubus-plugind/
-	$(CP) $(PKG_BUILD_DIR)/bin/menu.d $(1)/usr/share/ubus-plugind/
-	# install to rpcd directory as well for now, for compatibility
+	$(CP) $(PKG_BUILD_DIR)/bin/www/* $(1)/www/
+	$(INSTALL_DIR) $(1)/usr
+	$(CP) $(PKG_BUILD_DIR)/bin/usr/* $(1)/usr/
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/
-	$(CP) $(PKG_BUILD_DIR)/bin/menu.d $(1)/usr/share/rpcd/
-	# == 
+	$(CP) $(PKG_BUILD_DIR)/bin/usr/share/rpcd/* $(1)/usr/share/rpcd/
 	$(INSTALL_DIR) $(1)/etc/config
 	$(CP) $(PKG_BUILD_DIR)/juci.config $(1)/etc/config/juci
 	$(INSTALL_DIR) $(1)/www/cgi-bin/

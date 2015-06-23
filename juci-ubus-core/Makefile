@@ -6,7 +6,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=ubus-mod-juci
+PKG_NAME:=juci-ubus-core
 #PKG_VERSION:=$(shell git --git-dir=$(CURDIR)/../.git log -1 --pretty="%ci %h" | awk '{ print $$1 "-" $$4 }')
 PKG_VERSION:=15.6.8
 PKG_MAINTAINER:=Martin K. Schroder <mkschreder.uk@gmail.com>
@@ -19,47 +19,49 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/package.mk
 #include $(INCLUDE_DIR)/cmake.mk
 
+
+
+	
 define Build/Prepare
 	#$(INSTALL_DIR) $(PKG_BUILD_DIR)
 	#$(CP) ./src/* $(PKG_BUILD_DIR)/
-	export CONFIG_JUCI_UBUS_CORE=$(CONFIG_JUCI_UBUS_CORE)
 endef
 
 define Build/Compile 
 	
 endef
 
-define Package/ubus-mod-juci
-  SECTION:=ubus-mod-juci
+define Package/juci-ubus-core
+  SECTION:=juci-ubus-core
   CATEGORY:=UBUS
   TITLE:=JUCI UBUS Main Module
   DEPENDS:=+rpcd +libubox +libubus +@JUCI_UBUS_CORE
 endef
 
-define Package/ubus-mod-juci/config
+define Package/juci-ubus-core/config
 	config JUCI_UBUS_CORE
 		bool 
 		default n
 endef
 
-define Package/ubus-mod-juci/description
+define Package/juci-ubus-core/description
 	Provides support for writing lightweight ubus plugins
 endef
 
-define Package/ubus-mod-juci/install
+define Package/juci-ubus-core/install
 	#$(CP) $(PKG_BUILD_DIR)/juci-ubus-core/build/* $(1)/
 	#$(INSTALL_DIR) $(1)/usr/lib/rpcd
-	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/ubus-mod-juci.so $(1)/usr/lib/rpcd/
+	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/juci-ubus-core.so $(1)/usr/lib/rpcd/
 	#$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
-	#$(CP) ./access.json $(1)/usr/share/rpcd/acl.d/ubus-mod-juci.json
+	#$(CP) ./access.json $(1)/usr/share/rpcd/acl.d/juci-ubus-core.json
 	#$(INSTALL_DIR) $(1)/usr/libexec $(1)/www/cgi-bin
 	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/io/juci-cgi $(1)/usr/libexec/
 	#$(LN) /usr/libexec/juci-cgi $(1)/www/cgi-bin/juci-upload
 	#$(LN) /usr/libexec/juci-cgi $(1)/www/cgi-bin/juci-backup
 endef
 
-define Package/ubus-mod-juci/postinst
+define Package/juci-ubus-core/postinst
 
 endef
 
-$(eval $(call BuildPackage,ubus-mod-juci))
+$(eval $(call BuildPackage,juci-ubus-core))

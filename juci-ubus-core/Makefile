@@ -17,18 +17,29 @@ PKG_LICENSE_FILES:=
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
-include $(INCLUDE_DIR)/cmake.mk
+#include $(INCLUDE_DIR)/cmake.mk
 
 define Build/Prepare
 	#$(INSTALL_DIR) $(PKG_BUILD_DIR)
 	#$(CP) ./src/* $(PKG_BUILD_DIR)/
+	export CONFIG_JUCI_UBUS_CORE=$(CONFIG_JUCI_UBUS_CORE)
+endef
+
+define Build/Compile 
+	
 endef
 
 define Package/ubus-mod-juci
   SECTION:=ubus-mod-juci
   CATEGORY:=UBUS
   TITLE:=JUCI UBUS Main Module
-  DEPENDS:=+rpcd +libubox +libubus
+  DEPENDS:=+rpcd +libubox +libubus +@JUCI_UBUS_CORE
+endef
+
+define Package/ubus-mod-juci/config
+	config JUCI_UBUS_CORE
+		bool 
+		default n
 endef
 
 define Package/ubus-mod-juci/description
@@ -36,7 +47,7 @@ define Package/ubus-mod-juci/description
 endef
 
 define Package/ubus-mod-juci/install
-	$(CP) $(PKG_BUILD_DIR)/juci-ubus-core/build/* $(1)/
+	#$(CP) $(PKG_BUILD_DIR)/juci-ubus-core/build/* $(1)/
 	#$(INSTALL_DIR) $(1)/usr/lib/rpcd
 	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/ubus-mod-juci.so $(1)/usr/lib/rpcd/
 	#$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d

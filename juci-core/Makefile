@@ -29,13 +29,13 @@ define Package/juci
   SECTION:=juci
   CATEGORY:=JUCI
   TITLE:=JUCI Web Based Interface
-  DEPENDS:=+rpcd +ubus-mod-juci +uhttpd +uhttpd-mod-ubus +libubox +libubus
+  DEPENDS:=+@JUCI_THEME_DEFAULT +rpcd +ubus-mod-juci +uhttpd +uhttpd-mod-ubus +libubox +libubus
 endef
 
 define Package/juci/config 
-	choice
-		
-	endchoice
+	config JUCI_THEME_DEFAULT
+		bool
+		default n
 endef
 
 define Build/Compile

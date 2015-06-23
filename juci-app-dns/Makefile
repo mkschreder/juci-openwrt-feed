@@ -10,8 +10,8 @@ PKG_LICENSE_FILES:=
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/juci-app-ddns
-  $(Package/juci-app-ddns/default)
+define Package/juci-app-dns
+  $(Package/juci-app-dns/default)
   SECTION:=juci
   CATEGORY:=JUCI
   SUBMENU:=Applications
@@ -37,8 +37,8 @@ define Package/juci/install
 	
 endef
 
-define Package/juci-app-ddns/postinst
+define Package/juci-app-dns/postinst
 
 endef
 
-$(eval $(call BuildPackage,juci-app-ddns))
+$(eval $(call BuildPackage,juci-app-dns))

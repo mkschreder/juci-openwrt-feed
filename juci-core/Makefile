@@ -8,7 +8,7 @@ PKG_RELEASE=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=945435c28edd395bbf39dd8c4f0f68e35185f23b
+PKG_SOURCE_VERSION:=063e660c58994cdc9431a237f49e7f6df81ae4b3
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
 
@@ -16,13 +16,6 @@ PKG_LICENSE:=GPL
 PKG_LICENSE_FILES:=
 
 include $(INCLUDE_DIR)/package.mk
-
-define Package/juci-theme-default
-	SECTION:=juci
-	CATEGORY:=JUCI
-	TITLE:=JUCI Default Theme
-	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
-endef
 
 define Package/juci
   $(Package/juci/default)
@@ -33,9 +26,12 @@ define Package/juci
 endef
 
 define Package/juci/config 
-	choice
-		
-	endchoice
+	config JUCI_DNS
+		bool 
+		default n
+	config JUCI_THEME_SELECTED
+		bool 
+		default n
 endef
 
 define Build/Compile
@@ -78,5 +74,4 @@ exit 0
 endef
 
 
-$(eval $(call BuildPackage,juci-theme-default))
 $(eval $(call BuildPackage,juci))

@@ -15,14 +15,12 @@ define Package/juci-app-dns
   SECTION:=juci
   CATEGORY:=JUCI
   SUBMENU:=Applications
-  TITLE:=JUCI Web Based Interface
-  DEPENDS:=+rpcd +ubus-mod-juci +uhttpd +uhttpd-mod-ubus +libubox +libubus
+  TITLE:=JUCI DNS Pages
+  DEPENDS:=+juci @JUCI_DNS
 endef
 
 define Package/juci-app-dns/config 
-	choice
-		
-	endchoice
+	
 endef
 
 define Build/Compile

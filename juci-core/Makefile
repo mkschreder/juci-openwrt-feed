@@ -15,11 +15,15 @@ PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
 PKG_LICENSE:=GPL
 PKG_LICENSE_FILES:=
 
+export CONFIG_JUCI_UBUS_CORE:=$(CONFIG_JUCI_UBUS_CORE)
+export CONFIG_JUCI_THEME_INTENO:=$(CONFIG_JUCI_THEME_INTENO)
+
 include $(INCLUDE_DIR)/package.mk
 
 define Package/juci-theme-default
 	SECTION:=juci
 	CATEGORY:=JUCI
+	SUBMENU:=Themes
 	TITLE:=JUCI Default Theme
 	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 endef
@@ -28,19 +32,16 @@ define Package/juci
   $(Package/juci/default)
   SECTION:=juci
   CATEGORY:=JUCI
+  SUBMENU:=Core
   TITLE:=JUCI Web Based Interface
   DEPENDS:=+rpcd +ubus-mod-juci +uhttpd +uhttpd-mod-ubus +libubox +libubus
 endef
+
 
 define Package/juci/config 
 	config JUCI_THEME_SELECTED
 		bool
 		default n
-endef
-
-define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) clean
-	$(MAKE) -C $(PKG_BUILD_DIR) CONFIG_JUCI_UBUS_CORE=$(CONFIG_PACKAGE_juci-ubus-core) CONFIG_JUCI_THEME_INTENO=$(CONFIG_PACKAGE_juci-theme-inteno)
 endef
 
 define Package/juci/description

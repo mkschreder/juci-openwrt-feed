@@ -14,7 +14,7 @@ define Package/juci-mod-samba
   $(Package/juci-mod-samba/default)
   SECTION:=juci
   CATEGORY:=JUCI
-  SUBMENU:=Themes
+  SUBMENU:=Core
   TITLE:=JUCI samba module
   DEPENDS:=+juci +@JUCI_MOD_SAMBA
 endef

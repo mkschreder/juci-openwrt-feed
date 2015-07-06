@@ -34,7 +34,7 @@ define Package/juci
   CATEGORY:=JUCI
   SUBMENU:=Core
   TITLE:=JUCI Web Based Interface
-  DEPENDS:=+rpcd +ubus-mod-juci +uhttpd +uhttpd-mod-ubus +libubox +libubus
+  DEPENDS:=+rpcd +juci-ubus-core +uhttpd +uhttpd-mod-ubus +libubox +libubus
 endef
 
 

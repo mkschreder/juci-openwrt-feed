@@ -16,7 +16,7 @@ define Package/juci-backend-opkg
   CATEGORY:=JUCI
   SUBMENU:=Backend
   TITLE:=OPKG Backend
-  DEPENDS:=+juci +@JUCI_BACKEND_SYSUPGRADE
+  DEPENDS:=+juci +@JUCI_BACKEND_OPKG
 endef
 
 define Package/juci-backend-opkg/config 

@@ -43,11 +43,3 @@ endef
 
 $(eval $(call BuildPackage,juci-mod-samba))
 
-define Package/juci-theme-default
-  $(Package/juci-theme-default/default)
-  SECTION:=juci
-  CATEGORY:=JUCI
-  SUBMENU:=Themes
-  TITLE:=JUCI Default Theme
-  DEPENDS:=+juci +juci-mod-samba
-endef

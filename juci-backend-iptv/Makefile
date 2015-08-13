@@ -15,7 +15,7 @@ define Package/juci-backend-iptv
   SECTION:=juci
   CATEGORY:=JUCI
   SUBMENU:=Backend
-  TITLE:=OPKG Backend
+  TITLE:=IPTV Backend
   DEPENDS:=+juci +@JUCI_BACKEND_IPTV
 endef
 

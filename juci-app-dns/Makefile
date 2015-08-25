@@ -1,6 +1,6 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=juci
+PKG_NAME:=juci-app-dns
 PKG_VERSION=15.6.15
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
@@ -15,25 +15,23 @@ define Package/juci-app-dns
   SECTION:=juci
   CATEGORY:=JUCI
   SUBMENU:=Applications
-  TITLE:=JUCI Web Based Interface
-  DEPENDS:=+rpcd +ubus-mod-juci +uhttpd +uhttpd-mod-ubus +libubox +libubus
+  TITLE:=JUCI DNS Pages
+  DEPENDS:=+juci @JUCI_DNS
 endef
 
-define Package/juci/config 
-	choice
-		
-	endchoice
+define Package/juci-app-dns/config 
+	
 endef
 
 define Build/Compile
 	
 endef
 
-define Package/juci/description
+define Package/juci-app-dns/description
 	Provides DDNS configuration pages
 endef
 
-define Package/juci/install
+define Package/juci-app-dns/install
 	
 endef
 

@@ -17,13 +17,6 @@ PKG_LICENSE_FILES:=
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/juci-theme-default
-	SECTION:=juci
-	CATEGORY:=JUCI
-	TITLE:=JUCI Default Theme
-	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
-endef
-
 define Package/juci
   $(Package/juci/default)
   SECTION:=juci
@@ -71,5 +64,4 @@ exit 0
 endef
 
 
-$(eval $(call BuildPackage,juci-theme-default))
 $(eval $(call BuildPackage,juci))

@@ -29,7 +29,7 @@ define Package/juci
   SECTION:=juci
   CATEGORY:=JUCI
   TITLE:=JUCI Web Based Interface
-  DEPENDS:=+rpcd +ubus-mod-juci +uhttpd +uhttpd-mod-ubus +libubox +libubus
+  DEPENDS:=+rpcd +juci-ubus-core +uhttpd +uhttpd-mod-ubus +libubox +libubus
 endef
 
 define Package/juci/config 
@@ -48,12 +48,8 @@ define Package/juci/description
 endef
 
 define Package/juci/install
-	$(INSTALL_DIR) $(1)/www
-	$(CP) $(PKG_BUILD_DIR)/bin/www/* $(1)/www/
-	$(INSTALL_DIR) $(1)/usr
-	$(CP) $(PKG_BUILD_DIR)/bin/usr/* $(1)/usr/
-	$(INSTALL_DIR) $(1)/usr/share/rpcd/
-	$(CP) $(PKG_BUILD_DIR)/bin/usr/share/rpcd/* $(1)/usr/share/rpcd/
+	$(INSTALL_DIR) $(1)/
+	$(CP) $(PKG_BUILD_DIR)/bin/* $(1)/
 	$(INSTALL_DIR) $(1)/etc/config
 	$(CP) $(PKG_BUILD_DIR)/juci.config $(1)/etc/config/juci
 	$(INSTALL_DIR) $(1)/www/cgi-bin/

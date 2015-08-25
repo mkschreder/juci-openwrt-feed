@@ -2,38 +2,50 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=juci
-PKG_VERSION=1.0.18
+PKG_VERSION=1.0.32
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=master
+PKG_SOURCE_VERSION:=devel
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
 
 PKG_LICENSE:=GPL
 PKG_LICENSE_FILES:=
 
+export CONFIG_JUCI_UBUS_CORE:=$(CONFIG_JUCI_UBUS_CORE)
+export CONFIG_JUCI_THEME_INTENO:=$(CONFIG_JUCI_THEME_INTENO)
+export CONFIG_JUCI_BACKEND_BCM_WIRELESS:=$(CONFIG_JUCI_BACKEND_BCM_WIRELESS)
+export CONFIG_JUCI_BACKEND_BCM_DSL:=$(CONFIG_JUCI_BACKEND_BCM_DSL)
+export CONFIG_JUCI_BACKEND_SYSUPGRADE:=$(CONFIG_JUCI_BACKEND_SYSUPGRADE)
+export CONFIG_JUCI_BACKEND_OPKG:=$(CONFIG_JUCI_BACKEND_OPKG)
+
 include $(INCLUDE_DIR)/package.mk
+
+define Package/juci-theme-default
+	SECTION:=juci
+	CATEGORY:=JUCI
+	SUBMENU:=Themes
+	TITLE:=JUCI Default Theme
+	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
+endef
 
 define Package/juci
   $(Package/juci/default)
   SECTION:=juci
   CATEGORY:=JUCI
+  SUBMENU:=Core
   TITLE:=JUCI Web Based Interface
-  DEPENDS:=+rpcd +juci-ubus-core +uhttpd +uhttpd-mod-ubus +libubox +libubus
+  DEPENDS:=+haproxy +lua +libuv-lua +libuci-lua +libubus-lua +libubox-lua +rpcd +juci-ubus-core +uhttpd +uhttpd-mod-ubus +libubox +libubus
 endef
+
 
 define Package/juci/config 
 	config JUCI_THEME_SELECTED
 		bool
 		default n
-endef
-
-define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) clean
-	$(MAKE) -C $(PKG_BUILD_DIR) CONFIG_JUCI_UBUS_CORE=$(CONFIG_PACKAGE_juci-ubus-core) CONFIG_JUCI_THEME_INTENO=$(CONFIG_PACKAGE_juci-theme-inteno)
 endef
 
 define Package/juci/description

@@ -13,14 +13,10 @@ PKG_MAINTAINER:=Martin K. Schroder <mkschreder.uk@gmail.com>
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=
-
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 #include $(INCLUDE_DIR)/cmake.mk
-
-
-
 	
 define Build/Prepare
 	#$(INSTALL_DIR) $(PKG_BUILD_DIR)

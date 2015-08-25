@@ -2,7 +2,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=juci
-PKG_VERSION=1.0.31
+PKG_VERSION=1.0.32
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
@@ -38,7 +38,7 @@ define Package/juci
   CATEGORY:=JUCI
   SUBMENU:=Core
   TITLE:=JUCI Web Based Interface
-  DEPENDS:=+haproxy +lua +libuci-lua +libubus-lua +rpcd +juci-ubus-core +uhttpd +uhttpd-mod-ubus +libubox +libubus
+  DEPENDS:=+haproxy +lua +libuv-lua +libuci-lua +libubus-lua +libubox-lua +rpcd +juci-ubus-core +uhttpd +uhttpd-mod-ubus +libubox +libubus
 endef
 
 

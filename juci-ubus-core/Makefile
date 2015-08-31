@@ -32,7 +32,7 @@ define Package/juci-ubus-core
   SECTION:=juci-ubus-core
   CATEGORY:=UBUS
   TITLE:=JUCI UBUS Main Module
-  DEPENDS:=+rpcd +libubox +libubus +@JUCI_UBUS_CORE
+  DEPENDS:=+juci-rpcd +libubox +libubus +@JUCI_UBUS_CORE
 endef
 
 define Package/juci-ubus-core/config

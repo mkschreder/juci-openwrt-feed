@@ -53,7 +53,7 @@ endef
 define Package/juci-uhttpd-mod-ubus
   $(Package/juci-uhttpd/default)
   TITLE+= (ubus plugin)
-  DEPENDS:=uhttpd +libubus +libblobmsg-json
+  DEPENDS:=juci-uhttpd +libubus +libblobmsg-json
 endef
 
 define Package/juci-uhttpd-mod-ubus/description

@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=uhttpd
+PKG_NAME:=juci-uhttpd
 PKG_VERSION:=2014-10-27
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 

@@ -90,5 +90,5 @@ define Package/juci-uhttpd-mod-ubus/install
 	$(INSTALL_DATA) ./files/ubus.default $(1)/etc/uci-defaults/00_uhttpd_ubus
 endef
 
-$(eval $(call BuildPackage,uhttpd))
-$(eval $(call BuildPackage,uhttpd-mod-ubus))
+$(eval $(call BuildPackage,juci-uhttpd))
+$(eval $(call BuildPackage,juci-uhttpd-mod-ubus))

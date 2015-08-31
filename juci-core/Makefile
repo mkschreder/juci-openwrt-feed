@@ -5,8 +5,8 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
-PKG_SOURCE_VERSION:=0d32e0ceb3cb1bdea046ce8fd5fa65ab41e76587
-PKG_VERSION:=1.0.35
+PKG_SOURCE_VERSION:=cb115fe1d41e7971cb330d74c61bdcd5c19a8606
+PKG_VERSION:=1.0.38
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>

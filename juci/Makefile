@@ -40,7 +40,7 @@ define Package/juci
   CATEGORY:=JUCI
   SUBMENU:=Core
   TITLE:=JUCI Web Based Interface
-  DEPENDS:=+haproxy +lua +libuv-lua +libuci-lua +libubus-lua +libubox-lua +rpcd +juci-ubus-core +uhttpd +uhttpd-mod-ubus +libubox +libubus
+  DEPENDS:=+haproxy +lua +libuv-lua +libuci-lua +libubus-lua +libubox-lua +juci-rpcd +juci-ubus-core +juci-uhttpd +uhttpd-mod-ubus +libubox +libubus
 endef
 
 

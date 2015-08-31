@@ -1,0 +1,14 @@
+--- a/client.c
++++ b/client.c
+@@ -62,6 +62,11 @@ void uh_http_header(struct client *cl, i
+ 		http_versions[cl->request.version],
+ 		code, summary, conn, enc);
+ 
++#ifdef DISABLE_SAME_ORIGIN_POLICY
++	ustream_printf(cl->us, "Access-Control-Allow-Origin: *\r\n");
++	ustream_printf(cl->us, "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept\r\n");
++#endif /* DISABLE_SAME_ORIGIN_POLICY */
++
+ 	if (!r->connection_close)
+ 		ustream_printf(cl->us, "Keep-Alive: timeout=%d\r\n", conf.http_keepalive);
+ }

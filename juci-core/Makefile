@@ -26,14 +26,6 @@ export CONFIG_JUCI_BACKEND_OPKG:=$(CONFIG_JUCI_BACKEND_OPKG)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/juci-theme-default
-	SECTION:=juci
-	CATEGORY:=JUCI
-	SUBMENU:=Themes
-	TITLE:=JUCI Default Theme
-	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
-endef
-
 define Package/juci
   $(Package/juci/default)
   SECTION:=juci
@@ -78,3 +70,17 @@ endef
 
 
 $(eval $(call BuildPackage,juci))
+
+####### Extensions / Themes and Plugins
+
+define Package/juci-broadcom-wl
+  $(Package/juci-broadcom-wl/default)
+  SECTION:=juci
+  CATEGORY:=JUCI
+  SUBMENU:=Wireless
+  TITLE:=JUCI Propritry Broadcom Wireless Support
+  DEPENDS:=
+endef
+define Package/juci-broadcom-wl/description
+	Broadcom WL support for inteno
+endef

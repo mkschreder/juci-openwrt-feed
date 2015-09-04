@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
-PKG_SOURCE_VERSION:=ce27c9f447a6763bea93f86e9381b21f33a3febe
+PKG_SOURCE_VERSION:=0a2d9c5f2bbda2425549bb5726684f543311408e
 PKG_VERSION:=1.0.38
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -171,3 +171,6 @@ $(eval $(call BuildPackage,juci-usb))
 
 $(eval $(call plugin,juci-natalie-dect, Natalie DECT interface))
 $(eval $(call BuildPackage,juci-natalie-dect))
+
+$(eval $(call plugin,juci-theme-inteno, Juci Default Theme))
+$(eval $(call BuildPackage,juci-theme-inteno))

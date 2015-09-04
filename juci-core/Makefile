@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
-PKG_SOURCE_VERSION:=8e39544bad376239cfa551326d6c0d1946e480f2
+PKG_SOURCE_VERSION:=fa14192809327b38a665d483fb119bed6484aaba
 PKG_VERSION:=1.0.38
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -74,7 +74,7 @@ $(eval $(call BuildPackage,juci))
 ####### Extensions / Themes and Plugins
 
 define plugin
-	export CONFIG_PACKAGE_$(1)=$(CONFIG_PACKAGE_$(1))
+  export CONFIG_PACKAGE_$(1)=$(CONFIG_PACKAGE_$(1))
   define Package/$(1)
     SECTION:=juci
     CATEGORY:=JUCI
@@ -83,7 +83,8 @@ define plugin
     MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
     SUBMENU:=Plugins
     TITLE:=$(if $(2),$(2),JUCI $(1) plugin)
-    $(if $(3),DEPENDS:=+juci +@$(1) $(3))
+    DEPENDS:=+juci 
+    $(if $(3),DEPENDS+=$(3))
   endef
 	
   define Package/$(1)/config
@@ -93,19 +94,19 @@ define plugin
   endef
 endef
 
-$(eval $(call plugin,juci-asterisk, Inteno Asterisk Voice Client Module, voice_client))
+$(eval $(call plugin,juci-asterisk, Inteno Asterisk Voice Client Module))
 $(eval $(call BuildPackage,juci-asterisk))
 
-$(eval $(call plugin,juci-broadcom-wl, Inteno Broadcom Wireless Module (wlctl),bcmkernel ))
+$(eval $(call plugin,juci-broadcom-wl, Inteno Broadcom Wireless Module (wlctl) ))
 $(eval $(call BuildPackage,juci-broadcom-wl))
 
-$(eval $(call plugin,juci-broadcom-ethernet, Inteno Broadcom Ethernet Module,bcmkernel ))
+$(eval $(call plugin,juci-broadcom-ethernet, Inteno Broadcom Ethernet Module ))
 $(eval $(call BuildPackage,juci-broadcom-ethernet))
 
-$(eval $(call plugin,juci-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based),bcmkernel ))
+$(eval $(call plugin,juci-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based) ))
 $(eval $(call BuildPackage,juci-broadcom-vlan))
 
-$(eval $(call plugin,juci-broadcom-dsl, Inteno Broadcom DSL Module (xdslctl based), bcmkernel ))
+$(eval $(call plugin,juci-broadcom-dsl, Inteno Broadcom DSL Module (xdslctl based) ))
 $(eval $(call BuildPackage,juci-broadcom-dsl))
 
 $(eval $(call plugin,juci-ddns, DDNS configuration through /etc/config/ddns ))
@@ -117,7 +118,7 @@ $(eval $(call BuildPackage,juci-diagnostics))
 $(eval $(call plugin,juci-dnsmasq-dhcp, DHCP/DNSMasq configuration through /etc/config/dhcp ))
 $(eval $(call BuildPackage,juci-dnsmasq-dhcp))
 
-$(eval $(call plugin,juci-dropbear, Dropbear Configuration, dropbear ))
+$(eval $(call plugin,juci-dropbear, Dropbear Configuration ))
 $(eval $(call BuildPackage,juci-dropbear))
 
 $(eval $(call plugin,juci-event, JUCI Event Subsystem ))
@@ -126,7 +127,7 @@ $(eval $(call BuildPackage,juci-event))
 $(eval $(call plugin,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
 $(eval $(call BuildPackage,juci-firewall-fw3))
 
-$(eval $(call plugin,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables, +igmpinfo ))
+$(eval $(call plugin,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))
 $(eval $(call BuildPackage,juci-igmpinfo))
 
 $(eval $(call plugin,juci-inteno-router, Router Backend for Inteno Box))
@@ -156,7 +157,7 @@ $(eval $(call BuildPackage,juci-network-netifd))
 $(eval $(call plugin,juci-router-openwrt, OpenWRT Router Interface))
 $(eval $(call BuildPackage,juci-router-openwrt))
 
-$(eval $(call plugin,juci-samba, Samba2 Configuration))
+$(eval $(call plugin,juci-samba, Samba36 Configuration))
 $(eval $(call BuildPackage,juci-samba))
 
 $(eval $(call plugin,juci-sysupgrade, Inteno Sysupgrade Firmware Upgrade))
@@ -167,3 +168,6 @@ $(eval $(call BuildPackage,juci-upnp))
 
 $(eval $(call plugin,juci-usb, USB Support In GUI))
 $(eval $(call BuildPackage,juci-usb))
+
+$(eval $(call plugin,juci-natalie-dect, Natalie DECT interface))
+$(eval $(call BuildPackage,juci-natalie-dect))

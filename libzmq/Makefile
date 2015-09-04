@@ -23,7 +23,7 @@ define Package/libzmq
   CATEGORY:=Libraries
   TITLE:=Cross-platform encryption library
   URL:=https://github.com/zeromq/libzmq.git
-  DEPENDS:=
+  DEPENDS:=+libsodium
 endef
 
 define Package/libzmq/description

@@ -23,7 +23,7 @@ define Package/czmq
   CATEGORY:=Libraries
   TITLE:=Cross-platform encryption library
   URL:=https://github.com/zeromq/czmq.git
-  DEPENDS:=
+  DEPENDS:=+libzmq
 endef
 
 define Package/czmq/description

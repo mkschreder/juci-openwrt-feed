@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=czmq
-PKG_VERSION:=9e8e81cf9a227511fe027b4970eca19041ca72c0
+PKG_VERSION:=b3c83a3f1cd9204b9135841ac2f8b9c1a05efd21
 PKG_RELEASE:=1.0.0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -15,6 +15,8 @@ PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf
+
+TARGET_CFLAGS+=-std=c99
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -31,8 +33,10 @@ define Package/czmq/description
 endef
 
 define Build/Configure
+	
 	( cd $(PKG_BUILD_DIR); ./autogen.sh )
 	$(call Build/Configure/Default)
+	
 endef
 
 define Build/InstallDev

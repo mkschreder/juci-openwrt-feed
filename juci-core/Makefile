@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
-PKG_SOURCE_VERSION:=30ba68fb241f9be8905d68ddb518b6b76818b8e4
+PKG_SOURCE_VERSION:=bc355b0bbf590cf6f78be28d31d1630ea3117fd1
 PKG_VERSION:=1.0.41
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -74,7 +74,7 @@ $(eval $(call BuildPackage,juci))
 ####### Extensions / Themes and Plugins
 
 define plugin
-  export CONFIG_PACKAGE_$(1)=$(CONFIG_PACKAGE_$(1))
+  export CONFIG_PACKAGE_$(1):=$(CONFIG_PACKAGE_$(1))
   define Package/$(1)
     SECTION:=juci
     CATEGORY:=JUCI

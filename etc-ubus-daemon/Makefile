@@ -14,7 +14,7 @@ PKG_RELEASE=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/etc-ubus-daemon.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE_VERSION:=4672b715a8325b7442f5fd33eb5ba60c54fbc87c
+PKG_SOURCE_VERSION:=c137c74e5c036e8ef858ae3266d7a58e8d7e5780
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
 
@@ -43,6 +43,7 @@ define Package/etc-ubus-daemon/description
 endef
 
 define Package/etc-ubus-daemon/install
+	$(INSTALL_DIR) $(1)/etc/ubus/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/etc-ubus-daemon.init $(1)/etc/init.d/etc-ubus-daemon
 	$(INSTALL_DIR) $(1)/sbin

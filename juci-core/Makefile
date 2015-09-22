@@ -32,7 +32,7 @@ define Package/juci
   CATEGORY:=JUCI
   SUBMENU:=Core
   TITLE:=JUCI Web Based Interface
-  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +libubox-lua +juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus
+  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +etc-ubus-daemon +libubox-lua +juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus
 endef
 
 define Package/juci/config 

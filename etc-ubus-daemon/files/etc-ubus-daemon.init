@@ -3,8 +3,8 @@
 START=12
 
 USE_PROCD=1
-NAME=rpcd
-PROG=/sbin/rpcd
+NAME=etc-ubus-daemon
+PROG=/sbin/etc-ubus-daemon
 
 start_service() {
 	procd_open_instance
@@ -13,9 +13,9 @@ start_service() {
 }
 
 stop() {
-	service_stop /sbin/rpcd
+	service_stop /sbin/etc-ubus-daemon
 }
 
 reload() {
-	service_reload /sbin/rpcd
+	service_reload /sbin/etc-ubus-daemon
 }

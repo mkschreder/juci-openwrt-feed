@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libsodium
-PKG_VERSION:=master
+PKG_VERSION:=4705c0a06681d48ceec5ecbb66d496fd70c59bba
 PKG_RELEASE:=1.0.3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz

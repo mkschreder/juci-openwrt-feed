@@ -7,7 +7,27 @@ USE_PROCD=1
 NAME=stunnel
 PROG=/usr/bin/stunnel
 
+CONFIG_FILE=/etc/stunnel/stunnel.conf
+
+stunnel_tunnel() {
+	echo "[$1]" >> ${CONFIG_FILE}
+	for field in client accept connect verify CAfile checkHost OCSPaia cert exec execArgs ciphers PSKsecrets; do 
+		config_get value $1 $field
+		if [ "$value" != "" ]; then 
+			echo "$field = $value" >> ${CONFIG_FILE}
+		fi 
+	done
+	echo "" >> ${CONFIG_FILE}
+}
+
+stunnel_generate_config() {
+	printf "" > ${CONFIG_FILE}
+	config_load stunnel
+	config_foreach stunnel_tunnel tunnel
+}
+
 start_service() {
+	stunnel_generate_config 
 	if [ -s "/etc/stunnel/stunnel.pem" ]; then
 		chmod og-rwx /etc/stunnel/stunnel.pem
 	fi

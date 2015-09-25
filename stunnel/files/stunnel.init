@@ -1,0 +1,44 @@
+#!/bin/sh /etc/rc.common
+
+START=90
+STOP=96
+
+USE_PROCD=1
+NAME=stunnel
+PROG=/usr/bin/stunnel
+
+start_service() {
+	if [ -s "/etc/stunnel/stunnel.pem" ]; then
+		chmod og-rwx /etc/stunnel/stunnel.pem
+	else
+		[ -e /etc/stunnel/stunnel.conf ] && \
+		. /etc/stunnel/stunnel.conf
+
+		X509_CN=${X509_CN:-"router"}
+		X509_O=${X509_O:-"openwrt.org"}
+		X509_OU=${X509_OU:-"open-source firmware"}
+
+		[ -x /sbin/keygen ] && {
+		(keygen "$X509_CN" "$X509_O" "$X509_OU" > /etc/stunnel/stunnel.pem;
+			chmod og-rwx /etc/stunnel/stunnel.pem )
+		}
+	fi
+  procd_open_instance
+  procd_set_param command "$PROG"
+  procd_set_param respawn
+  procd_close_instance
+}
+
+stop_service() {
+  service_stop "$PROG"
+}
+
+service_triggers() {
+	procd_add_reload_trigger network wireless
+}
+
+reload_service() {
+	stop
+	start
+}
+

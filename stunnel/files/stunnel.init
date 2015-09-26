@@ -42,7 +42,7 @@ stop_service() {
 }
 
 service_triggers() {
-	procd_add_reload_trigger network wireless
+	procd_add_reload_trigger stunnel
 }
 
 reload_service() {

@@ -51,12 +51,12 @@ function reconfigure()
 		conn:call("uci", "set", { config = "stunnel", section = "iconnect_client", values = { 
 			accept = iconnect_client_socket, 
 			connect = router_ip..":5555",
-			cert = "/etc/stunnel/stunnel.pem"
+			CAfile = "/etc/stunnel/stunnel.pem"
 		}}); 
 		conn:call("uci", "set", { config = "stunnel", section = "iconnect_service", values = { 
 			accept = "5555", 
 			connect = iconnect_hub_socket,
-			CAfile = "/etc/stunnel/stunnel.pem"
+			cert = "/etc/stunnel/stunnel.pem"
 		}}); 
 		conn:call("uci", "commit", { config = "stunnel" }); 
 	end

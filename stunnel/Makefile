@@ -50,12 +50,16 @@ CONFIGURE_ARGS+= \
 	--with-ssl=$(STAGING_DIR)/usr \
 
 define Build/Compile
-	mkdir -p $(PKG_INSTALL_DIR)/etc/stunnel
-	echo '#dummy' > $(PKG_INSTALL_DIR)/etc/stunnel/stunnel.pem
+	openssl genrsa -out $(PKG_BUILD_DIR)/key.pem 2048
+	openssl req -new -x509 -key $(PKG_BUILD_DIR)/key.pem -out $(PKG_BUILD_DIR)/cert.pem -days 1095 -subj '/CN=SE'
 	$(call Build/Compile/Default)
 endef
 
 define Package/stunnel/install
+	$(INSTALL_DIR) $(1)/etc/stunnel
+	cat $(PKG_BUILD_DIR)/key.pem $(PKG_BUILD_DIR)/cert.pem > $(1)/etc/stunnel/stunnel.pem
+	$(INSTALL_DIR) $(1)/etc/config/
+	$(CP) ./files/stunnel.conf $(1)/etc/config/stunnel
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/stunnel $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/lib/stunnel

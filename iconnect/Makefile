@@ -21,7 +21,7 @@ define Package/iconnect
   SECTION:=net
   CATEGORY:=Network
   DEPENDS:=+stunnel
-  TITLE:=Inteno InterConnect
+  TITLE:=Router InterConnect
   URL:=https://github.com/mkschreder
 endef
 
@@ -33,7 +33,10 @@ endef
 define Build/Compile
 	mkdir -p $(PKG_INSTALL_DIR)/etc/stunnel/
 	echo '#dummy' > $(PKG_INSTALL_DIR)/etc/stunnel/stunnel.pem
-	$(call Build/Compile/Default)
+endef
+
+define Build/Install
+	$(call Package/iconnect/install,$(PKG_INSTALL_DIR))
 endef
 
 define Package/iconnect/install

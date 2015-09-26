@@ -39,6 +39,8 @@ endef
 define Package/iconnect/install
 	$(INSTALL_DIR) $(1)/etc/init.d/
 	$(INSTALL_BIN) ./files/iconnect.init $(1)/etc/init.d/iconnect
+	$(INSTALL_DIR) $(1)/usr/bin/
+	$(INSTALL_BIN) ./files/iconnectd.lua $(1)/usr/bin/iconnectd
 endef
 
 $(eval $(call BuildPackage,iconnect))

@@ -44,13 +44,16 @@ function find_router_ip()
 end
 
 configure(); 
-local reconf_timer
+local reconf_timer = nil; 
+local prev_router_ip = nil; 
 function reconfigure()
 	local router_ip = find_router_ip()
-	if(router_ip) then
+	if(router_ip and router_ip ~= prev_router_ip) then
 		conn:call("uci", "set", { config = "stunnel", section = "iconnect_client", values = { 
+			client = "yes", 
 			accept = iconnect_client_socket, 
 			connect = router_ip..":5555",
+			cert = "/etc/stunnel/stunnel.pem"
 			CAfile = "/etc/stunnel/stunnel.pem"
 		}}); 
 		conn:call("uci", "set", { config = "stunnel", section = "iconnect_service", values = { 
@@ -59,6 +62,7 @@ function reconfigure()
 			cert = "/etc/stunnel/stunnel.pem"
 		}}); 
 		conn:call("uci", "commit", { config = "stunnel" }); 
+		prev_router_ip = router_ip; 
 	end
 	reconf_timer:set(10000); 
 end
@@ -68,7 +72,7 @@ reconf_timer:set(0);
 hub:add({
 	["iconnect"] = {
 		test = { function (req, msg)
-			conn:reply(req, { foo = "bar" }); 
+			hub:reply(req, { foo = "bar" }); 
 		end, { param = ubus.STRING }}
 	}
 }); 

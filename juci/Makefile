@@ -73,104 +73,57 @@ $(eval $(call BuildPackage,juci))
 
 ####### Extensions / Themes and Plugins
 
-define plugin
-  export CONFIG_PACKAGE_$(1):=$(CONFIG_PACKAGE_$(1))
-  define Package/$(1)
-    SECTION:=juci
-    CATEGORY:=JUCI
-    TITLE:=JUCI - Universal Configuration Interface
-    URL:=https://github.com/mkschreder/luci-express
-    MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
-    SUBMENU:=Plugins
-    TITLE:=$(if $(2),$(2),JUCI $(1) plugin)
-    DEPENDS:=+juci 
-    $(if $(3),DEPENDS+=$(3))
-  endef
+define RegisterAddonInner
+export CONFIG_PACKAGE_$(2):=$(CONFIG_PACKAGE_$(2))
+define Package/$(2)
+	SECTION:=juci
+	CATEGORY:=JUCI
+	TITLE:=default
+	URL:=https://github.com/mkschreder/luci-express
+	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
+	SUBMENU:=$(1)
+	TITLE:=$(if $(3),$(3),JUCI $(2) plugin)
+	DEPENDS:= 
+	$(if $(4),DEPENDS+=$(4))
+endef
 	
-  define Package/$(1)/config
-		config $(shell echo $(1) | tr '[:lower:]' '[:upper:]' | sed 's/-/_/g')
-			bool 
-			default n
-  endef
+define Package/$(2)/config
+	config $(shell echo $(2) | tr '[:lower:]' '[:upper:]' | sed 's/-/_/g')
+		bool 
+		default n
+endef
 endef
 
-$(eval $(call plugin,juci-asterisk, Inteno Asterisk Voice Client Module))
-$(eval $(call BuildPackage,juci-asterisk))
+define RegisterAddon
+	$(eval $(call RegisterAddonInner,$(1),$(2),$(3)))
+	$(eval $(call BuildPackage,$(2)))
+endef
 
-$(eval $(call plugin,juci-broadcom-wl, Inteno Broadcom Wireless Module (wlctl) ))
-$(eval $(call BuildPackage,juci-broadcom-wl))
-
-$(eval $(call plugin,juci-broadcom-ethernet, Inteno Broadcom Ethernet Module ))
-$(eval $(call BuildPackage,juci-broadcom-ethernet))
-
-$(eval $(call plugin,juci-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based) ))
-$(eval $(call BuildPackage,juci-broadcom-vlan))
-
-$(eval $(call plugin,juci-broadcom-dsl, Inteno Broadcom DSL Module (xdslctl based) ))
-$(eval $(call BuildPackage,juci-broadcom-dsl))
-
-$(eval $(call plugin,juci-ddns, DDNS configuration through /etc/config/ddns ))
-$(eval $(call BuildPackage,juci-ddns))
-
-$(eval $(call plugin,juci-diagnostics, Simple Diagnostics ))
-$(eval $(call BuildPackage,juci-diagnostics))
-
-$(eval $(call plugin,juci-dnsmasq-dhcp, DHCP/DNSMasq configuration through /etc/config/dhcp ))
-$(eval $(call BuildPackage,juci-dnsmasq-dhcp))
-
-$(eval $(call plugin,juci-dropbear, Dropbear Configuration ))
-$(eval $(call BuildPackage,juci-dropbear))
-
-$(eval $(call plugin,juci-event, JUCI Event Subsystem ))
-$(eval $(call BuildPackage,juci-event))
-
-$(eval $(call plugin,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
-$(eval $(call BuildPackage,juci-firewall-fw3))
-
-$(eval $(call plugin,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))
-$(eval $(call BuildPackage,juci-igmpinfo))
-
-$(eval $(call plugin,juci-inteno-router, Router Backend for Inteno Box))
-$(eval $(call BuildPackage,juci-inteno-router))
-
-$(eval $(call plugin,juci-jquery-console, Quake Style Dropdown Console for JUCI in browser))
-$(eval $(call BuildPackage,juci-jquery-console))
-
-$(eval $(call plugin,juci-macdb, MAC Address to Manufacturer Name resolution for juci))
-$(eval $(call BuildPackage,juci-macdb))
-
-$(eval $(call plugin,juci-minidlna, MiniDLNA Configuration))
-$(eval $(call BuildPackage,juci-minidlna))
-
-$(eval $(call plugin,juci-mod-status, Deprecated JUCI Status Reporting Module))
-$(eval $(call BuildPackage,juci-mod-status))
-
-$(eval $(call plugin,juci-mod-system, JUCI System Administration Module))
-$(eval $(call BuildPackage,juci-mod-system))
-
-$(eval $(call plugin,juci-netmode, Inteno NetMode default reset functionality))
-$(eval $(call BuildPackage,juci-netmode))
-
-$(eval $(call plugin,juci-network-netifd, OpenWRT netifd network configuration module))
-$(eval $(call BuildPackage,juci-network-netifd))
-
-$(eval $(call plugin,juci-router-openwrt, OpenWRT Router Interface))
-$(eval $(call BuildPackage,juci-router-openwrt))
-
-$(eval $(call plugin,juci-samba, Samba36 Configuration))
-$(eval $(call BuildPackage,juci-samba))
-
-$(eval $(call plugin,juci-sysupgrade, Inteno Sysupgrade Firmware Upgrade))
-$(eval $(call BuildPackage,juci-sysupgrade))
-
-$(eval $(call plugin,juci-upnp, UPNP Configuration Module))
-$(eval $(call BuildPackage,juci-upnp))
-
-$(eval $(call plugin,juci-usb, USB Support In GUI))
-$(eval $(call BuildPackage,juci-usb))
-
-$(eval $(call plugin,juci-natalie-dect, Natalie DECT interface))
-$(eval $(call BuildPackage,juci-natalie-dect))
-
-$(eval $(call plugin,juci-theme-inteno, Juci Default Theme))
-$(eval $(call BuildPackage,juci-theme-inteno))
+$(eval $(call RegisterAddon,Core,juci-ubus-core, JUCI main ubus daemon ))
+$(eval $(call RegisterAddon,Plugins,juci-asterisk, Inteno Asterisk Voice Client Module))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-wl, Inteno Broadcom Wireless Module (wlctl) ))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-ethernet, Inteno Broadcom Ethernet Module ))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based) ))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-dsl, Inteno Broadcom DSL Module (xdslctl based) ))
+$(eval $(call RegisterAddon,Plugins,juci-ddns, DDNS configuration through /etc/config/ddns ))
+$(eval $(call RegisterAddon,Plugins,juci-diagnostics, Simple Diagnostics ))
+$(eval $(call RegisterAddon,Plugins,juci-dnsmasq-dhcp, DHCP/DNSMasq configuration through /etc/config/dhcp ))
+$(eval $(call RegisterAddon,Plugins,juci-dropbear, Dropbear Configuration ))
+$(eval $(call RegisterAddon,Plugins,juci-event, JUCI Event Subsystem ))
+$(eval $(call RegisterAddon,Plugins,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
+$(eval $(call RegisterAddon,Plugins,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))
+$(eval $(call RegisterAddon,Plugins,juci-inteno-router, Router Backend for Inteno Box))
+$(eval $(call RegisterAddon,Plugins,juci-jquery-console, Quake Style Dropdown Console for JUCI in browser))
+$(eval $(call RegisterAddon,Plugins,juci-macdb, MAC Address to Manufacturer Name resolution for juci))
+$(eval $(call RegisterAddon,Plugins,juci-minidlna, MiniDLNA Configuration))
+$(eval $(call RegisterAddon,Plugins,juci-mod-status, Deprecated JUCI Status Reporting Module))
+$(eval $(call RegisterAddon,Plugins,juci-mod-system, JUCI System Administration Module))
+$(eval $(call RegisterAddon,Plugins,juci-netmode, Inteno NetMode default reset functionality))
+$(eval $(call RegisterAddon,Plugins,juci-network-netifd, OpenWRT netifd network configuration module))
+$(eval $(call RegisterAddon,Plugins,juci-router-openwrt, OpenWRT Router Interface))
+$(eval $(call RegisterAddon,Plugins,juci-samba, Samba36 Configuration))
+$(eval $(call RegisterAddon,Plugins,juci-sysupgrade, Inteno Sysupgrade Firmware Upgrade))
+$(eval $(call RegisterAddon,Plugins,juci-upnp, UPNP Configuration Module))
+$(eval $(call RegisterAddon,Plugins,juci-usb, USB Support In GUI))
+$(eval $(call RegisterAddon,Plugins,juci-natalie-dect, Natalie DECT interface))
+$(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Default Theme))

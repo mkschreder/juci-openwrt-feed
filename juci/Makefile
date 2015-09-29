@@ -2,15 +2,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=juci
-PKG_VERSION=1.0.33
-PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=devel
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_SOURCE_VERSION:=949df74d4ffc20dd93a71f497847634cbbbc6e4a
+PKG_VERSION:=2015-09-28
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)
+
+PKG_RELEASE=$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 
 PKG_LICENSE:=GPL
 PKG_LICENSE_FILES:=
@@ -24,23 +26,14 @@ export CONFIG_JUCI_BACKEND_OPKG:=$(CONFIG_JUCI_BACKEND_OPKG)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/juci-theme-default
-	SECTION:=juci
-	CATEGORY:=JUCI
-	SUBMENU:=Themes
-	TITLE:=JUCI Default Theme
-	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
-endef
-
 define Package/juci
   $(Package/juci/default)
   SECTION:=juci
   CATEGORY:=JUCI
   SUBMENU:=Core
   TITLE:=JUCI Web Based Interface
-  DEPENDS:=+haproxy +lua +libuv-lua +libuci-lua +libubus-lua +libubox-lua +juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus
+  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +etc-ubus-daemon +libubox-lua +juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus
 endef
-
 
 define Package/juci/config 
 	config JUCI_THEME_SELECTED
@@ -78,66 +71,106 @@ endef
 
 $(eval $(call BuildPackage,juci))
 
-#
-# Copyright (C) 2013 Jo-Philipp Wich <jow@openwrt.org>
-#
-# Licensed under the Apache License, Version 2.0.
-#
+####### Extensions / Themes and Plugins
 
-include $(TOPDIR)/rules.mk
-
-PKG_NAME:=juci-ubus-core
-#PKG_VERSION:=$(shell git --git-dir=$(CURDIR)/../.git log -1 --pretty="%ci %h" | awk '{ print $$1 "-" $$4 }')
-PKG_VERSION:=15.6.8
-PKG_MAINTAINER:=Martin K. Schroder <mkschreder.uk@gmail.com>
-
-PKG_LICENSE:=Apache-2.0
-PKG_LICENSE_FILES:=
-PKG_BUILD_PARALLEL:=1
-
-include $(INCLUDE_DIR)/package.mk
-#include $(INCLUDE_DIR)/cmake.mk
+define plugin
+  export CONFIG_PACKAGE_$(1):=$(CONFIG_PACKAGE_$(1))
+  define Package/$(1)
+    SECTION:=juci
+    CATEGORY:=JUCI
+    TITLE:=JUCI - Universal Configuration Interface
+    URL:=https://github.com/mkschreder/luci-express
+    MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
+    SUBMENU:=Plugins
+    TITLE:=$(if $(2),$(2),JUCI $(1) plugin)
+    DEPENDS:=+juci 
+    $(if $(3),DEPENDS+=$(3))
+  endef
 	
-define Build/Prepare
-	#$(INSTALL_DIR) $(PKG_BUILD_DIR)
-	#$(CP) ./src/* $(PKG_BUILD_DIR)/
+  define Package/$(1)/config
+		config $(shell echo $(1) | tr '[:lower:]' '[:upper:]' | sed 's/-/_/g')
+			bool 
+			default n
+  endef
 endef
 
-define Build/Compile 
-	
-endef
+$(eval $(call plugin,juci-asterisk, Inteno Asterisk Voice Client Module))
+$(eval $(call BuildPackage,juci-asterisk))
 
-define Package/juci-ubus-core
-  SECTION:=juci-ubus-core
-  CATEGORY:=UBUS
-  TITLE:=JUCI UBUS Main Module
-  DEPENDS:=+rpcd +libubox +libubus +@JUCI_UBUS_CORE
-endef
+$(eval $(call plugin,juci-broadcom-wl, Inteno Broadcom Wireless Module (wlctl) ))
+$(eval $(call BuildPackage,juci-broadcom-wl))
 
-define Package/juci-ubus-core/config
-	config JUCI_UBUS_CORE
-		bool 
-		default n 
-endef
+$(eval $(call plugin,juci-broadcom-ethernet, Inteno Broadcom Ethernet Module ))
+$(eval $(call BuildPackage,juci-broadcom-ethernet))
 
-define Package/juci-ubus-core/description
-	Provides support for writing lightweight ubus plugins
-endef
+$(eval $(call plugin,juci-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based) ))
+$(eval $(call BuildPackage,juci-broadcom-vlan))
 
-define Package/juci-ubus-core/install
-	#$(CP) $(PKG_BUILD_DIR)/juci-ubus-core/build/* $(1)/
-	#$(INSTALL_DIR) $(1)/usr/lib/rpcd
-	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/juci-ubus-core.so $(1)/usr/lib/rpcd/
-	#$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
-	#$(CP) ./access.json $(1)/usr/share/rpcd/acl.d/juci-ubus-core.json
-	#$(INSTALL_DIR) $(1)/usr/libexec $(1)/www/cgi-bin
-	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/io/juci-cgi $(1)/usr/libexec/
-	#$(LN) /usr/libexec/juci-cgi $(1)/www/cgi-bin/juci-upload
-	#$(LN) /usr/libexec/juci-cgi $(1)/www/cgi-bin/juci-backup
-endef
+$(eval $(call plugin,juci-broadcom-dsl, Inteno Broadcom DSL Module (xdslctl based) ))
+$(eval $(call BuildPackage,juci-broadcom-dsl))
 
-define Package/juci-ubus-core/postinst
+$(eval $(call plugin,juci-ddns, DDNS configuration through /etc/config/ddns ))
+$(eval $(call BuildPackage,juci-ddns))
 
-endef
+$(eval $(call plugin,juci-diagnostics, Simple Diagnostics ))
+$(eval $(call BuildPackage,juci-diagnostics))
 
-$(eval $(call BuildPackage,juci-ubus-core))
+$(eval $(call plugin,juci-dnsmasq-dhcp, DHCP/DNSMasq configuration through /etc/config/dhcp ))
+$(eval $(call BuildPackage,juci-dnsmasq-dhcp))
+
+$(eval $(call plugin,juci-dropbear, Dropbear Configuration ))
+$(eval $(call BuildPackage,juci-dropbear))
+
+$(eval $(call plugin,juci-event, JUCI Event Subsystem ))
+$(eval $(call BuildPackage,juci-event))
+
+$(eval $(call plugin,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
+$(eval $(call BuildPackage,juci-firewall-fw3))
+
+$(eval $(call plugin,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))
+$(eval $(call BuildPackage,juci-igmpinfo))
+
+$(eval $(call plugin,juci-inteno-router, Router Backend for Inteno Box))
+$(eval $(call BuildPackage,juci-inteno-router))
+
+$(eval $(call plugin,juci-jquery-console, Quake Style Dropdown Console for JUCI in browser))
+$(eval $(call BuildPackage,juci-jquery-console))
+
+$(eval $(call plugin,juci-macdb, MAC Address to Manufacturer Name resolution for juci))
+$(eval $(call BuildPackage,juci-macdb))
+
+$(eval $(call plugin,juci-minidlna, MiniDLNA Configuration))
+$(eval $(call BuildPackage,juci-minidlna))
+
+$(eval $(call plugin,juci-mod-status, Deprecated JUCI Status Reporting Module))
+$(eval $(call BuildPackage,juci-mod-status))
+
+$(eval $(call plugin,juci-mod-system, JUCI System Administration Module))
+$(eval $(call BuildPackage,juci-mod-system))
+
+$(eval $(call plugin,juci-netmode, Inteno NetMode default reset functionality))
+$(eval $(call BuildPackage,juci-netmode))
+
+$(eval $(call plugin,juci-network-netifd, OpenWRT netifd network configuration module))
+$(eval $(call BuildPackage,juci-network-netifd))
+
+$(eval $(call plugin,juci-router-openwrt, OpenWRT Router Interface))
+$(eval $(call BuildPackage,juci-router-openwrt))
+
+$(eval $(call plugin,juci-samba, Samba36 Configuration))
+$(eval $(call BuildPackage,juci-samba))
+
+$(eval $(call plugin,juci-sysupgrade, Inteno Sysupgrade Firmware Upgrade))
+$(eval $(call BuildPackage,juci-sysupgrade))
+
+$(eval $(call plugin,juci-upnp, UPNP Configuration Module))
+$(eval $(call BuildPackage,juci-upnp))
+
+$(eval $(call plugin,juci-usb, USB Support In GUI))
+$(eval $(call BuildPackage,juci-usb))
+
+$(eval $(call plugin,juci-natalie-dect, Natalie DECT interface))
+$(eval $(call BuildPackage,juci-natalie-dect))
+
+$(eval $(call plugin,juci-theme-inteno, Juci Default Theme))
+$(eval $(call BuildPackage,juci-theme-inteno))

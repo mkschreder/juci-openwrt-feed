@@ -7,14 +7,14 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=etc-ubus-daemon
+PKG_NAME:=ubus-scriptd
 PKG_VERSION:=0.1.0
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/mkschreder/etc-ubus-daemon.git
+PKG_SOURCE_URL:=https://github.com/mkschreder/ubus-scriptd.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE_VERSION:=4acacad80f8808cf7e3bda131663dbd7e7273aa0
+PKG_SOURCE_VERSION:=5903173648479c43f2257acdc336c408b691d2b6
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
 
@@ -26,28 +26,28 @@ PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/etc-ubus-daemon/default
+define Package/ubus-scriptd/default
 	SECTION:=utils
 	CATEGORY:=UBUS
-	TITLE:=/etc/ubus object management daemon
+	TITLE:=Scripted ubus object management daemon
 	DEPENDS:=+libubus +libubox
 endef
 
-define Package/etc-ubus-daemon
-	$(Package/etc-ubus-daemon/default)
+define Package/ubus-scriptd
+	$(Package/ubus-scriptd/default)
 	DEPENDS+= +libuci +libblobmsg-json
 endef
 
-define Package/etc-ubus-daemon/description
-	Allows easy management of ubus objects though /etc/ubus directory tree. 
+define Package/ubus-scriptd/description
+	Allows easy management of ubus objects though /usr/lib/ubus/ directory tree. 
 endef
 
-define Package/etc-ubus-daemon/install
-	$(INSTALL_DIR) $(1)/etc/ubus/
+define Package/ubus-scriptd/install
+	$(INSTALL_DIR) $(1)/usr/lib//ubus/
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/etc-ubus-daemon.init $(1)/etc/init.d/etc-ubus-daemon
+	$(INSTALL_BIN) ./files/ubus-scriptd.init $(1)/etc/init.d/ubus-scriptd
 	$(INSTALL_DIR) $(1)/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/build_dir/etc-ubus-daemon $(1)/sbin/etc-ubus-daemon
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/build_dir/ubus-scriptd $(1)/sbin/ubus-scriptd
 endef
 
-$(eval $(call BuildPackage,etc-ubus-daemon))
+$(eval $(call BuildPackage,ubus-scriptd))

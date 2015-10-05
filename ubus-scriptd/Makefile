@@ -14,7 +14,7 @@ PKG_RELEASE=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/ubus-scriptd.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE_VERSION:=5903173648479c43f2257acdc336c408b691d2b6
+PKG_SOURCE_VERSION:=20d8aed12395e33bee652de773c44ed97d7f9453
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
 
@@ -43,7 +43,8 @@ define Package/ubus-scriptd/description
 endef
 
 define Package/ubus-scriptd/install
-	$(INSTALL_DIR) $(1)/usr/lib//ubus/
+	$(INSTALL_DIR) $(1)/usr/lib/ubus/
+	$(INSTALL_DIR) $(1)/usr/lib/ubus-services/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/ubus-scriptd.init $(1)/etc/init.d/ubus-scriptd
 	$(INSTALL_DIR) $(1)/sbin

@@ -9,12 +9,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ubus-scriptd
 PKG_VERSION:=0.1.0
-PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/ubus-scriptd.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)
 PKG_SOURCE_VERSION:=1e8d366d578391f253f73f24643581542d3d6eed
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
+PKG_RELEASE=$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
 
@@ -30,7 +30,7 @@ define Package/ubus-scriptd/default
 	SECTION:=utils
 	CATEGORY:=UBUS
 	TITLE:=Scripted ubus object management daemon
-	DEPENDS:=+libubus +libubox
+	DEPENDS:=+liblua +lua +libubus +libubox
 endef
 
 define Package/ubus-scriptd

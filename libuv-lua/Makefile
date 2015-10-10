@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libuv-lua
-PKG_VERSION:=0ad1c3200ce88bf880d8658ef5c75486e81ff9b7
+PKG_VERSION:=5de609bf5c016dc0f637f4d6a464180a3c8db625
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -17,7 +17,7 @@ MAKE_VARS += WITH_LUA_ENGINE=Lua
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/image.mk
-include $(INCLUDE_DIR)/kernel.mk
+include $(INCLUDE_DIR)/cmake.mk
 
 define Package/libuv-lua
   SECTION:=libs
@@ -32,7 +32,7 @@ endef
 
 define Package/libuv-lua/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/
-	$(CP) $(PKG_BUILD_DIR)/build/luv.so $(1)/usr/lib/lua/uv.so
+	$(CP) $(PKG_BUILD_DIR)/luv.so $(1)/usr/lib/lua/uv.so
 endef
 
 $(eval $(call BuildPackage,libuv-lua))

@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
-PKG_SOURCE_VERSION:=47aafcf7171ab545dc163757045d230a2bac2c3c
+PKG_SOURCE_VERSION:=69bc56bbd132ad103b0518e56fd6a9a9f91564e6
 PKG_VERSION:=2015-09-28
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -30,9 +30,36 @@ define Package/juci
   $(Package/juci/default)
   SECTION:=juci
   CATEGORY:=JUCI
-  SUBMENU:=Core
-  TITLE:=JUCI Web Based Interface
-  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus
+  MENU=1
+  TITLE:=JUCI Core Package (select this to select default plugins)
+  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua \
+  		+juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus \
+		+juci-ethernet \
+		+PACKAGE_asterisk18-mod:juci-asterisk \
+		+PACKAGE_bcmkernel:juci-broadcom-dsl \
+		+PACKAGE_bcmkernel:juci-broadcom-ethernet \
+		+PACKAGE_bcmkernel:juci-broadcom-wl \
+		+PACKAGE_bcmkernel:juci-broadcom-vlan \
+		+PACKAGE_ddns-scripts:juci-ddns \
+		+juci-diagnostics \
+		+PACKAGE_dnsmasq:juci-dnsmasq-dhcp \
+		+PACKAGE_dropbear:juci-dropbear \
+		+juci-event \
+		+PACKAGE_firewall:juci-firewall-fw3 \
+		+PACKAGE_igmpproxy:juci-igmpinfo \
+		+PACKAGE_inteno-base:juci-inteno-router \
+		+juci-jquery-console \
+		+PACKAGE_inteno-base:juci-macdb \
+		+PACKAGE_minidlna:juci-minidlna \
+		+juci-mod-status \
+		+juci-mod-system \
+		+PACKAGE_inteno-base:juci-netmode \
+		+PACKAGE_netifd:juci-network-netifd \
+		+PACKAGE_samba36-server:juci-mod-samba \
+		+PACKAGE_inteno-base:juci-sysupgrade \
+		+PACKAGE_miniupnpd:juci-upnp \
+		+!JUCI_THEME_SELECTED:juci-theme-inteno \
+		+USB_SUPPORT:juci-usb 
 endef
 
 define Package/juci/config 
@@ -83,8 +110,7 @@ define Package/$(2)
 	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 	SUBMENU:=$(1)
 	TITLE:=$(if $(3),$(3),JUCI $(2) plugin)
-	DEPENDS:= 
-	$(if $(4),DEPENDS+=$(4))
+	DEPENDS:=$(4)
 endef
 	
 define Package/$(2)/config
@@ -95,21 +121,21 @@ endef
 endef
 
 define RegisterAddon
-	$(eval $(call RegisterAddonInner,$(1),$(2),$(3)))
+	$(eval $(call RegisterAddonInner,$(1),$(2),$(3),$(4)))
 	$(eval $(call BuildPackage,$(2)))
 endef
 
-$(eval $(call RegisterAddon,Core,juci-ubus-core, JUCI main ubus daemon ))
+$(eval $(call RegisterAddon,C-backend,juci-ubus-core, JUCI main ubus daemon ))
 $(eval $(call RegisterAddon,Plugins,juci-asterisk, Inteno Asterisk Voice Client Module))
-$(eval $(call RegisterAddon,Plugins,juci-broadcom-wl, Inteno Broadcom Wireless Module (wlctl) ))
-$(eval $(call RegisterAddon,Plugins,juci-broadcom-ethernet, Inteno Broadcom Ethernet Module ))
 $(eval $(call RegisterAddon,Plugins,juci-ethernet, JUCI ethernet core module ))
-$(eval $(call RegisterAddon,Plugins,juci-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based) ))
-$(eval $(call RegisterAddon,Plugins,juci-broadcom-dsl, Inteno Broadcom DSL Module (xdslctl based) ))
-$(eval $(call RegisterAddon,Plugins,juci-ddns, DDNS configuration through /etc/config/ddns ))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-wl, Inteno Broadcom Wireless Module (wlctl),+juci-ethernet ))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-ethernet, Inteno Broadcom Ethernet Module,+juci-ethernet))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based),+juci-ethernet))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-dsl, Inteno Broadcom DSL Module (xdslctl based),+juci-ethernet))
+$(eval $(call RegisterAddon,Plugins,juci-ddns, DDNS configuration through /etc/config/ddns))
 $(eval $(call RegisterAddon,Plugins,juci-diagnostics, Simple Diagnostics ))
 $(eval $(call RegisterAddon,Plugins,juci-dnsmasq-dhcp, DHCP/DNSMasq configuration through /etc/config/dhcp ))
-$(eval $(call RegisterAddon,Plugins,juci-dropbear, Dropbear Configuration ))
+$(eval $(call RegisterAddon,Plugins,juci-dropbear, Dropbear Configuration,dropbear))
 $(eval $(call RegisterAddon,Plugins,juci-event, JUCI Event Subsystem ))
 $(eval $(call RegisterAddon,Plugins,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
 $(eval $(call RegisterAddon,Plugins,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))

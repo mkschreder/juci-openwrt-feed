@@ -14,10 +14,10 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/ubus-scriptd.git
 PKG_SOURCE_VERSION:=1e8d366d578391f253f73f24643581542d3d6eed
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
-PKG_RELEASE=$(PKG_SOURCE_VERSION)
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_RELEASE=$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)
 
 PKG_LICENSE:=GPL
 PKG_LICENSE_FILES:=
@@ -26,16 +26,11 @@ PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/ubus-scriptd/default
+define Package/ubus-scriptd
 	SECTION:=utils
 	CATEGORY:=UBUS
 	TITLE:=Scripted ubus object management daemon
-	DEPENDS:=+liblua +lua +libubus +libubox
-endef
-
-define Package/ubus-scriptd
-	$(Package/ubus-scriptd/default)
-	DEPENDS+= +libuci +libblobmsg-json
+	DEPENDS:=+liblua +lua +libubus +libubox +libuci +libblobmsg-json
 endef
 
 define Package/ubus-scriptd/description

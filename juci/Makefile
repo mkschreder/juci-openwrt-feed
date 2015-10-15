@@ -4,8 +4,8 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
-PKG_SOURCE_VERSION:=f57ef4117243acb0994d7990af1aba92ff757575
+PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
+PKG_SOURCE_VERSION:=abe4a4907a68dcf9c988dc6501f2f796f11702e1
 PKG_VERSION:=2015-09-28
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz

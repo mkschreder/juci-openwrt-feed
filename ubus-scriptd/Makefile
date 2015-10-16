@@ -30,7 +30,7 @@ define Package/ubus-scriptd
 	SECTION:=utils
 	CATEGORY:=UBUS
 	TITLE:=Scripted ubus object management daemon
-	DEPENDS:=+liblua +lua +libubus +libubox +libuci +libblobmsg-json
+	DEPENDS:=+liblua +lua +libubus +libubox +libuci +libpthread +libblobmsg-json
 endef
 
 define Package/ubus-scriptd/description

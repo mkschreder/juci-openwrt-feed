@@ -58,7 +58,6 @@ define Package/juci
 		+PACKAGE_samba36-server:juci-mod-samba \
 		+PACKAGE_inteno-base:juci-sysupgrade \
 		+PACKAGE_miniupnpd:juci-upnp \
-		+!JUCI_THEME_SELECTED:juci-theme-inteno \
 		+USB_SUPPORT:juci-usb 
 endef
 
@@ -114,6 +113,7 @@ define Package/$(2)
 endef
 	
 define Package/$(2)/config
+	$(5)
 	config $(shell echo $(2) | tr '[:lower:]' '[:upper:]' | sed 's/-/_/g')
 		bool 
 		default n
@@ -121,7 +121,7 @@ endef
 endef
 
 define RegisterAddon
-	$(eval $(call RegisterAddonInner,$(1),$(2),$(3),$(4)))
+	$(eval $(call RegisterAddonInner,$(1),$(2),$(3),$(4),$(5)))
 	$(eval $(call BuildPackage,$(2)))
 endef
 
@@ -153,4 +153,4 @@ $(eval $(call RegisterAddon,Plugins,juci-sysupgrade, Inteno Sysupgrade Firmware 
 $(eval $(call RegisterAddon,Plugins,juci-upnp, UPNP Configuration Module))
 $(eval $(call RegisterAddon,Plugins,juci-usb, USB Support In GUI))
 $(eval $(call RegisterAddon,Plugins,juci-natalie-dect, Natalie DECT interface))
-$(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Default Theme))
+$(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Default Theme,+@JUCI_THEME_SELECTED,default y if PACKAGE_juci))

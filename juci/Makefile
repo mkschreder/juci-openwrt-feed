@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=a6f223ff88e978a279b4813bb0a168cf276fb8fd
+PKG_SOURCE_VERSION:=12707a4a34358edfb568193f52aa4086dcc67e7b
 PKG_VERSION:=2015-09-28
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -32,7 +32,7 @@ define Package/juci
   CATEGORY:=JUCI
   MENU=1
   TITLE:=JUCI Core Package (select this to select default plugins)
-  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua \
+  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix \
   		+juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus \
 		+juci-ethernet \
 		+PACKAGE_asterisk18-mod:juci-asterisk \
@@ -57,6 +57,7 @@ define Package/juci
 		+PACKAGE_netifd:juci-network-netifd \
 		+PACKAGE_samba36-server:juci-mod-samba \
 		+PACKAGE_inteno-base:juci-sysupgrade \
+		+!@JUCI_THEME_SELECTED:juci-theme-inteno \
 		+PACKAGE_miniupnpd:juci-upnp \
 		+USB_SUPPORT:juci-usb 
 endef
@@ -66,6 +67,11 @@ define Package/juci/config
 		bool
 		default n
 endef
+
+define Build/InstallDev 
+	$(INSTALL_DIR) $(1)/usr/src/
+	ln -s $(PKG_BUILD_DIR) $(1)/usr/src/juci
+endef 
 
 define Package/juci/description
  Provides the JUCI Javascript UCI web interface with standard functionality.
@@ -94,7 +100,7 @@ juci-update
 exit 0
 endef
 
-
+export CONFIG_PACKAGE_juci:=$(CONFIG_PACKAGE_juci)
 $(eval $(call BuildPackage,juci))
 
 ####### Extensions / Themes and Plugins
@@ -153,4 +159,4 @@ $(eval $(call RegisterAddon,Plugins,juci-sysupgrade, Inteno Sysupgrade Firmware 
 $(eval $(call RegisterAddon,Plugins,juci-upnp, UPNP Configuration Module))
 $(eval $(call RegisterAddon,Plugins,juci-usb, USB Support In GUI))
 $(eval $(call RegisterAddon,Plugins,juci-natalie-dect, Natalie DECT interface))
-$(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Default Theme,+@JUCI_THEME_SELECTED,default y if PACKAGE_juci))
+$(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Default Theme,,depends on y || !JUCI_THEME_SELECTED))

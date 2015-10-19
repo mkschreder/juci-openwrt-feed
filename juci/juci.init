@@ -1,0 +1,27 @@
+#!/bin/sh /etc/rc.common
+
+START=14
+STOP=96
+
+USE_PROCD=1
+NAME=juci
+
+start_service() {
+	# this will simply update index.html to include any files that are for some reason not included
+	# a good way to make sure all plugins are properly included at each boot
+	juci-update
+}
+
+stop() {
+	service_stop /sbin/juci
+}
+
+service_triggers()
+{
+	procd_add_reload_trigger juci
+}
+
+reload() {
+
+}
+

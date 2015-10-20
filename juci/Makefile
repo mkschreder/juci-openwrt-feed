@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=5d26872f7c4e059677b4822e527ed1867fb85a5c
+PKG_SOURCE_VERSION:=a2ed518c32816b0b2dcba8c8ad097b63522967ce
 PKG_VERSION:=2015-09-28
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -35,6 +35,7 @@ define Package/juci
   DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix \
   		+juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus \
 		+juci-ethernet \
+		+PACKAGE_multiwan:juci-inteno-multiwan \
 		+PACKAGE_asterisk18-mod:juci-asterisk \
 		+PACKAGE_bcmkernel:juci-broadcom-dsl \
 		+PACKAGE_bcmkernel:juci-broadcom-ethernet \
@@ -162,4 +163,5 @@ $(eval $(call RegisterAddon,Plugins,juci-natalie-dect, Natalie DECT interface))
 $(eval $(call RegisterAddon,Plugins,juci-freecwmp,JUCI TR-069 FreeCWMP plugin))
 $(eval $(call RegisterAddon,Plugins,juci-snmp,JUCI SNMP plugin))
 $(eval $(call RegisterAddon,Plugins,juci-openwrt-wireless,JUCI OpenWRT standard wireless configuration))
+$(eval $(call RegisterAddon,Plugins,juci-inteno-multiwan,Package for configuring inteno MultiWAN implementation))
 $(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Default Theme,,depends on y || !JUCI_THEME_SELECTED))

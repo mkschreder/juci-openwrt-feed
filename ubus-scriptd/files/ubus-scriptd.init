@@ -12,9 +12,14 @@ start_service() {
 	procd_close_instance
 }
 
-stop() {
+stop_service() {
 	service_stop /sbin/ubus-scriptd
-	killall ubus-scriptd 2>/dev/null
+	killall ubus-scriptd 
+}
+
+restart_service() {
+	stop_service
+	start_service
 }
 
 reload() {

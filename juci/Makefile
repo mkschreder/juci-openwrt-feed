@@ -33,7 +33,7 @@ define Package/juci
   MENU=1
   TITLE:=JUCI Core Package (select this to select default plugins)
   DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix \
-  		+juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus \
+  		+juci-ubus-core +libubox +libubus \
 		+juci-ethernet \
 		+PACKAGE_multiwan:juci-inteno-multiwan \
 		+PACKAGE_asterisk18-mod:juci-asterisk \

@@ -12,9 +12,9 @@ PKG_VERSION:=v33.3.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=release-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://github.com/luaposix33/luaposix33/archive/
+PKG_SOURCE_URL:=https://github.com/luaposix/luaposix/archive/
 PKG_MD5SUM:=1d07112a5582b539930066d7c834643f
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-release-$(PKG_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/luaposix-release-$(PKG_VERSION)
 PKG_REMOVE_FILES:=aclocal.m4
 PKG_FIXUP:=autoreconf
 PKG_MAINTAINER:=Maxim Storchak <m.storchak@gmail.com>
@@ -26,7 +26,7 @@ define Package/luaposix33
   SECTION:=lang
   CATEGORY:=Languages
   TITLE:=luaposix33
-  URL:=http://luaforge.net/projects/luaposix33/
+  URL:=http://luaforge.net/projects/luaposix/
   DEPENDS:=+lua +librt +luabitop
   PKG_BUILD_DEPENDS:=+lua/host
 endef

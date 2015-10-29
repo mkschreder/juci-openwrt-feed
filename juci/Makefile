@@ -5,8 +5,8 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=b6160e4fa46f0757828783d0b087159172cd54b6
-PKG_VERSION:=2015-09-28
+PKG_SOURCE_VERSION:=85d345750a39f1a70a8651185ff9637a30afb126
+PKG_VERSION:=2015-10-27
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
@@ -32,7 +32,7 @@ define Package/juci
   CATEGORY:=JUCI
   MENU=1
   TITLE:=JUCI Core Package (select this to select default plugins)
-  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix \
+  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix33 \
   		+juci-ubus-core +libubox +libubus +uhttpd +uhttpd-mod-ubus +rpcd \
 		+juci-ethernet \
 		+PACKAGE_multiwan:juci-inteno-multiwan \

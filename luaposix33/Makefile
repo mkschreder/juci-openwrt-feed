@@ -27,7 +27,7 @@ define Package/luaposix33
   CATEGORY:=Languages
   TITLE:=luaposix33
   URL:=http://luaforge.net/projects/luaposix/
-  DEPENDS:=+lua +librt +luabitop
+  DEPENDS:=+lua +librt +luabitop +libncurses
   PKG_BUILD_DEPENDS:=+lua/host
 endef
 

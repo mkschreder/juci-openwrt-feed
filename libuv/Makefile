@@ -18,7 +18,6 @@ MAKE_VARS += WITH_LUA_ENGINE=Lua
 PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf
 
-PKG_BUILD_DEPENDS=lua
 include $(INCLUDE_DIR)/package.mk
 
 define Package/libuv

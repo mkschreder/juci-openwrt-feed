@@ -5,8 +5,8 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=85d345750a39f1a70a8651185ff9637a30afb126
-PKG_VERSION:=2015-10-27
+PKG_SOURCE_VERSION:=852ec49d3e3236f7eb244992d43dc4f23d0b974d
+PKG_VERSION:=1.15.10
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
@@ -81,8 +81,6 @@ endef
 define Package/juci/install
 	$(INSTALL_DIR) $(1)/
 	$(CP) $(PKG_BUILD_DIR)/bin/* $(1)/
-	$(INSTALL_DIR) $(1)/etc/config
-	$(CP) $(PKG_BUILD_DIR)/juci.config $(1)/etc/config/juci
 	$(INSTALL_DIR) $(1)/www/cgi-bin/
 	$(CP) $(PKG_BUILD_DIR)/juci_redirect.sh $(1)/www/cgi-bin/luci
 	$(INSTALL_DIR) $(1)/sbin/

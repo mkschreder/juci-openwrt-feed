@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=852ec49d3e3236f7eb244992d43dc4f23d0b974d
+PKG_SOURCE_VERSION:=86baa5e9ee2f1cb793f299d6883158bff952005a
 PKG_VERSION:=1.15.10
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -34,33 +34,6 @@ define Package/juci
   TITLE:=JUCI Core Package (select this to select default plugins)
   DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix33 \
   		+juci-ubus-core +libubox +libubus +uhttpd +uhttpd-mod-ubus +rpcd \
-		+juci-ethernet \
-		+PACKAGE_multiwan:juci-inteno-multiwan \
-		+PACKAGE_asterisk18-mod:juci-asterisk \
-		+PACKAGE_bcmkernel:juci-broadcom-dsl \
-		+PACKAGE_bcmkernel:juci-broadcom-ethernet \
-		+PACKAGE_bcmkernel:juci-broadcom-wl \
-		+PACKAGE_bcmkernel:juci-broadcom-vlan \
-		+PACKAGE_ddns-scripts:juci-ddns \
-		+juci-diagnostics \
-		+PACKAGE_dnsmasq:juci-dnsmasq-dhcp \
-		+PACKAGE_dropbear:juci-dropbear \
-		+juci-event \
-		+PACKAGE_firewall:juci-firewall-fw3 \
-		+PACKAGE_igmpproxy:juci-igmpinfo \
-		+PACKAGE_inteno-base:juci-inteno-router \
-		+juci-jquery-console \
-		+PACKAGE_inteno-base:juci-macdb \
-		+PACKAGE_minidlna:juci-minidlna \
-		+juci-mod-status \
-		+juci-mod-system \
-		+PACKAGE_inteno-base:juci-netmode \
-		+PACKAGE_netifd:juci-network-netifd \
-		+PACKAGE_samba36-server:juci-mod-samba \
-		+PACKAGE_inteno-base:juci-sysupgrade \
-		+!@JUCI_THEME_SELECTED:juci-theme-inteno \
-		+PACKAGE_miniupnpd:juci-upnp \
-		+USB_SUPPORT:juci-usb 
 endef
 
 define Package/juci/config 

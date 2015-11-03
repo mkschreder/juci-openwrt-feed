@@ -24,6 +24,7 @@ define Package/libuv-lua
   CATEGORY:=Libraries
   DEPENDS:=+libuv
   TITLE:=Lua LibUV async io bindings for lua
+  PKG_BUILD_DEPENDS:=+lua
 endef
 
 define Package/libuv-lua/description

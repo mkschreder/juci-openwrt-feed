@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=6bcbd6765b20220c534759e7506d6258e4c033c7
+PKG_SOURCE_VERSION:=6b10fd9162e4670d273dc26974df32a7e0016aec
 PKG_VERSION:=1.15.10
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -133,6 +133,7 @@ $(eval $(call RegisterAddon,Plugins,juci-samba, Samba36 Configuration))
 $(eval $(call RegisterAddon,Plugins,juci-sysupgrade, Inteno Sysupgrade Firmware Upgrade))
 $(eval $(call RegisterAddon,Plugins,juci-upnp, UPNP Configuration Module))
 $(eval $(call RegisterAddon,Plugins,juci-usb, USB Support In GUI))
+$(eval $(call RegisterAddon,Plugins,juci-uhttpd,UHTTPD configuration))
 $(eval $(call RegisterAddon,Plugins,juci-natalie-dect, Natalie DECT interface))
 $(eval $(call RegisterAddon,Plugins,juci-freecwmp,JUCI TR-069 FreeCWMP plugin))
 $(eval $(call RegisterAddon,Plugins,juci-snmp,JUCI SNMP plugin))

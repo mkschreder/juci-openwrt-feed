@@ -1,0 +1,24 @@
+From d59051c9a1413d38f5d4add71ff71e4a9f33c065 Mon Sep 17 00:00:00 2001
+From: lvzaina <lvzaina@gmail.com>
+Date: Tue, 10 Nov 2015 16:31:50 +0800
+Subject: [PATCH] Build failed.(luaposix-release-v33.3.1)
+
+---
+ ext/posix/sched.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/ext/posix/sched.c b/ext/posix/sched.c
+index 13b196b..9ba2cb2 100644
+--- a/ext/posix/sched.c
++++ b/ext/posix/sched.c
+@@ -27,6 +27,8 @@
+ #include <sched.h>
+ #endif
+
++#include <pthread.h>
++
+ #include "_helpers.c"
+
+
+-- 
+1.9.1

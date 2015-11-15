@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=7d7be0a91a08caf57764f95faa673dcf52d6f5a6
+PKG_SOURCE_VERSION:=4e26e3769bb6a67d6bdf64667accf431c23a56df
 PKG_VERSION:=1.15.11rc5
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -32,9 +32,7 @@ define Package/juci
   CATEGORY:=JUCI
   MENU=1
   TITLE:=JUCI Core Package (select this to select default plugins)
-  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix33 \
-  	+juci-ubus-core +libubox +libubus +uhttpd +uhttpd-mod-ubus +rpcd 
-
+  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix33 +libubox +libubus +uhttpd +uhttpd-mod-ubus +rpcd 
 endef
 
 define Package/juci/config 

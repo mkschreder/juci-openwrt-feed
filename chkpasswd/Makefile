@@ -23,8 +23,8 @@ include $(INCLUDE_DIR)/package.mk
 
 define Package/chkpasswd
   SECTION:=utilities
-  CATEGORY:=Base System
-  DEPENDS:=+libcrypt
+  CATEGORY:=Base system
+  DEPENDS:=
   TITLE:=chkpasswd
 endef
 
@@ -34,7 +34,7 @@ endef
 
 define Package/chkpasswd/install
 	$(INSTALL_DIR) $(1)/sbin/
-	$(CP) chkpasswd $(1)/sbin/
+	$(CP) $(PKG_BUILD_DIR)/chkpasswd $(1)/sbin/
 endef
 
 $(eval $(call BuildPackage,chkpasswd))

@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=2368629b5eb19c33bd93a53a0e9d86a10f7fbf0e
+PKG_SOURCE_VERSION:=f223b6b2a467c75b1525400a9aacc505b7a5462b
 PKG_VERSION:=1.15.11rc7
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -120,6 +120,7 @@ $(eval $(call RegisterAddon,Plugins,juci-event, JUCI Event Subsystem ))
 $(eval $(call RegisterAddon,Plugins,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
 $(eval $(call RegisterAddon,Plugins,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))
 $(eval $(call RegisterAddon,Plugins,juci-inteno-router, Router Backend for Inteno Box))
+$(eval $(call RegisterAddon,Plugins,juci-inteno-multiwan, Package for configuring inteno MultiWAN))
 $(eval $(call RegisterAddon,Plugins,juci-jquery-console, Quake Style Dropdown Console for JUCI in browser))
 $(eval $(call RegisterAddon,Plugins,juci-macdb, MAC Address to Manufacturer Name resolution for juci))
 $(eval $(call RegisterAddon,Plugins,juci-minidlna, MiniDLNA Configuration))
@@ -136,8 +137,8 @@ $(eval $(call RegisterAddon,Plugins,juci-uhttpd,UHTTPD configuration))
 $(eval $(call RegisterAddon,Plugins,juci-utils,UHTTPD configuration))
 $(eval $(call RegisterAddon,Plugins,juci-natalie-dect, Natalie DECT interface))
 $(eval $(call RegisterAddon,Plugins,juci-freecwmp,JUCI TR-069 FreeCWMP plugin))
-$(eval $(call RegisterAddon,Plugins,juci-snmp,JUCI SNMP plugin))
+$(eval $(call RegisterAddon,Plugins,juci-snmpd,JUCI SNMP plugin))
+$(eval $(call RegisterAddon,Plugins,juci-minisnmpd,JUCI mini-SNMPd plugin))
 $(eval $(call RegisterAddon,Plugins,juci-simple-gui,Provides pages for building simplified user gui))
 $(eval $(call RegisterAddon,Plugins,juci-openwrt-wireless,JUCI OpenWRT standard wireless configuration,+libiwinfo-lua))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-multiwan,Package for configuring inteno MultiWAN implementation))
 $(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Default Theme,,depends on y || !JUCI_THEME_SELECTED))

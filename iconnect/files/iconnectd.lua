@@ -53,7 +53,7 @@ function reconfigure()
 			client = "yes", 
 			accept = iconnect_client_socket, 
 			connect = router_ip..":5555",
-			cert = "/etc/stunnel/stunnel.pem"
+			cert = "/etc/stunnel/stunnel.pem",
 			CAfile = "/etc/stunnel/stunnel.pem"
 		}}); 
 		conn:call("uci", "set", { config = "stunnel", section = "iconnect_service", values = { 

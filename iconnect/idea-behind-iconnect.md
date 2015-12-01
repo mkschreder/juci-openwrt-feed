@@ -198,4 +198,61 @@ The connection to the slave is using public key of the individual slave - which
 is unique to that slave - so other slaves can not listen in on the
 communication.. 
 
+Even simpler solution
+--------------------
+
+Write a standalone client service that will login to the server and expose a
+rigid interface with login, logout, call and list methods. These will then
+allow any other client to login and execute commands on current slave. This
+works very similar to how ubus rpc works through uhttpd. 
+
+This way objects look like this: 
+
+	'F40D7920B840CD55202316CC0B05E43EF8EE5CB2' @1bcef705
+		"call":{"method":"String","object":"String","sid":"String"}
+		"logout":{"sid":"String"}
+		"login":{"username":"String","password":"String"}
+		"list":{"object":"String","sid":"String"}
+
+Each method apart from login basically takes a sid which has been retreived by
+logging into the interface. 
+
+Benefits of this solution: 
+
+- Very narrow interface which is easy to audit. 
+- Full access to client ubus provided the right login details are provided. 
+- No need to write any extra services. Just implement users and access control lists. 
+- Similar access control to how gui works. 
+
+Creating CA and keys
+--------------------
+
+In a production environment proper keys are needed. This is currently just an
+example of how to create a ca key and sign certifficate using it. 
+
+First create a self signed CA key and cert: 
+
+	openssl genrsa -out ca-key.pem
+	openssl req -new -x509 -days 365 -key ca-key.pem -out ca-cert.pem -subj "/CN=whatever"
+
+Then create a client key: 
+
+	openssl genrsa -out client-key.pem
+
+Create a signing request for the key: 
+
+	openssl req -new -key client-key.pem -out client-csr.pem -subj "/CN=clientwhatever"
+
+Sign the client key using the previously generated ca: 
+
+	openssl x509 -req -days 365 -in client-csr.pem -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.pem
+
+Verification of the client cert can then be done like this: 
+
+	openssl verify -CAfile ca-cert.pem client-cert.pem 
+
+Here is how to get fingerprint string of the certificate: 
+	
+	openssl x509 -noout -in cert.pem -fingerprint | sed 's/://g' | cut -f 2 -d '='
+
 LICENSE: GPLv3

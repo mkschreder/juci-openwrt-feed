@@ -42,8 +42,10 @@ end
 local function iconnect_call(req, msg)
 	local res = {}; 
 	if(not iconnect_access(msg.sid)) then return 1; end; 
-	if(not msg.object or msg.object == "") then res.error = "No object specified!"; 
-	elseif(not msg.method or msg.method == "") then res.error = "No method specified!"; 
+	if(msg.data == nil or type(msg.data) ~= "table") then msg.data = {}; end 
+
+	if(not msg or not msg.object or msg.object == "") then res.error = "No object specified!"; 
+	elseif(not msg or not msg.method or msg.method == "") then res.error = "No method specified!"; 
 	end
 	
 	if(not res.error) then 

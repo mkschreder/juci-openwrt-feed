@@ -22,6 +22,14 @@ stunnel_tunnel() {
 
 stunnel_generate_config() {
 	printf "" > ${CONFIG_FILE}
+	# choose the fastest cipher combination without compromizing strength
+	# see https://www.stunnel.org/perf.html
+	cat > ${CONFIG_FILE} << EOF
+foreground = yes
+sslVersion = TLSv1.2
+ciphers = ECDHE-RSA-AES256-GCM-SHA384
+
+EOF
 	config_load stunnel
 	config_foreach stunnel_tunnel tunnel
 }
@@ -31,6 +39,8 @@ start_service() {
 	if [ -s "/etc/stunnel/stunnel.pem" ]; then
 		chmod og-rwx /etc/stunnel/stunnel.pem
 	fi
+	echo "Using config from ${CONFIG_FILE}"
+	cat ${CONFIG_FILE}
 	procd_open_instance
 	procd_set_param command "$PROG"
 	procd_set_param respawn

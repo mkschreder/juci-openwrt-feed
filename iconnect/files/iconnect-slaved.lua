@@ -17,12 +17,13 @@ if conn == nil then
         return;
 end
 
-local iconnect_hub_socket = "/var/run/iconnect.hub.sock"; 
-local hub = ubus.connect(iconnect_hub_socket);
-if hub == nil then
-        print("could not connect to "..iconnect_hub_socket);
-        return;
-end
+local iconnect_hub_socket = "/var/run/iconnect.client.sock"; 
+local hub = nil; 
+-- ubus.connect(iconnect_hub_socket);
+-- if hub == nil then
+--        print("could not connect to "..iconnect_hub_socket);
+--        return;
+--end
 
 local clid = juci.shell("openssl x509 -noout -in /etc/stunnel/stunnel.pem -fingerprint | sed 's/://g' | cut -f 2 -d '='");
 clid = clid:match("%S+");
@@ -70,14 +71,37 @@ local function iconnect_list(req, msg)
 	return 0; 
 end
 
-hub:add({
-	[clid] = {
-		login = { iconnect_login, { username = ubus.STRING, password = ubus.STRING } }, 
-		logout = { iconnect_logout, { sid = ubus.STRING } }, 
-		call = { iconnect_call, { sid = ubus.STRING, object = ubus.STRING, method = ubus.STRING } }, 
-		list = { iconnect_list, { sid = ubus.STRING, object = ubus.STRING } }
-	}
-});
+-- listen on ubus events locally and forward them onto the hub ubus
+-- Important: do not broadcast all events (it will make all setting changes in uci be broadcasted onto the network!)
+conn:listen({
+	["button*"] = function(ev, kind)
+		hub:send(kind, { from = clid, data = ev }); 
+	end,
+	["network.interface"] = function(ev, kind)
+		-- { "hotplug.iface": {"interface":"wan","action":"ifdown"} }
+		if(ev.interface == "wan" and ev.action == "ifup") then
+			reconnect(); 
+		elseif(ev.interface == "wan" and ev.action == "ifdown" and hub) then
+			hub:close(); 
+			hub = nil; 
+		end
+	end
+}); 
+
+function reconnect()
+	hub = ubus.connect(iconnect_hub_socket); 
+	if(not hub) then return; end
+	-- hub:call(clid, "list", {}); 
+	hub:add({
+		[clid] = {
+			login = { iconnect_login, { username = ubus.STRING, password = ubus.STRING } }, 
+			logout = { iconnect_logout, { sid = ubus.STRING } }, 
+			call = { iconnect_call, { sid = ubus.STRING, object = ubus.STRING, method = ubus.STRING } }, 
+			list = { iconnect_list, { sid = ubus.STRING, object = ubus.STRING } }
+		}
+	});
+end
+reconnect(); 
 
 uloop.run();
 

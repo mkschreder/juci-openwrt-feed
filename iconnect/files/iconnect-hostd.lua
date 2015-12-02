@@ -46,6 +46,12 @@ local function iconnect_clients(req, msg)
 	return 0; 
 end
 
+hub:listen({
+	["*"] = function(ev, kind)
+		conn:send("iconnect.hubevent", { type = kind, event = ev });
+	end
+});
+
 conn:add({
 	iconnect = {
 		login = { function(req, msg) return forward_call("login", req, msg); end, { host = ubus.STRING, username = ubus.STRING, password = ubus.STRING } }, 

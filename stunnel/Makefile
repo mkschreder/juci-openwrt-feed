@@ -67,7 +67,7 @@ define Package/stunnel/install
 	$(INSTALL_DIR) $(1)/etc/stunnel
 	$(INSTALL_CONF) $(PKG_INSTALL_DIR)/etc/stunnel/stunnel.conf-sample $(1)/etc/stunnel/stunnel.conf
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/stunnel.init $(1)/etc/init.d/stunnel
+	#$(INSTALL_BIN) ./files/stunnel.init $(1)/etc/init.d/stunnel
 endef
 
 $(eval $(call BuildPackage,stunnel))

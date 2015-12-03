@@ -1,14 +1,30 @@
 #!/bin/sh 
 
-SECRET=$(uci get wireless.@wifi-iface[0].key | sha1sum | cut -d ' ' -f 1); 
-echo "client1:$SECRET" > /etc/stunnel/secrets.txt 
+. /lib/functions.sh
+
+SECRETS="/etc/stunnel/secrets.txt"
+
+[ -e /etc/config/iconnect ] || touch /etc/config/iconnect; 
+
+iconnect_client() {
+	config_get KEY $1 key
+
+	SECRET=$(printf "$KEY" | md5sum | cut -d ' ' -f 1); 
+	[ -e "$SECRETS" ] && [ "$(grep $SECRET $SECRETS)" == "" ] && {
+		echo "$SECRET:$SECRET" >> "$SECRETS" 
+	}
+}
+
+config_load iconnect
+config_foreach iconnect_client slave
+
 chmod 600 /etc/stunnel/secrets.txt
 
 stunnel -fd 0 << EOF
 foreground = yes 
 
 [server]
-accept = localhost:5305
+accept = 5305
 connect = /var/run/iconnect.hub.sock
 ciphers = PSK
 PSKsecrets = /etc/stunnel/secrets.txt

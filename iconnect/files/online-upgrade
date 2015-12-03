@@ -35,6 +35,10 @@ do_download_upgrade(){
 	ls /tmp/firmware.bin
 }
 
+rm -f /tmp/firmware.bin
+
 install_uci_defaults
 check_upgrade
 do_download_upgrade "$(uci -q get system.onlineupgrade.available)"
+
+[ -e /tmp/firmware.bin ] && sysupgrade -n /tmp/firmware.bin

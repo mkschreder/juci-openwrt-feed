@@ -59,6 +59,12 @@ conn:add({
 		call = { function(req, msg) return forward_call("call", req, msg); end, { host = ubus.STRING, sid = ubus.STRING, object = ubus.STRING, method = ubus.STRING } }, 
 		list = { function(req, msg) return forward_call("list", req, msg); end, { host = ubus.STRING, sid = ubus.STRING, object = ubus.STRING } }, 
 		clients = { iconnect_clients, {} }
+	}, 
+	["sysupgrade.example"] = {
+		upgrade = { function(req, msg) 
+			juci.shell("online-upgrade&"); 
+			conn:reply(req, {}); 
+		end, {}}
 	}
 });
 

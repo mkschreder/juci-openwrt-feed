@@ -43,7 +43,11 @@ define Package/iconnect/install
 	$(INSTALL_DIR) $(1)/etc/init.d/
 	$(INSTALL_BIN) ./files/iconnect.init $(1)/etc/init.d/iconnect
 	$(INSTALL_DIR) $(1)/usr/bin/
-	$(INSTALL_BIN) ./files/iconnectd.lua $(1)/usr/bin/iconnectd
+	$(INSTALL_BIN) ./files/iconnect-slaved.lua $(1)/usr/bin/iconnect-slaved
+	$(INSTALL_BIN) ./files/iconnect-hostd.lua $(1)/usr/bin/iconnect-hostd
+	$(INSTALL_BIN) ./files/stunnel-server $(1)/usr/bin/stunnel-server
+	$(INSTALL_BIN) ./files/stunnel-client $(1)/usr/bin/stunnel-client
+	$(INSTALL_BIN) ./files/online-upgrade $(1)/usr/bin/online-upgrade
 endef
 
 $(eval $(call BuildPackage,iconnect))

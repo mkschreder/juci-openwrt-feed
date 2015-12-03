@@ -1,13 +1,19 @@
 #!/bin/sh 
 
+SECRET=$(uci get wireless.@wifi-iface[0].key | sha1sum | cut -d ' ' -f 1); 
+echo "client1:$SECRET" > /etc/stunnel/secrets.txt 
+chmod 600 /etc/stunnel/secrets.txt
+
 stunnel -fd 0 << EOF
 foreground = yes 
 
 [server]
-accept = localhost:5555
-connect = www.google.com:80
-key = /home/martin/iop-aa/ca-key.pem 
-cert = /home/martin/iop-aa/ca-cert.pem 
-CAfile = /home/martin/iop-aa/ca-cert.pem 
+accept = localhost:5305
+connect = /var/run/iconnect.hub.sock
+ciphers = PSK
+PSKsecrets = /etc/stunnel/secrets.txt
+#key = /home/martin/iop-aa/ca-key.pem 
+#cert = /home/martin/iop-aa/ca-cert.pem 
+#CAfile = /home/martin/iop-aa/ca-cert.pem 
 
 EOF

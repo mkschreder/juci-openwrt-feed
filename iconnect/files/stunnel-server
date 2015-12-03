@@ -1,0 +1,13 @@
+#!/bin/sh 
+
+stunnel -fd 0 << EOF
+foreground = yes 
+
+[server]
+accept = localhost:5555
+connect = www.google.com:80
+key = /home/martin/iop-aa/ca-key.pem 
+cert = /home/martin/iop-aa/ca-cert.pem 
+CAfile = /home/martin/iop-aa/ca-cert.pem 
+
+EOF

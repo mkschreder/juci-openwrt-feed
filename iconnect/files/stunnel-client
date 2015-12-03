@@ -1,0 +1,18 @@
+#!/bin/sh 
+
+UPSTREAM_HOST=192.168.1.1
+PORT=5305
+
+stunnel -fd 0 << EOF
+foreground = yes 
+
+[client]
+client = yes 
+accept = /var/run/iconnect.client.sock
+connect = ${UPSTREAM_HOST}:${PORT}
+key = /etc/stunnel/client-key.pem
+cert = /etc/stunnel/client-cert.pem 
+CAfile = /etc/stunnel/ca-cert.pem
+verify = 0
+
+EOF

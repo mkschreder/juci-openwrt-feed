@@ -1,6 +1,6 @@
 #!/bin/sh /etc/rc.common
 
-START=90
+START=80
 STOP=96
 
 USE_PROCD=1
@@ -35,6 +35,7 @@ EOF
 }
 
 start_service() {
+	exit
 	stunnel_generate_config 
 	if [ -s "/etc/stunnel/stunnel.pem" ]; then
 		chmod og-rwx /etc/stunnel/stunnel.pem

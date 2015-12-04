@@ -11,6 +11,10 @@ local juci = require("juci/core");
 
 uloop.init();
 
+-- this is a quick fix to make sure that when services start simultaneously, this one waits until all others have started
+-- TODO: solve this using procd
+juci.shell("sleep 2"); 
+
 local conn = ubus.connect();
 if conn == nil then
         print("could not connect to ubus socket!");

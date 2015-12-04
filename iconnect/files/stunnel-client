@@ -15,12 +15,13 @@ PORT=$(uci -q get iconnect.settings.port)
 SECRET=$(uci get iconnect.settings.key | md5sum | cut -d ' ' -f 1); 
 SECRETS=/etc/stunnel/secrets.txt
 
+[ -e "$SECRETS" ] || touch "$SECRETS"; 
 [ -e "$SECRETS" ] && [ "$SECRET" != "" ] && [ "$(grep $SECRET $SECRETS)" == "" ] && {
 	echo "$SECRET:$SECRET" >> /etc/stunnel/secrets.txt
 }
 chmod 600 /etc/stunnel/secrets.txt
 
-stunnel -fd 0 << EOF
+exec stunnel -fd 0 << EOF
 foreground = yes 
 
 [client]

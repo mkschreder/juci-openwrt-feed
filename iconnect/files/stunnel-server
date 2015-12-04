@@ -4,12 +4,13 @@
 
 SECRETS="/etc/stunnel/secrets.txt"
 
+[ -e "$SECRETS" ] || touch "$SECRETS"; 
 [ -e /etc/config/iconnect ] || touch /etc/config/iconnect; 
 
 iconnect_client() {
 	config_get KEY $1 key
 
-	SECRET=$(printf "$KEY" | md5sum | cut -d ' ' -f 1); 
+	SECRET=$(echo "$KEY" | md5sum | cut -d ' ' -f 1); 
 	[ -e "$SECRETS" ] && [ "$(grep $SECRET $SECRETS)" == "" ] && {
 		echo "$SECRET:$SECRET" >> "$SECRETS" 
 	}
@@ -20,7 +21,7 @@ config_foreach iconnect_client slave
 
 chmod 600 /etc/stunnel/secrets.txt
 
-stunnel -fd 0 << EOF
+exec stunnel -fd 0 << EOF
 foreground = yes 
 
 [server]

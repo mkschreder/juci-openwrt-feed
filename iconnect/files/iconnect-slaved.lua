@@ -25,7 +25,7 @@ local hub = nil;
 --        return;
 --end
 
-local clid = juci.shell("openssl x509 -noout -in /etc/stunnel/stunnel.pem -fingerprint | sed 's/://g' | cut -f 2 -d '='");
+local clid = juci.shell("openssl x509 -noout -in /etc/stunnel/self-signed-key.pem -fingerprint | sed 's/://g' | cut -f 2 -d '='");
 clid = clid:match("%S+");
 
 local function iconnect_access(sid)

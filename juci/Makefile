@@ -118,6 +118,7 @@ $(eval $(call RegisterAddon,Plugins,juci-dnsmasq-dhcp, DHCP/DNSMasq configuratio
 $(eval $(call RegisterAddon,Plugins,juci-dropbear, Dropbear Configuration,dropbear))
 $(eval $(call RegisterAddon,Plugins,juci-event, JUCI Event Subsystem ))
 $(eval $(call RegisterAddon,Plugins,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
+$(eval $(call RegisterAddon,Plugins,juci-iconnect,JUCI UBUS interconnect private cloud interface))
 $(eval $(call RegisterAddon,Plugins,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))
 $(eval $(call RegisterAddon,Plugins,juci-inteno-router, Router Backend for Inteno Box))
 $(eval $(call RegisterAddon,Plugins,juci-inteno-multiwan, Package for configuring inteno MultiWAN))

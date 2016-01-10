@@ -1,0 +1,63 @@
+#!/bin/sh /etc/rc.common
+
+START=80
+STOP=96
+
+USE_PROCD=1
+NAME=stunnel
+PROG=/usr/bin/stunnel
+
+CONFIG_FILE=/etc/stunnel/stunnel.conf
+
+stunnel_tunnel() {
+	echo "[$1]" >> ${CONFIG_FILE}
+	for field in client accept connect verify CAfile checkHost OCSPaia cert exec execArgs ciphers PSKsecrets; do 
+		config_get value $1 $field
+		if [ "$value" != "" ]; then 
+			echo "$field = $value" >> ${CONFIG_FILE}
+		fi 
+	done
+	echo "" >> ${CONFIG_FILE}
+}
+
+stunnel_generate_config() {
+	printf "" > ${CONFIG_FILE}
+	# choose the fastest cipher combination without compromizing strength
+	# see https://www.stunnel.org/perf.html
+	cat > ${CONFIG_FILE} << EOF
+foreground = yes
+sslVersion = TLSv1.2
+ciphers = ECDHE-RSA-AES256-GCM-SHA384
+
+EOF
+	config_load stunnel
+	config_foreach stunnel_tunnel tunnel
+}
+
+start_service() {
+	exit
+	stunnel_generate_config 
+	if [ -s "/etc/stunnel/stunnel.pem" ]; then
+		chmod og-rwx /etc/stunnel/stunnel.pem
+	fi
+	echo "Using config from ${CONFIG_FILE}"
+	cat ${CONFIG_FILE}
+	procd_open_instance
+	procd_set_param command "$PROG"
+	procd_set_param respawn
+	procd_close_instance
+}
+
+stop_service() {
+	service_stop "$PROG"
+}
+
+service_triggers() {
+	procd_add_reload_trigger stunnel
+}
+
+reload_service() {
+	stop
+	start
+}
+

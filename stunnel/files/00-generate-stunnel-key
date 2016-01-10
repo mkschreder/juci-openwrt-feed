@@ -1,0 +1,7 @@
+#!/bin/sh
+
+openssl genrsa -out /tmp/key.pem 2048
+openssl req -new -x509 -key /tmp/key.pem -out /tmp/cert.pem -days 1095 -subj '/CN=iconnect'
+cat /tmp/key.pem /tmp/cert.pem > /etc/stunnel/self-signed-key.pem
+chmod 600 /etc/stunnel/self-signed-key.pem
+rm -f /tmp/key.pem /tmp/cert.pem

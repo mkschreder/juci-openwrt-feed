@@ -1,0 +1,27 @@
+#!/bin/sh /etc/rc.common
+
+START=12
+
+USE_PROCD=1
+NAME=ubus-scriptd
+PROG=/sbin/ubus-scriptd
+
+start_service() {
+	procd_open_instance
+	procd_set_param command "$PROG"
+	procd_close_instance
+}
+
+stop_service() {
+	service_stop /sbin/ubus-scriptd
+	killall ubus-scriptd 
+}
+
+restart_service() {
+	stop_service
+	start_service
+}
+
+reload() {
+	service_reload /sbin/ubus-scriptd
+}

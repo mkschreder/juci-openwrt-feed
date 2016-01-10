@@ -1,0 +1,36 @@
+#!/bin/sh 
+
+. /lib/functions.sh
+
+SECRETS="/etc/stunnel/secrets.txt"
+
+[ -e "$SECRETS" ] || touch "$SECRETS"; 
+[ -e /etc/config/iconnect ] || touch /etc/config/iconnect; 
+
+iconnect_client() {
+	config_get KEY $1 key
+
+	SECRET=$(echo "$KEY" | md5sum | cut -d ' ' -f 1); 
+	[ -e "$SECRETS" ] && [ "$(grep $SECRET $SECRETS)" == "" ] && {
+		echo "$SECRET:$SECRET" >> "$SECRETS" 
+	}
+}
+
+config_load iconnect
+config_foreach iconnect_client slave
+
+chmod 600 /etc/stunnel/secrets.txt
+
+exec stunnel -fd 0 << EOF
+foreground = yes 
+
+[server]
+accept = 5305
+connect = /var/run/iconnect.hub.sock
+ciphers = PSK
+PSKsecrets = /etc/stunnel/secrets.txt
+#key = /home/martin/iop-aa/ca-key.pem 
+#cert = /home/martin/iop-aa/ca-cert.pem 
+#CAfile = /home/martin/iop-aa/ca-cert.pem 
+
+EOF

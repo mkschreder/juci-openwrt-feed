@@ -1,0 +1,51 @@
+#!/bin/sh /etc/rc.common
+
+START=90
+STOP=96
+
+USE_PROCD=1
+NAME=iconnect
+ICONNECT_SOCKET="/var/run/iconnect.hub.sock"
+UBUS_SERVICE=/sbin/ubusd 
+
+start_service() {
+	# the ubus socket for connecting clients 
+	procd_open_instance
+	procd_set_param command /sbin/ubusd -s ${ICONNECT_SOCKET}
+	procd_set_param respawn
+	procd_close_instance
+	
+	procd_open_instance
+	procd_set_param command "/usr/bin/stunnel-client"
+	procd_set_param respawn
+	procd_close_instance
+	procd_open_instance
+	procd_set_param command "/usr/bin/stunnel-server"
+	procd_set_param respawn
+	procd_close_instance
+
+	# this service will try to connect to client 
+	procd_open_instance
+	procd_set_param command "/usr/bin/iconnect-slaved"
+	procd_set_param respawn
+	procd_close_instance
+	# this service will listen on lan for incoming connections from downstream boxes
+	procd_open_instance
+	procd_set_param command "/usr/bin/iconnect-hostd"
+	procd_set_param respawn
+	procd_close_instance
+}
+
+#stop_service() {
+#
+#}
+
+service_triggers() {
+	procd_add_reload_trigger network iconnect
+}
+
+reload_service() {
+	stop
+	start
+}
+

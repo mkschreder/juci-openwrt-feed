@@ -4,8 +4,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libuv
-PKG_VERSION:=master
-PKG_RELEASE:=1
+PKG_VERSION:=a8c1136de2cabf25b143021488cbaab05834daa8
+PKG_RELEASE:=1.7.5-stable
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/libuv/libuv.git

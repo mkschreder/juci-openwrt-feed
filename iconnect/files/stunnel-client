@@ -1,0 +1,38 @@
+#!/bin/sh 
+
+[ -e /etc/config/iconnect ] || touch /etc/config/iconnect; 
+uci -q get iconnect.@settings[0] > /dev/null || {
+	echo "Setting defaults.."; 
+	uci set iconnect.settings=settings; 
+	uci set iconnect.settings.host=192.168.1.1; 
+	uci set iconnect.settings.port=5305; 
+	uci set iconnect.settings.key=$(uci -q get wireless.@wifi-iface[0].key); 
+	uci commit
+}
+
+UPSTREAM_HOST=$(uci -q get iconnect.settings.host)
+PORT=$(uci -q get iconnect.settings.port)
+SECRET=$(uci get iconnect.settings.key | md5sum | cut -d ' ' -f 1); 
+SECRETS=/etc/stunnel/secrets.txt
+
+[ -e "$SECRETS" ] || touch "$SECRETS"; 
+[ -e "$SECRETS" ] && [ "$SECRET" != "" ] && [ "$(grep $SECRET $SECRETS)" == "" ] && {
+	echo "$SECRET:$SECRET" >> /etc/stunnel/secrets.txt
+}
+chmod 600 /etc/stunnel/secrets.txt
+
+exec stunnel -fd 0 << EOF
+foreground = yes 
+
+[client]
+client = yes 
+accept = /var/run/iconnect.client.sock
+connect = ${UPSTREAM_HOST}:${PORT}
+ciphers = PSK
+PSKsecrets = /etc/stunnel/secrets.txt
+#key = /etc/stunnel/client-key.pem
+#cert = /etc/stunnel/client-cert.pem 
+#CAfile = /etc/stunnel/ca-cert.pem
+verify = 0
+
+EOF

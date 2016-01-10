@@ -2,15 +2,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=juci
-PKG_VERSION=1.0.33
-PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/mkschreder/luci-express.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=devel
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
+PKG_SOURCE_VERSION:=461d4ba4eefbcb8052bdb7f5ec846b0c2c9b4d91
+PKG_VERSION:=1.15.12rc4
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)
+
+PKG_RELEASE=$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 
 PKG_LICENSE:=GPL
 PKG_LICENSE_FILES:=
@@ -24,29 +26,25 @@ export CONFIG_JUCI_BACKEND_OPKG:=$(CONFIG_JUCI_BACKEND_OPKG)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/juci-theme-default
-	SECTION:=juci
-	CATEGORY:=JUCI
-	SUBMENU:=Themes
-	TITLE:=JUCI Default Theme
-	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
-endef
-
 define Package/juci
   $(Package/juci/default)
   SECTION:=juci
   CATEGORY:=JUCI
-  SUBMENU:=Core
-  TITLE:=JUCI Web Based Interface
-  DEPENDS:=+haproxy +lua +libuv-lua +libuci-lua +libubus-lua +libubox-lua +juci-rpcd +juci-ubus-core +juci-uhttpd +juci-uhttpd-mod-ubus +libubox +libubus
+  MENU=1
+  TITLE:=JUCI Core Package (select this to select default plugins)
+  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix33 +libubox +libubus +uhttpd +uhttpd-mod-ubus +rpcd 
 endef
-
 
 define Package/juci/config 
 	config JUCI_THEME_SELECTED
 		bool
 		default n
 endef
+
+define Build/InstallDev 
+	$(INSTALL_DIR) $(1)/usr/src/
+	ln -s $(PKG_BUILD_DIR) $(1)/usr/src/juci
+endef 
 
 define Package/juci/description
  Provides the JUCI Javascript UCI web interface with standard functionality.
@@ -55,12 +53,12 @@ endef
 define Package/juci/install
 	$(INSTALL_DIR) $(1)/
 	$(CP) $(PKG_BUILD_DIR)/bin/* $(1)/
-	$(INSTALL_DIR) $(1)/etc/config
-	$(CP) $(PKG_BUILD_DIR)/juci.config $(1)/etc/config/juci
 	$(INSTALL_DIR) $(1)/www/cgi-bin/
 	$(CP) $(PKG_BUILD_DIR)/juci_redirect.sh $(1)/www/cgi-bin/luci
 	$(INSTALL_DIR) $(1)/sbin/
 	$(CP) $(PKG_BUILD_DIR)/juci-update $(1)/sbin/juci-update
+	$(INSTALL_DIR) $(1)/etc/init.d/
+	$(CP) ./juci.init $(1)/etc/init.d/juci
 endef
 
 define Package/juci/postinst
@@ -75,69 +73,77 @@ juci-update
 exit 0
 endef
 
-
+export CONFIG_PACKAGE_juci:=$(CONFIG_PACKAGE_juci)
 $(eval $(call BuildPackage,juci))
 
-#
-# Copyright (C) 2013 Jo-Philipp Wich <jow@openwrt.org>
-#
-# Licensed under the Apache License, Version 2.0.
-#
+####### Extensions / Themes and Plugins
 
-include $(TOPDIR)/rules.mk
-
-PKG_NAME:=juci-ubus-core
-#PKG_VERSION:=$(shell git --git-dir=$(CURDIR)/../.git log -1 --pretty="%ci %h" | awk '{ print $$1 "-" $$4 }')
-PKG_VERSION:=15.6.8
-PKG_MAINTAINER:=Martin K. Schroder <mkschreder.uk@gmail.com>
-
-PKG_LICENSE:=Apache-2.0
-PKG_LICENSE_FILES:=
-PKG_BUILD_PARALLEL:=1
-
-include $(INCLUDE_DIR)/package.mk
-#include $(INCLUDE_DIR)/cmake.mk
+define RegisterAddonInner
+export CONFIG_PACKAGE_$(2):=$(CONFIG_PACKAGE_$(2))
+define Package/$(2)
+	SECTION:=juci
+	CATEGORY:=JUCI
+	TITLE:=default
+	URL:=https://github.com/mkschreder/luci-express
+	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
+	SUBMENU:=$(1)
+	TITLE:=$(if $(3),$(3),JUCI $(2) plugin)
+	DEPENDS:=$(4)
+endef
 	
-define Build/Prepare
-	#$(INSTALL_DIR) $(PKG_BUILD_DIR)
-	#$(CP) ./src/* $(PKG_BUILD_DIR)/
-endef
-
-define Build/Compile 
-	
-endef
-
-define Package/juci-ubus-core
-  SECTION:=juci-ubus-core
-  CATEGORY:=UBUS
-  TITLE:=JUCI UBUS Main Module
-  DEPENDS:=+rpcd +libubox +libubus +@JUCI_UBUS_CORE
-endef
-
-define Package/juci-ubus-core/config
-	config JUCI_UBUS_CORE
+define Package/$(2)/config
+	$(5)
+	config $(shell echo $(2) | tr '[:lower:]' '[:upper:]' | sed 's/-/_/g')
 		bool 
-		default n 
+		default n
+endef
 endef
 
-define Package/juci-ubus-core/description
-	Provides support for writing lightweight ubus plugins
+define RegisterAddon
+	$(eval $(call RegisterAddonInner,$(1),$(2),$(3),$(4),$(5)))
+	$(eval $(call BuildPackage,$(2)))
 endef
 
-define Package/juci-ubus-core/install
-	#$(CP) $(PKG_BUILD_DIR)/juci-ubus-core/build/* $(1)/
-	#$(INSTALL_DIR) $(1)/usr/lib/rpcd
-	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/juci-ubus-core.so $(1)/usr/lib/rpcd/
-	#$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
-	#$(CP) ./access.json $(1)/usr/share/rpcd/acl.d/juci-ubus-core.json
-	#$(INSTALL_DIR) $(1)/usr/libexec $(1)/www/cgi-bin
-	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/io/juci-cgi $(1)/usr/libexec/
-	#$(LN) /usr/libexec/juci-cgi $(1)/www/cgi-bin/juci-upload
-	#$(LN) /usr/libexec/juci-cgi $(1)/www/cgi-bin/juci-backup
-endef
-
-define Package/juci-ubus-core/postinst
-
-endef
-
-$(eval $(call BuildPackage,juci-ubus-core))
+$(eval $(call RegisterAddon,C-backend,juci-ubus-core, JUCI main ubus daemon ))
+$(eval $(call RegisterAddon,Plugins,juci-ethernet, JUCI ethernet core module ))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-dsl, Inteno Broadcom DSL Module (xdslctl based),+juci-ethernet))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-ethernet, Inteno Broadcom Ethernet Module,+juci-ethernet))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-iptv, Inteno Broadcom IPTV/MCPD Plugin,+juci-network-netifd +juci-ethernet))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based),+juci-ethernet))
+$(eval $(call RegisterAddon,Plugins,juci-broadcom-wl, Inteno Broadcom Wireless Module (wlctl),+juci-ethernet ))
+$(eval $(call RegisterAddon,Plugins,juci-ddns, DDNS configuration through /etc/config/ddns))
+$(eval $(call RegisterAddon,Plugins,juci-diagnostics, Simple Diagnostics ))
+$(eval $(call RegisterAddon,Plugins,juci-dnsmasq-dhcp, DHCP/DNSMasq configuration through /etc/config/dhcp ))
+$(eval $(call RegisterAddon,Plugins,juci-dropbear, Dropbear Configuration,dropbear))
+$(eval $(call RegisterAddon,Plugins,juci-event, JUCI Event Subsystem ))
+$(eval $(call RegisterAddon,Plugins,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
+$(eval $(call RegisterAddon,Plugins,juci-iconnect,JUCI UBUS interconnect private cloud interface))
+$(eval $(call RegisterAddon,Plugins,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))
+$(eval $(call RegisterAddon,Plugins,juci-inteno-backup,Inteno Backup Module))
+$(eval $(call RegisterAddon,Plugins,juci-inteno-provisioning,Inteno Provisioning Module))
+$(eval $(call RegisterAddon,Plugins,juci-inteno-router, Router Backend for Inteno Box))
+$(eval $(call RegisterAddon,Plugins,juci-inteno-multiwan, Package for configuring inteno MultiWAN))
+$(eval $(call RegisterAddon,Plugins,juci-inteno-qos,Inteno QoS module))
+$(eval $(call RegisterAddon,Plugins,juci-inteno-voice-client, Inteno Asterisk Voice Client Module))
+$(eval $(call RegisterAddon,Plugins,juci-jquery-console, Quake Style Dropdown Console for JUCI in browser))
+$(eval $(call RegisterAddon,Plugins,juci-realtime-graphs,Realtime Graphs based on luci-bwc,+luci-bwc))
+$(eval $(call RegisterAddon,Plugins,juci-macdb, MAC Address to Manufacturer Name resolution for juci))
+$(eval $(call RegisterAddon,Plugins,juci-minidlna, MiniDLNA Configuration))
+$(eval $(call RegisterAddon,Plugins,juci-mod-status, Deprecated JUCI Status Reporting Module))
+$(eval $(call RegisterAddon,Plugins,juci-mod-system, JUCI System Administration Module))
+$(eval $(call RegisterAddon,Plugins,juci-netmode, Inteno NetMode default reset functionality))
+$(eval $(call RegisterAddon,Plugins,juci-network-netifd, OpenWRT netifd network configuration module))
+$(eval $(call RegisterAddon,Plugins,juci-router-openwrt, OpenWRT Router Interface))
+$(eval $(call RegisterAddon,Plugins,juci-samba, Samba36 Configuration))
+$(eval $(call RegisterAddon,Plugins,juci-sysupgrade, Inteno Sysupgrade Firmware Upgrade))
+$(eval $(call RegisterAddon,Plugins,juci-upnp, UPNP Configuration Module))
+$(eval $(call RegisterAddon,Plugins,juci-usb, USB Support In GUI))
+$(eval $(call RegisterAddon,Plugins,juci-uhttpd,UHTTPD configuration))
+$(eval $(call RegisterAddon,Plugins,juci-utils,UHTTPD configuration))
+$(eval $(call RegisterAddon,Plugins,juci-natalie-dect, Natalie DECT interface))
+$(eval $(call RegisterAddon,Plugins,juci-freecwmp,JUCI TR-069 FreeCWMP plugin))
+$(eval $(call RegisterAddon,Plugins,juci-snmpd,JUCI SNMP plugin))
+$(eval $(call RegisterAddon,Plugins,juci-minisnmpd,JUCI mini-SNMPd plugin))
+$(eval $(call RegisterAddon,Plugins,juci-simple-gui,Provides pages for building simplified user gui))
+$(eval $(call RegisterAddon,Plugins,juci-openwrt-wireless,JUCI OpenWRT standard wireless configuration,+libiwinfo-lua))
+$(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Default Theme,,depends on y || !JUCI_THEME_SELECTED))

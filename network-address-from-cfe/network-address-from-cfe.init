@@ -1,0 +1,7 @@
+#!/bin/sh /etc/rc.common
+
+/sbin/network-address-from-cfe > /dev/console
+
+echo "network-address-from-cfe: removing program after first boot after upgrade." > /dev/console
+rm /sbin/network-address-from-cfe 
+rm /etc/rc.d/S13network-address-from-cfe-first-boot

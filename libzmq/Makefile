@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libzmq
-PKG_VERSION:=master
+PKG_VERSION:=a8605f576e8b92a53dd1bebde30860b42a27c24e
 PKG_RELEASE:=1.0.0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz

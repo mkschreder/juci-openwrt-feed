@@ -1,0 +1,44 @@
+#!/bin/sh 
+
+check_upgrade(){
+	SOURCES=$(uci -q get system.onlineupgrade.sources); 
+	SERVER=$(uci -q get system.onlineupgrade.server);
+	[ "$SERVER" == "" ] && SERVER="http://10.10.1.126"; 
+	[ "$SOURCES" == "" ] && SOURCES="sources.list"; 
+
+	FWLIST="$SERVER/$SOURCES"; 
+	HWVER=$(db get hw.board.hardware); 
+	[ "$FWLIST" != "" ] && {
+		IMAGE=$(wget -q "$FWLIST" -O - | grep $HWVER | cut -d ' ' -f 2); 
+		if [ "$IMAGE" != "" ]; then
+			echo "Found image in the list: $IMAGE"
+			uci set system.onlineupgrade.available=$SERVER/$IMAGE; 
+			uci commit
+		else 
+			echo "No image was found for this hardware ($HWVER) in the list on the server"; 
+		fi
+	}
+}
+
+install_uci_defaults(){
+	uci -q get system.onlineupgrade > /dev/null || {
+		uci set system.onlineupgrade=onlineupgrade; 
+		uci commit
+	}
+}
+
+do_download_upgrade(){
+	[ "$1" != "" ] || return; 
+	FILE="$1"
+	echo "Downloading upgrade $FILE"
+	wget -q "$FILE" -O /tmp/firmware.bin
+	ls /tmp/firmware.bin
+}
+
+rm -f /tmp/firmware.bin
+
+install_uci_defaults
+check_upgrade
+do_download_upgrade "$(uci -q get system.onlineupgrade.available)"
+
+[ -e /tmp/firmware.bin ] && sysupgrade -n /tmp/firmware.bin

@@ -22,7 +22,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/jucid
   SECTION:=base
   CATEGORY:=Base system
-  DEPENDS:=+libubus2
+  DEPENDS:=+libubus2 +ubus-json-server
   TITLE:=JUCI Backend Server
 endef
 

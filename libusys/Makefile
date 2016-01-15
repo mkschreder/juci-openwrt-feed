@@ -22,7 +22,7 @@ define Package/libusys
   CATEGORY:=Libraries
   TITLE:=Lightweight System Layer
   URL:=https://github.com/mkschreder/libusys.git
-  DEPENDS:=
+  DEPENDS:=+libutype
 endef
 
 define Package/libusys/description

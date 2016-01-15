@@ -44,7 +44,7 @@ define Package/libwebsockets
 	SECTION:=libs
 	CATEGORY:=Libraries
 	TITLE:=libwebsockets
-	DEPENDS:=+zlib
+	DEPENDS:=+zlib +libpthread
 	URL:=https://libwebsockets.org
 	MAINTAINER:=Karl Palsson <karlp@remake.is>
 endef

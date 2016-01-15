@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libubus2
-PKG_VERSION:=6e20c92e52bacdd9d1ff5e72e8c864fe660a04e7
+PKG_VERSION:=bf6e163a5efb8fb363e03a686c9863aaedc88caf
 PKG_RELEASE:=1.0.0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz

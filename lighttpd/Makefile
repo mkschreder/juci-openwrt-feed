@@ -292,7 +292,7 @@ endef
 define Package/lighttpd/install
 	$(INSTALL_DIR) $(1)/etc/lighttpd
 	$(INSTALL_DATA) ./files/lighttpd.conf $(1)/etc/lighttpd/
-	$(INSTALL_DATA) ./files/etc/* $(1)/etc/
+	$(CP) ./files/etc/* $(1)/etc/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/lighttpd.init $(1)/etc/init.d/lighttpd
 	$(INSTALL_DIR) $(1)/usr/lib/lighttpd

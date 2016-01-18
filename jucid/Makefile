@@ -29,6 +29,8 @@ endef
 define Package/jucid/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) $(PKG_BUILD_DIR)/jucid $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/jucid.init $(1)/etc/init.d/juci
 endef
 
 $(eval $(call BuildPackage,jucid))

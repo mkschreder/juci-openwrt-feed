@@ -1,0 +1,27 @@
+#!/bin/sh /etc/rc.common
+
+START=12
+
+USE_PROCD=1
+NAME=jucid
+PROG=/usr/bin/jucid
+
+start_service() {
+	procd_open_instance
+	procd_set_param command "$PROG"
+	procd_close_instance
+}
+
+stop_service() {
+	service_stop /sbin/jucid
+	killall jucid 
+}
+
+restart_service() {
+	stop_service
+	start_service
+}
+
+reload() {
+	service_reload /sbin/jucid
+}

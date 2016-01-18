@@ -29,6 +29,8 @@ endef
 define Package/ubus-json-server/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) $(PKG_BUILD_DIR)/ubus-json-server $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/ubus-json-server.init $(1)/etc/init.d/ubus-json-server
 endef
 
 $(eval $(call BuildPackage,ubus-json-server))

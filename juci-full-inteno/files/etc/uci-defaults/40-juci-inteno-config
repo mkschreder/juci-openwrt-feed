@@ -1,0 +1,623 @@
+#!/bin/sh
+
+install_event_config(){
+	cat >> /etc/config/juci << EOF
+config juci_event 'juci_event'
+	list filter firewall.ssh
+	list filter network.netifd
+	list filter network.dnmasq
+	list filter system.kernel
+	list filter system.ntp
+	list filter iptv.mcpd
+
+config menu
+	option path 'overview'
+	option page 'overview'
+EOF
+}
+
+install_voice_pages(){
+	cat >> /etc/config/juci << EOF
+config menu
+	option path 'voice'
+	option page 'voice'
+	option redirect 'voice-call-log'
+	list acls 'juci-inteno-voice-client'
+
+config menu
+	option path 'voice/call-log'
+	option page 'voice-call-log'
+	list acls 'juci-inteno-voice-client'
+
+config menu
+	option path 'voice/sip-accounts'
+	option page 'voice-sip-accounts'
+	list acls 'juci-inteno-voice-client'
+	list acls 'user-support'
+
+config menu
+	option path 'voice/lines'
+	option page 'voice-lines'
+	list acls 'juci-inteno-voice-client'
+	list acls 'user-support'
+	option modes 'expert'
+
+config menu
+	option path 'voice/advanced-settings'
+	option page 'voice-advanced-settings'
+	list acls 'juci-inteno-voice-client'
+	list acls 'user-support'
+	option redirect 'voice-advanced-settings-sip'
+	option modes 'expert'
+
+config menu
+	option path 'voice/advanced-settings/sip'
+	option page 'voice-advanced-settings-sip'
+	list acls 'juci-inteno-voice-client'
+	list acls 'user-support'
+
+config menu
+	option path 'voice/advanced-settings/lines'
+	option page 'voice-advanced-settings-lines'
+	list acls 'juci-inteno-voice-client'
+	list acls 'user-support'
+
+config menu
+	option path 'voice/advanced-settings/dialplan'
+	option page 'voice-advanced-settings-dialplan'
+	list acls 'juci-inteno-voice-client'
+	list acls 'user-support'
+
+config menu
+	option path 'voice/number-blocking'
+	option page 'voice-number-blocking'
+	list acls 'juci-inteno-voice-client'
+	option modes 'expert'
+
+config menu
+	option path 'voice/ringing-schedule'
+	option page 'voice-ringing-schedule'
+	list acls 'juci-inteno-voice-client'
+	option modes 'expert'
+
+config menu
+	option path 'voice/speed_dialing'
+	option page 'voice-speed-dialing'
+	list acls 'juci-inteno-voice-client'
+	option modes 'expert'
+EOF
+}
+
+install_dect_pages(){
+	cat >> /etc/config/juci << EOF
+config menu
+	option path 'voice/dect'
+	option page 'voice-dect'
+	list acls 'juci-natalie-dect'
+EOF
+}
+
+install_ethernet_pages(){
+	cat >> /etc/config/juci << EOF
+config menu
+	option path 'internet'
+	option page 'network'
+	option redirect 'internet-ethernet'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/ethernet'
+	option page 'internet-ethernet'
+	list acls 'juci-network-netifd'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/ethernet/phy'
+	option page 'page-broadcom-ethernet-phy'
+	list acls 'juci-broadcom-ethernet'
+	list acls 'user-support'
+EOF
+}
+
+install_adsl_pages(){
+	cat >> /etc/config/juci << EOF
+config menu
+	option path 'internet/ethernet/adsl'
+	option page 'page-broadcom-adsl'
+	list acls 'juci-broadcom-dsl'
+	list acls 'user-support'
+EOF
+}
+
+install_vdsl_pages(){
+	cat >> /etc/config/juci << EOF
+config menu
+	option path 'internet/ethernet/vdsl'
+	option page 'page-broadcom-vdsl'
+	list acls 'juci-broadcom-dsl'
+	list acls 'user-support'
+EOF
+}
+
+# install the default menus if they are not already in the config
+uci -q get juci.@menu[0] || {
+	install_event_config
+	install_voice_pages
+	db -q get hw.board.hasVoice && install_voice_pages
+	db -q get hw.board.hasDect && install_dect_pages
+	install_ethernet_pages
+	
+	db -q get hw.board.hasAdsl && install_adsl_pages
+	db -q get hw.board.hasVdsl && install_vdsl_pages
+
+	cat >> /etc/config/juci << EOF
+config menu
+	option path 'internet/ethernet/vlan'
+	option page 'page-broadcom-ethernet-vlan'
+	list acls 'juci-broadcom-vlan'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/network'
+	option page 'internet-network'
+	list acls 'juci-network-netifd'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/routes'
+	option page 'internet-routes'
+	list acls 'juci-network-netifd'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/firewall'
+	option page 'internet-firewall'
+	list acls 'juci-firewall-fw3'
+
+config menu
+	option path 'internet/firewall/zones'
+	option page 'internet-firewall-zones'
+	list acls 'juci-firewall-fw3'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/firewall/rules'
+	option page 'internet-firewall-rules'
+	list acls 'juci-firewall-fw3'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/firewall/forwarding'
+	option page 'internet-firewall-forwarding'
+	list acls 'juci-firewall-fw3'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/firewall/port_mapping'
+	option page 'internet-firewall-port-mapping'
+	list acls 'juci-firewall-fw3'
+	option modes 'expert'
+
+config menu
+	option path 'internet/firewall/dmz'
+	option page 'internet-firewall-dmz'
+	list acls 'juci-firewall-fw3'
+	option modes 'expert'
+
+config menu
+	option path 'internet/parental_control'
+	option page 'internet-parental-control'
+	list acls 'juci-firewall-fw3'
+
+config menu
+	option path 'internet/multiwan'
+	option page 'internet-multiwan'
+	list acls 'juci-inteno-multiwan'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/services'
+	option page 'internet-services'
+	list acls 'juci-network-netifd'
+
+config menu
+	option path 'internet/services/minidlna'
+	option page 'internet-services-minidlna'
+	list acls 'juci-minidlna'
+
+config menu
+	option path 'internet/services/ntp'
+	option page 'internet-services-ntp'
+	list acls 'juci-mod-system'
+
+config menu
+	option path 'internet/services/upnp'
+	option page 'upnpd-settings'
+	list acls 'juci-upnp'
+
+config menu
+	option path 'internet/services/ddns'
+	option page 'internet-services-ddns'
+	list acls 'juci-ddns'
+
+config menu
+	option path 'internet/services/mcpd'
+	option page 'broadcom-iptv'
+	list acls 'juci-broadcom-iptv'
+	list acls 'user-support'
+
+config menu 
+	option path 'internet/services/dhcp'
+	option page 'dhcp-settings'
+	list acls 'juci-dnsmasq-dhcp'
+	list acls 'user-support'
+
+config menu 
+	option path 'internet/services/snmpd'
+	option page 'snmpd-config'
+	list acls 'juci-snmpd'
+	list acls 'user-support'
+
+config menu
+	option path 'internet/services/samba'
+	option page 'internet-services-samba'
+	list acls 'juci-samba'
+
+config menu
+	option path 'wifi'
+	option page 'wireless'
+	option redirect 'wireless-general'
+
+config menu
+	option path 'wifi/general'
+	option page 'wireless-general'
+	list acls 'juci-broadcom-wl'
+
+config menu
+	option path 'wifi/general/devices'
+	option page 'wireless-devices'
+	list acls 'juci-broadcom-wl'
+
+config menu
+	option path 'wifi/general/interfaces'
+	option page 'wireless-interfaces'
+	list acls 'juci-broadcom-wl'
+
+config menu
+	option path 'wifi/general/clients'
+	option page 'wireless-clients'
+	list acls 'juci-broadcom-wl'
+
+config menu
+	option path 'wifi/schedule'
+	option page 'wireless-schedule'
+	list acls 'juci-broadcom-wl'
+
+config menu
+	option path 'wifi/wps'
+	option page 'wireless-wps'
+	list acls 'juci-broadcom-wl'
+
+config menu
+	option path 'wifi/mac_filter'
+	option page 'wireless-filtering'
+	list acls 'juci-broadcom-wl'
+	option modes 'expert'
+
+config menu
+	option path 'wifi/client'
+	option page 'wireless-client-mode'
+	option acls 'juci-broadcom-wl'
+	list acls 'juci-broadcom-wl'
+	list acls 'not-used'
+
+config menu
+	option path 'settings'
+	option page 'system'
+	option redirect 'settings-system'
+
+config menu
+	option path 'settings/system'
+	option page 'settings-system'
+	list acls 'juci-mod-system'
+
+config menu
+	option path 'settings/password'
+	option page 'settings-password'
+	list acls 'juci-mod-system'
+
+config menu
+	option path 'settings/upgrade'
+	option page 'settings-upgrade'
+	list acls 'juci-sysupgrade'
+	list acls 'user-support'
+
+config menu
+	option path 'settings/upgrade/options'
+	option page 'settings-upgrade-options'
+	option acls 'juci-sysupgrade'
+
+config menu
+	option path 'settings/configuration'
+	option page 'settings-configuration'
+	list acls 'juci-mod-system'
+
+config menu
+	option path 'settings/configuration/settings'
+	option page 'inteno-backup-settings'
+	list acls 'juci-inteno-backup'
+
+config menu
+	option path 'settings/provisioning'
+	option page 'settings-provisioning-iup'
+	list acls 'juci-inteno-provisioning'
+	list acls 'user-support'
+
+config menu
+	option path 'settings/icwmp'
+	option page 'icwmp-config'
+	list acls 'juci-icwmp'
+	list acls 'user-support'
+
+config menu
+	option path 'settings/management'
+	option page 'settings-management'
+	list acls 'juci-mod-system'
+	list acls 'user-support'
+
+config menu
+	option path 'settings/management/powermgmt'
+	option page 'broadcom-pwrmgmt'
+	list acls 'juci-broadcom-pwrmgmt'
+	list acls 'user-support'
+
+config menu
+	option path 'settings/management/dropbear'
+	option page 'settings-management-dropbear'
+	list acls 'juci-dropbear'
+	list acls 'user-support'
+
+config menu
+	option path 'settings/management/uhttpd'
+	option page 'page-uhttpd-settings'
+	list acls 'juci-uhttpd'
+	list acls 'user-support'
+
+config menu
+	option path 'settings/management/services'
+	option page 'internet-firewall-services'
+	list acls 'juci-firewall-fw3'
+	list acls 'user-support'
+
+config menu
+	option path 'settings/services'
+	option page 'settings-services'
+	list acls 'juci-mod-system'
+	list acls 'user-support'
+
+config menu
+	option path 'status'
+	option page 'status'
+	option redirect 'status-system'
+
+config menu
+	option path 'status/system'
+	option page 'status-system'
+	list acls 'juci-mod-system'
+
+config menu
+	option path 'status/system/processes'
+	option page 'status-system-processes'
+	list acls 'juci-mod-system'
+
+config menu
+	option path 'status/tv'
+	option page 'status-tv'
+	list acls 'juci-igmpsnoop'
+
+config menu
+	option path 'status/wifi'
+	option page 'wireless-status'
+	list acls 'juci-broadcom-wl'
+
+config menu
+	option path 'status/dsl'
+	option page 'page-broadcom-dsl-status'
+	list acls 'juci-broadcom-dsl'
+
+config menu
+	option path 'status/usb'
+	option page 'status-usb'
+	list acls 'juci-usb'
+
+config menu
+	option path 'status/network'
+	option page 'status-network'
+	list acls 'juci-network-netifd'
+
+config menu
+	option path 'status/network/clients'
+	option page 'netifd-status-clients'
+	list acls 'juci-network-netifd'
+
+config menu
+	option path 'status/network/routes'
+	option page 'status-network-routes'
+	list acls 'juci-network-netifd'
+
+config menu
+	option path 'status/network/upnpd'
+	option page 'upnpd-status'
+	list acls 'juci-upnp'
+
+config menu 
+	option path 'status/network/dhcp'
+	option page 'dhcp-status'
+	list acls 'juci-dhcp'
+
+config menu
+	option path 'status/network/nat'
+	option page 'status-network-nat'
+	list acls 'juci-network-netifd'
+
+config menu
+	option path 'status/diagnostics'
+	option page 'status-diagnostics'
+	list acls 'juci-diagnostics'
+EOF
+	db -q get hw.board.hasVoice && {
+		cat >> /etc/config/juci << EOF
+config menu
+	option path 'status/phone'
+	option page 'status-phone'
+	list acls 'juci-inteno-voice-client'
+EOF
+}
+	cat >> /etc/config/juci << EOF
+config menu
+	option path 'status/events'
+	option page 'status-events'
+	option modes 'expert'
+
+config menu
+	option path 'status/restart'
+	option page 'status-restart'
+EOF
+}
+
+# install the default menus if they are not already in the config
+ubus call uci delete '{"config":"rpcd","type":"login"}'
+ubus call uci commit 
+
+cat >> /etc/config/rpcd << EOF
+config login
+	option username 'admin'
+	option password '\$p\$admin'
+	list write 'user-admin'
+	list write 'user-support'
+	list write 'juci-broadcom-dsl'
+	list write 'juci-broadcom-dsl-admin'
+	list write 'juci-broadcom-ethernet'
+	list write 'juci-broadcom-iptv'
+	list write 'juci-broadcom-vlan'
+	list write 'juci-broadcom-vlan-admin'
+	list write 'juci-broadcom-wl'
+	list write 'juci-broadcom-wl-admin'
+	list write 'juci-ddns'
+	list write 'juci-diagnostics'
+	list write 'juci-dnsmasq-dhcp'
+	list write 'juci-dropbear'
+	list write 'juci-ethernet'
+	list write 'juci-event'
+	list write 'juci-firewall-fw3'
+	list write 'juci-iconnect'
+	list write 'juci-igmpinfo'
+	list write 'juci-inteno-backup'
+	list write 'juci-inteno-multiwan'
+	list write 'juci-inteno-provisioning'
+	list write 'juci-inteno-qos'
+	list write 'juci-inteno-router'
+	list write 'juci-inteno-voice-client'
+	list write 'juci-minidlna'
+	list write 'juci-mod-status'
+	list write 'juci-mod-system'
+	list write 'juci-mod-system-admin'
+	list write 'juci-natalie-dect'
+	list write 'juci-netmode'
+	list write 'juci-network-netifd'
+	list write 'juci-samba'
+	list write 'juci-snmpd'
+	list write 'juci-sysupgrade'
+	list write 'juci-uhttpd'
+	list write 'juci-upnp'
+	list write 'juci-usb'
+	list write 'core'
+	list write 'unauthenticated'
+
+config login
+	option username 'support'
+	option password '\$p\$support'
+	list write 'user-support'
+	list write 'juci-broadcom-dsl'
+	list write 'juci-broadcom-dsl-admin'
+	list write 'juci-broadcom-ethernet'
+	list write 'juci-broadcom-iptv'
+	list write 'juci-broadcom-vlan'
+	list write 'juci-broadcom-vlan-admin'
+	list write 'juci-broadcom-wl'
+	list write 'juci-broadcom-wl-admin'
+	list write 'juci-ddns'
+	list write 'juci-diagnostics'
+	list write 'juci-dnsmasq-dhcp'
+	list write 'juci-dropbear'
+	list write 'juci-ethernet'
+	list write 'juci-event'
+	list write 'juci-firewall-fw3'
+	list write 'juci-iconnect'
+	list write 'juci-igmpinfo'
+	list write 'juci-inteno-backup'
+	list write 'juci-inteno-multiwan'
+	list write 'juci-inteno-provisioning'
+	list write 'juci-inteno-qos'
+	list write 'juci-inteno-router'
+	list write 'juci-inteno-voice-client'
+	list write 'juci-minidlna'
+	list write 'juci-mod-status'
+	list write 'juci-mod-system'
+	list write 'juci-natalie-dect'
+	list write 'juci-netmode'
+	list write 'juci-network-netifd'
+	list write 'juci-samba'
+	list write 'juci-snmpd'
+	list write 'juci-sysupgrade'
+	list write 'juci-uhttpd'
+	list write 'juci-upnp'
+	list write 'juci-usb'
+	list write 'core'
+	list write 'unauthenticated'
+
+config login
+	option username 'user'
+	option password '\$p\$user'
+	list write 'user-user'
+	list write 'juci-broadcom-dsl'
+	list write 'juci-broadcom-dsl-admin'
+	list write 'juci-broadcom-ethernet'
+	list write 'juci-broadcom-iptv'
+	list write 'juci-broadcom-vlan'
+	list write 'juci-broadcom-vlan-admin'
+	list write 'juci-broadcom-wl'
+	list write 'juci-broadcom-wl-admin'
+	list write 'juci-ddns'
+	list write 'juci-diagnostics'
+	list write 'juci-dnsmasq-dhcp'
+	list write 'juci-dropbear'
+	list write 'juci-ethernet'
+	list write 'juci-event'
+	list write 'juci-firewall-fw3'
+	list write 'juci-iconnect'
+	list write 'juci-igmpinfo'
+	list write 'juci-inteno-backup'
+	list write 'juci-inteno-multiwan'
+	list write 'juci-inteno-provisioning'
+	list write 'juci-inteno-qos'
+	list write 'juci-inteno-router'
+	list write 'juci-inteno-voice-client'
+	list write 'juci-minidlna'
+	list write 'juci-mod-status'
+	list write 'juci-mod-system'
+	list write 'juci-natalie-dect'
+	list write 'juci-netmode'
+	list write 'juci-network-netifd'
+	list write 'juci-samba'
+	list write 'juci-snmpd'
+	list write 'juci-sysupgrade'
+	list write 'juci-uhttpd'
+	list write 'juci-upnp'
+	list write 'juci-usb'
+	list write 'core'
+	list write 'unauthenticated'
+EOF
+/etc/init.d/rpcd restart
+
+exit 0

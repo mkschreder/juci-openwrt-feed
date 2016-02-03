@@ -14,7 +14,7 @@ PKG_RELEASE=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci-rpcd.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE_VERSION:=fdaa9f9adebda9b7879c05ab96162f57aac5124b
+PKG_SOURCE_VERSION:=50b1a51f32bbabb450e0fcabb4225e967651b4bb
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 

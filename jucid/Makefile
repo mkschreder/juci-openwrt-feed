@@ -7,7 +7,7 @@ PKG_RELEASE=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/jucid.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=1f1116f155cef5e18900d16bc3b7b68c41306612
+PKG_SOURCE_VERSION:=f9ca10a79a149a274c9e770bd12d8f48ae6e07e6
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MIRROR_MD5SUM:=
 CMAKE_INSTALL:=1
@@ -22,7 +22,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/jucid
   SECTION:=base
   CATEGORY:=Base system
-  DEPENDS:=+libubus2 +ubus-json-server
+  DEPENDS:=+libubus2 +liblua +ubus-json-server
   TITLE:=JUCI Backend Server
 endef
 

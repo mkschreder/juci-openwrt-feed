@@ -15,30 +15,30 @@ include $(INCLUDE_DIR)/package.mk
 define Package/juci-full-inteno
   CATEGORY:=JUCI
   DEPENDS:= \
-	  +juci-broadcom-dsl \
-	  +juci-broadcom-ethernet \
-	  +juci-broadcom-iptv \
-	  +juci-broadcom-vlan \
-	  +juci-broadcom-wl \
+	  +juci-inteno-broadcom-dsl \
+	  +juci-inteno-broadcom-ethernet \
+	  +juci-inteno-broadcom-iptv \
+	  +juci-inteno-broadcom-vlan \
+	  +juci-inteno-broadcom-wl \
+	  +juci-inteno-iconnect \
+	  +juci-inteno-multiwan \
+	  +juci-inteno-router \
+	  +juci-inteno-qos \
+	  +juci-inteno-voice-client \
+	  +juci-inteno-dect \
+	  +juci-inteno-netmode \
 	  +juci-ddns \
-	  +juci-diagnostics \
+	  +juci-inteno-diagnostics \
 	  +juci-dnsmasq-dhcp \
 	  +juci-dropbear \
 	  +juci-ethernet \
 	  +juci-event \
 	  +juci-firewall-fw3 \
 	  +juci-simple-gui \
-	  +juci-iconnect \
-	  +juci-inteno-multiwan \
-	  +juci-inteno-router \
-	  +juci-inteno-qos \
-	  +juci-inteno-voice-client \
 	  +juci-macdb \
 	  +juci-minidlna \
 	  +juci-mod-status \
 	  +juci-mod-system \
-	  +juci-natalie-dect \
-	  +juci-netmode \
 	  +juci-network-netifd \
 	  +juci-samba \
 	  +juci-snmpd \

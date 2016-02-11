@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# TODO: improve this 
-
-[ "$ACTION" = ifup ] && [ "$INTERFACE" = wan ] && /etc/init.d/iconnect restart
-[ "$ACTION" = ifdown ] && [ "$INTERFACE" = wan ] && /etc/init.d/iconnect stop

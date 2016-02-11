@@ -5,30 +5,17 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_NAME:=juci-full-inteno
+PKG_NAME:=juci-full-openwrt
 PKG_VERSION:=2.0.3
 PKG_RELEASE:=3
 PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/juci-full-inteno
+define Package/juci-full-openwrt
   CATEGORY:=JUCI
   DEPENDS:= \
-	  +juci-inteno-broadcom-dsl \
-	  +juci-inteno-broadcom-ethernet \
-	  +juci-inteno-broadcom-iptv \
-	  +juci-inteno-broadcom-vlan \
-	  +juci-inteno-broadcom-wl \
-	  +juci-inteno-iconnect \
-	  +juci-inteno-multiwan \
-	  +juci-inteno-router \
-	  +juci-inteno-qos \
-	  +juci-inteno-voice-client \
-	  +juci-inteno-dect \
-	  +juci-inteno-netmode \
 	  +juci-ddns \
-	  +juci-inteno-diagnostics \
 	  +juci-dnsmasq-dhcp \
 	  +juci-dropbear \
 	  +juci-ethernet \
@@ -40,22 +27,23 @@ define Package/juci-full-inteno
 	  +juci-mod-status \
 	  +juci-mod-system \
 	  +juci-network-netifd \
+	  +juci-openwrt-wireless \
 	  +juci-samba \
 	  +juci-snmpd \
 	  +juci-sysupgrade \
-	  +juci-theme-inteno \
 	  +juci-ubus-core \
 	  +juci-uhttpd \
 	  +juci-upnp \
 	  +juci-usb \
 	  +juci-utils \
 	  +juci-igmpinfo \
+	  +juci-theme-inteno \
 	  +juci 
   TITLE:=JUCI Inteno Configuration Meta Package
 endef
 
-define Package/juci-full-inteno/description
-	Select this package to select default juci packages and configure menus based on needs of inteno. 
+define Package/juci-full-openwrt/description
+	Select this package to select default juci packages and configure menus that will work on OpenWRT.
 endef
 
 define Build/Prepare
@@ -66,8 +54,8 @@ define Build/Compile
 	echo "Nothing to compile!"
 endef 
 
-define Package/juci-full-inteno/install
+define Package/juci-full-openwrt/install
 	$(CP) ./files/* $(1)/
 endef
 
-$(eval $(call BuildPackage,juci-full-inteno))
+$(eval $(call BuildPackage,juci-full-openwrt))

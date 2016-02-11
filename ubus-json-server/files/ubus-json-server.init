@@ -13,7 +13,7 @@ start_service() {
 }
 
 stop_service() {
-	service_stop /sbin/ubus-json-server
+	service_stop "$PROG"
 	killall ubus-json-server 
 }
 
@@ -23,5 +23,5 @@ restart_service() {
 }
 
 reload() {
-	service_reload /sbin/ubus-json-server
+	service_reload "$PROG"
 }

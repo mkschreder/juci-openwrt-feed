@@ -1,16 +1,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=jucid
-PKG_VERSION:=16.01
-PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/jucid.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=f9ca10a79a149a274c9e770bd12d8f48ae6e07e6
+PKG_SOURCE_VERSION:=678d8ba8ddb91cb165a1612b63552f2d3c5c63c1
+PKG_VERSION:=$(PKG_SOURCE_VERSION)
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MIRROR_MD5SUM:=
-CMAKE_INSTALL:=1
 
 PKG_LICENSE:=GPLv2
 PKG_LICENSE_FILES:=
@@ -24,6 +22,14 @@ define Package/jucid
   CATEGORY:=Base system
   DEPENDS:=+libubus2 +liblua +ubus-json-server
   TITLE:=JUCI Backend Server
+endef
+
+define Package/jucid/configure
+	./configure 
+endef 
+
+define Build/Configure
+	$(call Build/Configure/Default)
 endef
 
 define Package/jucid/install

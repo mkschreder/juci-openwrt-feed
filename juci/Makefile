@@ -5,8 +5,8 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=d7bbb212d604ff1cdc70d02a22269d8b9985e737
-PKG_VERSION:=2.16.02-stable
+PKG_SOURCE_VERSION:=071db69f75e83dfb4fee0fa2862571c38069ee87
+PKG_VERSION:=2.16.02-ws
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
@@ -32,13 +32,7 @@ define Package/juci
   CATEGORY:=JUCI
   MENU=1
   TITLE:=JUCI Core Package (select this to select default plugins)
-  DEPENDS:=+lua +libuv-lua +libuci-lua +libubus-lua +ubus-scriptd +libubox-lua +luaposix33 +libubox +libubus +uhttpd +uhttpd-mod-ubus +rpcd 
-endef
-
-define Package/juci/config 
-	config JUCI_THEME_SELECTED
-		bool
-		default n
+  DEPENDS:=+lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libubox +libubus +lighttpd +lighttpd-mod-websocket +lighttpd-mod-proxy +jucid +rpcd 
 endef
 
 define Build/InstallDev 
@@ -57,18 +51,10 @@ define Package/juci/install
 	$(CP) $(PKG_BUILD_DIR)/juci_redirect.sh $(1)/www/cgi-bin/luci
 	$(INSTALL_DIR) $(1)/sbin/
 	$(CP) $(PKG_BUILD_DIR)/juci-update $(1)/sbin/juci-update
-	$(INSTALL_DIR) $(1)/etc/init.d/
-	$(CP) ./juci.init $(1)/etc/init.d/juci
 endef
 
 define Package/juci/postinst
 #!/bin/sh
-
-if [ "$$(uci -q get uhttpd.main.ubus_prefix)" != "/ubus" ]; then
-	uci set uhttpd.main.ubus_prefix="/ubus"
-	uci commit uhttpd
-fi
-
 juci-update
 exit 0
 endef

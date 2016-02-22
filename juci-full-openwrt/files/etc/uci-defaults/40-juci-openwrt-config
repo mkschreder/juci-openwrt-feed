@@ -35,14 +35,8 @@ EOF
 # install the default menus if they are not already in the config
 uci -q get juci.@menu[0] || {
 	install_event_config
-	install_voice_pages
-	db -q get hw.board.hasVoice && install_voice_pages
-	db -q get hw.board.hasDect && install_dect_pages
 	install_ethernet_pages
 	
-	db -q get hw.board.hasAdsl && install_adsl_pages
-	db -q get hw.board.hasVdsl && install_vdsl_pages
-
 	cat >> /etc/config/juci << EOF
 config menu
 	option path 'internet/ethernet/vlan'
@@ -288,7 +282,7 @@ EOF
 
 # install the default menus if they are not already in the config
 ubus call uci delete '{"config":"rpcd","type":"login"}'
-ubus call uci commit 
+ubus call uci commit '{"config":"rpcd"}'
 
 cat >> /etc/config/rpcd << EOF
 config login

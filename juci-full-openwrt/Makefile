@@ -37,7 +37,7 @@ define Package/juci-full-openwrt
 	  +juci-usb \
 	  +juci-utils \
 	  +juci-igmpinfo \
-	  +juci-theme-inteno \
+	  +juci-theme-openwrt \
 	  +juci 
   TITLE:=JUCI Inteno Configuration Meta Package
 endef

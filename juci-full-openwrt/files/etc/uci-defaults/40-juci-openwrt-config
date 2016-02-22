@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# install the default password (admin/admin)
+# TODO: make this read default passwords from configuration file
+rm -f /etc/juci-shadow
+echo "admin `printf admin|sha1sum`" > /etc/juci-shadow
+chmod 700 /etc/juci-shadow 
+
 install_event_config(){
 	cat >> /etc/config/juci << EOF
 config juci_event 'juci_event'
@@ -9,10 +15,6 @@ config juci_event 'juci_event'
 	list filter system.kernel
 	list filter system.ntp
 	list filter iptv.mcpd
-
-config menu
-	option path 'overview'
-	option page 'overview'
 EOF
 }
 
@@ -34,6 +36,11 @@ EOF
 
 # install the default menus if they are not already in the config
 uci -q get juci.@menu[0] || {
+	cat >> /etc/config/juci << EOF
+config menu
+	option path 'overview'
+	option page 'overview'
+EOF
 	install_event_config
 	install_ethernet_pages
 	

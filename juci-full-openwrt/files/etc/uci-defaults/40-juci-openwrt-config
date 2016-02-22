@@ -143,6 +143,26 @@ config menu
 	option page 'wireless'
 	option redirect 'wireless-general'
 
+config menu 
+	option path 'wifi/general'
+	option page 'wireless-general'
+	list acls 'juci-openwrt-wireless'
+
+config menu 
+	option path 'wifi/devices'
+	option page 'wireless-devices'
+	list acls 'juci-openwrt-wireless'
+
+config menu 
+	option path 'wifi/interfaces'
+	option page 'wireless-interfaces'
+	list acls 'juci-openwrt-wireless'
+
+config menu 
+	option path 'wifi/clients'
+	option page 'wireless-clients'
+	list acls 'juci-openwrt-wireless'
+
 config menu
 	option path 'settings'
 	option page 'system'
@@ -165,25 +185,16 @@ config menu
 	list acls 'user-support'
 
 config menu
-	option path 'settings/upgrade/options'
-	option page 'settings-upgrade-options'
-	option acls 'juci-sysupgrade'
-
-config menu
 	option path 'settings/configuration'
 	option page 'settings-configuration'
 	list acls 'juci-mod-system'
-config menu
-	option path 'settings/icwmp'
-	option page 'icwmp-config'
-	list acls 'juci-icwmp'
-	list acls 'user-support'
 
 config menu
 	option path 'settings/management'
 	option page 'settings-management'
 	list acls 'juci-mod-system'
 	list acls 'user-support'
+
 config menu
 	option path 'settings/management/dropbear'
 	option page 'settings-management-dropbear'

@@ -17,13 +17,6 @@ PKG_RELEASE=$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 PKG_LICENSE:=GPL
 PKG_LICENSE_FILES:=
 
-export CONFIG_JUCI_UBUS_CORE:=$(CONFIG_JUCI_UBUS_CORE)
-export CONFIG_JUCI_THEME_INTENO:=$(CONFIG_JUCI_THEME_INTENO)
-export CONFIG_JUCI_BACKEND_BCM_WIRELESS:=$(CONFIG_JUCI_BACKEND_BCM_WIRELESS)
-export CONFIG_JUCI_BACKEND_BCM_DSL:=$(CONFIG_JUCI_BACKEND_BCM_DSL)
-export CONFIG_JUCI_BACKEND_SYSUPGRADE:=$(CONFIG_JUCI_BACKEND_SYSUPGRADE)
-export CONFIG_JUCI_BACKEND_OPKG:=$(CONFIG_JUCI_BACKEND_OPKG)
-
 include $(INCLUDE_DIR)/package.mk
 
 define Package/juci
@@ -137,5 +130,6 @@ $(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-wl, Inteno Broadcom Wir
 $(eval $(call RegisterAddon,Plugins,juci-inteno-diagnostics, Simple Diagnostics ))
 
 # themes 
-$(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Default Theme,,depends on y || !JUCI_THEME_SELECTED))
+$(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Inteno Theme,,depends on y || !JUCI_THEME_SELECTED))
+$(eval $(call RegisterAddon,Themes,juci-theme-openwrt,Juci Default Theme,,depends on y || !JUCI_THEME_SELECTED))
 

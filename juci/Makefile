@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=5053842a951e6539e97059d18a1fb1dcf0afde16
+PKG_SOURCE_VERSION:=5d744dd4cbd80abed2e0ba33bb870b7e91c58d47
 PKG_VERSION:=2.16.02-ws
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -87,6 +87,7 @@ endef
 $(eval $(call RegisterAddon,C-backend,juci-ubus-core, JUCI main ubus daemon ))
 $(eval $(call RegisterAddon,Plugins,juci-ethernet, JUCI ethernet core module ))
 $(eval $(call RegisterAddon,Plugins,juci-ddns, DDNS configuration through /etc/config/ddns))
+$(eval $(call RegisterAddon,Plugins,juci-diagnostics, Simple Diagnostics ))
 $(eval $(call RegisterAddon,Plugins,juci-dnsmasq-dhcp, DHCP/DNSMasq configuration through /etc/config/dhcp ))
 $(eval $(call RegisterAddon,Plugins,juci-dropbear, Dropbear Configuration,dropbear))
 $(eval $(call RegisterAddon,Plugins,juci-event, JUCI Event Subsystem ))
@@ -127,7 +128,6 @@ $(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-ethernet, Inteno Broadc
 $(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-iptv, Inteno Broadcom IPTV/MCPD Plugin,+juci-network-netifd +juci-ethernet))
 $(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based),+juci-ethernet))
 $(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-wl, Inteno Broadcom Wireless Module (wlctl),+juci-ethernet ))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-diagnostics, Simple Diagnostics ))
 
 # themes 
 $(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Inteno Theme,,depends on y || !JUCI_THEME_SELECTED))

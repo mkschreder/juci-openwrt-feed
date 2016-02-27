@@ -25,7 +25,7 @@ define Package/juci
   CATEGORY:=JUCI
   MENU=1
   TITLE:=JUCI Core Package (select this to select default plugins)
-  DEPENDS:=+lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libubox +libubus +lighttpd +lighttpd-mod-websocket +lighttpd-mod-proxy +jucid +rpcd 
+  DEPENDS:=+lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libubox +libubus +lighttpd +lighttpd-mod-websocket +lighttpd-mod-proxy +lighttpd-mod-cgi +jucid +rpcd 
 endef
 
 define Build/InstallDev 

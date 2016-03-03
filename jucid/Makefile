@@ -4,7 +4,7 @@ PKG_NAME:=jucid
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/jucid.git
-PKG_SOURCE_VERSION:=2888444eea2908a0186cc6636b481784ad10cc6e
+PKG_SOURCE_VERSION:=28513583d6f93a23d778349a4625ab6d2a3aea4e
 PKG_VERSION:=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
@@ -18,10 +18,11 @@ PKG_MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 include $(INCLUDE_DIR)/package.mk
 
 define Package/jucid
-  SECTION:=base
-  CATEGORY:=Base system
-  DEPENDS:=+!BUSYBOX_CONFIG_SHA1SUM:coreutils-sha1sum +libblobpack +libuci +libusys +libutype +liblua +libwebsockets
-  TITLE:=JUCI Backend Server
+  SECTION:=juci
+  CATEGORY:=JUCI
+  TITLE:=JUCI Backend Server 
+  #DEPENDS:=+BUSYBOX_DEFAULT_SHA1SUM <<- this one is necessary but it is not easily selectable TODO: fix it 
+  DEPENDS+=+iwinfo +rpcd +lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets
 endef
 
 define Build/Configure

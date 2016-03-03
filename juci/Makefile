@@ -20,12 +20,11 @@ PKG_LICENSE_FILES:=
 include $(INCLUDE_DIR)/package.mk
 
 define Package/juci
-  $(Package/juci/default)
   SECTION:=juci
   CATEGORY:=JUCI
-  MENU=1
-  TITLE:=JUCI Core Package (select this to select default plugins)
-  DEPENDS:=+lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libubox +libubus +lighttpd +lighttpd-mod-websocket +lighttpd-mod-proxy +lighttpd-mod-cgi +jucid +rpcd 
+  MENU:=1
+  TITLE:=JUCI Web Interface
+  DEPENDS:=+lighttpd +lighttpd-mod-websocket +lighttpd-mod-proxy +lighttpd-mod-cgi 
 endef
 
 define Build/InstallDev 
@@ -52,7 +51,6 @@ juci-update
 exit 0
 endef
 
-export CONFIG_PACKAGE_juci:=$(CONFIG_PACKAGE_juci)
 $(eval $(call BuildPackage,juci))
 
 ####### Extensions / Themes and Plugins
@@ -62,12 +60,11 @@ export CONFIG_PACKAGE_$(2):=$(CONFIG_PACKAGE_$(2))
 define Package/$(2)
 	SECTION:=juci
 	CATEGORY:=JUCI
-	TITLE:=default
 	URL:=https://github.com/mkschreder/luci-express
 	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 	SUBMENU:=$(1)
 	TITLE:=$(if $(3),$(3),JUCI $(2) plugin)
-	DEPENDS:=$(4)
+	DEPENDS:=juci $(4)
 endef
 	
 define Package/$(2)/config
@@ -84,7 +81,6 @@ define RegisterAddon
 endef
 
 # these plugins should work on openwrt!
-$(eval $(call RegisterAddon,C-backend,juci-ubus-core, JUCI main ubus daemon ))
 $(eval $(call RegisterAddon,Plugins,juci-ethernet, JUCI ethernet core module ))
 $(eval $(call RegisterAddon,Plugins,juci-ddns, DDNS configuration through /etc/config/ddns))
 $(eval $(call RegisterAddon,Plugins,juci-diagnostics, Simple Diagnostics ))

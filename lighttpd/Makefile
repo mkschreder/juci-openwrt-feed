@@ -52,181 +52,181 @@ endef
  
 define Package/lighttpd-mod-websocket
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Websockets module
 endef
 
 define Package/lighttpd-mod-access
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Access restrictions module
 endef
 
 define Package/lighttpd-mod-accesslog
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Access logging module
 endef
 
 define Package/lighttpd-mod-alias
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Directory alias module
 endef
 
 define Package/lighttpd-mod-auth
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Authentication module
 endef
 
 define Package/lighttpd-mod-cgi
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=CGI module
 endef
 
 define Package/lighttpd-mod-cml
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Cache Meta Language module
 endef
 
 define Package/lighttpd-mod-compress
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd +zlib
+  DEPENDS:=+lighttpd +zlib
   TITLE:=Compress output module
 endef
 
 define Package/lighttpd-mod-evasive
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Evasive module
 endef
 
 define Package/lighttpd-mod-evhost
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Exnhanced Virtual-Hosting module
 endef
 
 define Package/lighttpd-mod-expire
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Expire module
 endef
 
 define Package/lighttpd-mod-extforward
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Extract client IP module
 endef
 
 define Package/lighttpd-mod-fastcgi
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=FastCGI module
 endef
 
 define Package/lighttpd-mod-flv-streaming
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=flv streaming module
 endef
 
 define Package/lighttpd-mod-magnet
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=magnet module
 endef
 
 define Package/lighttpd-mod-mysql-vhost
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd +libmysqlclient
+  DEPENDS:=+lighttpd +libmysqlclient
   TITLE:=Mysql virtual hosting module
 endef
 
 define Package/lighttpd-mod-proxy
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Proxy module
 endef
 
 define Package/lighttpd-mod-redirect
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd +libpcre
+  DEPENDS:=+lighttpd +libpcre
   TITLE:=URL redirection module
 endef
 
 define Package/lighttpd-mod-rewrite
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd +libpcre
+  DEPENDS:=+lighttpd +libpcre
   TITLE:=URL rewriting module
 endef
 
 define Package/lighttpd-mod-rrdtool
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=rrdtool module
 endef
 
 define Package/lighttpd-mod-scgi
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=SCGI module
 endef
 
 define Package/lighttpd-mod-secdownload
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Secure and fast download module
 endef
 
 define Package/lighttpd-mod-setenv
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Environment variable setting module
 endef
 
 define Package/lighttpd-mod-simple-vhost
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Simple virtual hosting module
 endef
 
 define Package/lighttpd-mod-ssi
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd +libpcre
+  DEPENDS:=+lighttpd +libpcre
   TITLE:=SSI module
 endef
 
 define Package/lighttpd-mod-status
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=Server status display module
 endef
 
 define Package/lighttpd-mod-trigger-b4-dl
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd +libpcre
+  DEPENDS:=+lighttpd +libpcre
   TITLE:=Trigger before download module
 endef
 
 define Package/lighttpd-mod-userdir
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=User directory module
 endef
 
 define Package/lighttpd-mod-usertrack
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd
+  DEPENDS:=+lighttpd
   TITLE:=User tracking module
 endef
 
 define Package/lighttpd-mod-webdav
   $(call Package/lighttpd/Default)
-  DEPENDS:=lighttpd +libsqlite3 +libuuid +libxml2
+  DEPENDS:=+lighttpd +libsqlite3 +libuuid +libxml2
   TITLE:=WebDAV module
 endef
 

@@ -18,6 +18,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/juci-full-openwrt
   CATEGORY:=JUCI
   DEPENDS:= \
+  	  +juci \
 	  +juci-ddns \
 	  +juci-dnsmasq-dhcp \
 	  +juci-dropbear \
@@ -38,8 +39,7 @@ define Package/juci-full-openwrt
 	  +juci-upnp \
 	  +juci-usb \
 	  +juci-utils \
-	  +juci-theme-openwrt \
-	  +juci 
+	  +juci-theme-openwrt 
   TITLE:=JUCI Openwrt Configuration Meta Package
 endef
 

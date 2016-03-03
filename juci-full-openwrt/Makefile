@@ -1,5 +1,8 @@
 #
 # Copyright (C) 2013 Inteno
+# Copyright (C) 2016 Martin K. Schröder 
+# This software is free software distributed under 
+# GNU General Public License version 3 or any later version. 
 #
 
 include $(TOPDIR)/rules.mk
@@ -36,10 +39,9 @@ define Package/juci-full-openwrt
 	  +juci-upnp \
 	  +juci-usb \
 	  +juci-utils \
-	  +juci-igmpinfo \
 	  +juci-theme-openwrt \
 	  +juci 
-  TITLE:=JUCI Inteno Configuration Meta Package
+  TITLE:=JUCI Openwrt Configuration Meta Package
 endef
 
 define Package/juci-full-openwrt/description

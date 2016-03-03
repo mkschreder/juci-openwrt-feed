@@ -34,7 +34,6 @@ define Package/juci-full-openwrt
 	  +juci-samba \
 	  +juci-snmpd \
 	  +juci-sysupgrade \
-	  +juci-ubus-core \
 	  +juci-uhttpd \
 	  +juci-upnp \
 	  +juci-usb \

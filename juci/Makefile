@@ -38,9 +38,7 @@ endef
 
 define Package/juci/install
 	$(INSTALL_DIR) $(1)/
-	$(INSTALL_DIR) $(1)/etc/config/
 	$(CP) $(PKG_BUILD_DIR)/bin/* $(1)/
-	$(CP) $(PKG_BUILD_DIR)/juci.default.config $(1)/etc/config/juci
 	$(INSTALL_DIR) $(1)/www/cgi-bin/
 	$(CP) $(PKG_BUILD_DIR)/juci_redirect.sh $(1)/www/cgi-bin/luci
 	$(INSTALL_DIR) $(1)/sbin/

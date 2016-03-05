@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=a7af7d20887f757866a996c825176b2d7d3f53c2
+PKG_SOURCE_VERSION:=6a677f08b2626efe1d1cba65bce6dbb6c6be5187
 PKG_VERSION:=2.16.03
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -38,7 +38,9 @@ endef
 
 define Package/juci/install
 	$(INSTALL_DIR) $(1)/
+	$(INSTALL_DIR) $(1)/etc/config/
 	$(CP) $(PKG_BUILD_DIR)/bin/* $(1)/
+	$(CP) $(PKG_BUILD_DIR)/juci.default.config $(1)/etc/config/juci
 	$(INSTALL_DIR) $(1)/www/cgi-bin/
 	$(CP) $(PKG_BUILD_DIR)/juci_redirect.sh $(1)/www/cgi-bin/luci
 	$(INSTALL_DIR) $(1)/sbin/
@@ -51,6 +53,7 @@ juci-update
 exit 0
 endef
 
+export CONFIG_PACKAGE_juci:=$(CONFIG_PACKAGE_juci)
 $(eval $(call BuildPackage,juci))
 
 ####### Extensions / Themes and Plugins
@@ -79,6 +82,7 @@ define RegisterAddon
 	$(eval $(call RegisterAddonInner,$(1),$(2),$(3),$(4),$(5)))
 	$(eval $(call BuildPackage,$(2)))
 endef
+
 
 # these plugins should work on openwrt!
 $(eval $(call RegisterAddon,Plugins,juci-ethernet, JUCI ethernet core module ))

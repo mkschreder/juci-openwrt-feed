@@ -13,6 +13,7 @@ PKG_MIRROR_MD5SUM:=
 PKG_LICENSE:=GPLv3+
 PKG_LICENSE_FILES:=
 
+PKG_FIXUP:=autoreconf
 PKG_MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 
 include $(INCLUDE_DIR)/package.mk

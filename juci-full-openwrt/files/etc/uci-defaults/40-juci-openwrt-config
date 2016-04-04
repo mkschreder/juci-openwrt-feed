@@ -9,6 +9,14 @@ which sha1sum || { echo "ERROR: you need to have sha1sum installed for JUCI to w
 echo "admin `printf admin|sha1sum | awk '{printf $1}'`" > /etc/juci-shadow
 chmod 700 /etc/juci-shadow 
 
+# install the admin user into the jucid config
+
+cat >> /etc/config/jucid << EOF
+config login admin
+	list acls 'juci*'
+	list acls 'user-admin'
+EOF
+
 install_event_config(){
 	cat >> /etc/config/juci << EOF
 config juci_event 'juci_event'

@@ -18,28 +18,28 @@ include $(INCLUDE_DIR)/package.mk
 define Package/juci-full-openwrt
   CATEGORY:=JUCI
   DEPENDS:= \
-  	  +juci \
-	  +juci-ddns \
-	  +juci-dnsmasq-dhcp \
-	  +juci-dropbear \
-	  +juci-ethernet \
-	  +juci-event \
-	  +juci-firewall-fw3 \
-	  +juci-simple-gui \
-	  +juci-macdb \
-	  +juci-minidlna \
-	  +juci-mod-status \
-	  +juci-mod-system \
-	  +juci-network-netifd \
-	  +juci-openwrt-wireless \
-	  +juci-samba \
-	  +juci-snmpd \
-	  +juci-sysupgrade \
-	  +juci-uhttpd \
-	  +juci-upnp \
-	  +juci-usb \
-	  +juci-utils \
-	  +juci-theme-openwrt 
+  	  +@PACKAGE_juci \
+	  +@PACKAGE_juci-ddns \
+	  +@PACKAGE_juci-dnsmasq-dhcp \
+	  +@PACKAGE_juci-dropbear \
+	  +@PACKAGE_juci-ethernet \
+	  +@PACKAGE_juci-event \
+	  +@PACKAGE_juci-firewall-fw3 \
+	  +@PACKAGE_juci-simple-gui \
+	  +@PACKAGE_juci-macdb \
+	  +@PACKAGE_juci-minidlna \
+	  +@PACKAGE_juci-mod-status \
+	  +@PACKAGE_juci-mod-system \
+	  +@PACKAGE_juci-network-netifd \
+	  +@PACKAGE_juci-openwrt-wireless \
+	  +@PACKAGE_juci-samba \
+	  +@PACKAGE_juci-snmpd \
+	  +@PACKAGE_juci-sysupgrade \
+	  +@PACKAGE_juci-uhttpd \
+	  +@PACKAGE_juci-upnp \
+	  +@PACKAGE_juci-usb \
+	  +@PACKAGE_juci-utils \
+	  +@PACKAGE_juci-theme-openwrt 
   TITLE:=JUCI Openwrt Configuration Meta Package
 endef
 

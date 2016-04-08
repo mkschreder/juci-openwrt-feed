@@ -18,6 +18,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/juci-full-openwrt
   CATEGORY:=JUCI
   DEPENDS:= \
+	  +jucid \
   	  +@PACKAGE_juci \
 	  +@PACKAGE_juci-ddns \
 	  +@PACKAGE_juci-dnsmasq-dhcp \

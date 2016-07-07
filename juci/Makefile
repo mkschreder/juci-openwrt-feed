@@ -5,8 +5,8 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=eda7ee991f6a7cfbdd7742b6e956a6b802b3e594
-PKG_VERSION:=2.16.03
+PKG_SOURCE_VERSION:=e77d8e8cc2d0b3a0a5039d170636bb0fa8fd6036
+PKG_VERSION:=2.16.07
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin Schröder <mkschreder.uk@gmail.com>
@@ -98,7 +98,6 @@ $(eval $(call RegisterAddon,Plugins,juci-minidlna, MiniDLNA Configuration))
 $(eval $(call RegisterAddon,Plugins,juci-mod-status, Deprecated JUCI Status Reporting Module))
 $(eval $(call RegisterAddon,Plugins,juci-mod-system, JUCI System Administration Module))
 $(eval $(call RegisterAddon,Plugins,juci-network-netifd, OpenWRT netifd network configuration module))
-$(eval $(call RegisterAddon,Plugins,juci-router-openwrt, OpenWRT Router Interface))
 $(eval $(call RegisterAddon,Plugins,juci-samba, Samba36 Configuration))
 $(eval $(call RegisterAddon,Plugins,juci-sysupgrade, Inteno Sysupgrade Firmware Upgrade))
 $(eval $(call RegisterAddon,Plugins,juci-upnp, UPNP Configuration Module))
@@ -111,23 +110,6 @@ $(eval $(call RegisterAddon,Plugins,juci-minisnmpd,JUCI mini-SNMPd plugin))
 $(eval $(call RegisterAddon,Plugins,juci-simple-gui,Provides pages for building simplified user gui))
 $(eval $(call RegisterAddon,Plugins,juci-openwrt-wireless,JUCI OpenWRT standard wireless configuration,+libiwinfo-lua))
 
-# inteno plugins (most of these will not work on stock openwrt!)
-$(eval $(call RegisterAddon,Plugins,juci-inteno-iconnect,JUCI UBUS interconnect private cloud interface))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-netmode, Inteno NetMode default reset functionality))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-backup,Inteno Backup Module))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-provisioning,Inteno Provisioning Module))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-router, Router Backend for Inteno Box))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-multiwan, Package for configuring inteno MultiWAN))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-qos,Inteno QoS module))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-voice-client, Inteno Asterisk Voice Client Module))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-dect, Natalie DECT interface))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-dsl, Inteno Broadcom DSL Module (xdslctl based),+juci-ethernet))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-ethernet, Inteno Broadcom Ethernet Module,+juci-ethernet))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-iptv, Inteno Broadcom IPTV/MCPD Plugin,+juci-network-netifd +juci-ethernet))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-vlan, Inteno Broadcom VLAN Module (vlanctl based),+juci-ethernet))
-$(eval $(call RegisterAddon,Plugins,juci-inteno-broadcom-wl, Inteno Broadcom Wireless Module (wlctl),+juci-ethernet ))
-
 # themes 
-$(eval $(call RegisterAddon,Themes,juci-theme-inteno,Juci Inteno Theme,,depends on y || !JUCI_THEME_SELECTED))
 $(eval $(call RegisterAddon,Themes,juci-theme-openwrt,Juci Default Theme,,depends on y || !JUCI_THEME_SELECTED))
 

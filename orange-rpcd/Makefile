@@ -1,9 +1,9 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=jucid
+PKG_NAME:=orange-rpcd
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/mkschreder/jucid.git
+PKG_SOURCE_URL:=https://github.com/mkschreder/orangerpcd.git
 PKG_SOURCE_VERSION:=5d3d0a3c8b4f848de378284f032c9b4bf86a6736
 PKG_VERSION:=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
@@ -18,10 +18,10 @@ PKG_MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/jucid
+define Package/orange-rpcd
   SECTION:=juci
   CATEGORY:=JUCI
-  TITLE:=JUCI Backend Server 
+  TITLE:=Websocket RPC server for OpenWRT
   #DEPENDS:=+BUSYBOX_DEFAULT_SHA1SUM <<- this one is necessary but it is not easily selectable TODO: fix it 
   DEPENDS+=+iwinfo +rpcd +lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets
 endef
@@ -30,16 +30,16 @@ define Build/Configure
 	$(call Build/Configure/Default)
 endef
 
-define Package/jucid/install
+define Package/orange-rpcd/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) $(PKG_BUILD_DIR)/src/revorpcd $(1)/usr/bin/
-	$(INSTALL_DIR) $(1)/usr/lib/juci/api/
-	$(CP) $(PKG_BUILD_DIR)/plugins/* $(1)/usr/lib/juci/api/
-	$(INSTALL_DIR) $(1)/usr/lib/juci/acl/
-	$(INSTALL_DIR) $(1)/usr/lib/juci/lib/
-	$(CP) $(PKG_BUILD_DIR)/lualib/* $(1)/usr/lib/juci/lib/
+	$(CP) $(PKG_BUILD_DIR)/src/orangerpcd $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/usr/lib/orange/api/
+	$(CP) $(PKG_BUILD_DIR)/plugins/* $(1)/usr/lib/orange/api/
+	$(INSTALL_DIR) $(1)/usr/lib/orange/acl/
+	$(INSTALL_DIR) $(1)/usr/lib/orange/lib/
+	$(CP) $(PKG_BUILD_DIR)/lualib/* $(1)/usr/lib/orange/lib/
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/jucid.init $(1)/etc/init.d/juci
+	$(INSTALL_BIN) ./files/orange.init $(1)/etc/init.d/orange
 endef
 
-$(eval $(call BuildPackage,jucid))
+$(eval $(call BuildPackage,orange-rpcd))

@@ -4,6 +4,7 @@
 # TODO: make this read default passwords from configuration file
 SHADOW_FILE=/etc/orange/shadow
 
+mkdir -p $(dirname $SHADOW_FILE)
 rm -f $SHADOW_FILE
 which sha1sum || { echo "ERROR: you need to have sha1sum installed for JUCI to work!"; return -1; }
 echo "admin `printf admin|sha1sum | awk '{printf $1}'`" > $SHADOW_FILE

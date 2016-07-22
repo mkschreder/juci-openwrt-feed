@@ -2,12 +2,12 @@
 
 # install the default password (admin/admin)
 # TODO: make this read default passwords from configuration file
-rm -f /etc/juci-shadow
+SHADOW_FILE=/etc/orange/shadow
 
+rm -f $SHADOW_FILE
 which sha1sum || { echo "ERROR: you need to have sha1sum installed for JUCI to work!"; return -1; }
-
-echo "admin `printf admin|sha1sum | awk '{printf $1}'`" > /etc/juci-shadow
-chmod 700 /etc/juci-shadow 
+echo "admin `printf admin|sha1sum | awk '{printf $1}'`" > $SHADOW_FILE
+chmod 700 $SHADOW_FILE
 
 # install the admin user into the jucid config
 

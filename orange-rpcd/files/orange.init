@@ -3,12 +3,12 @@
 START=12
 
 USE_PROCD=1
-NAME=jucid
-PROG=/usr/bin/revorpcd
+NAME=orangerpcd
+PROG=/usr/bin/orangerpcd
 
 start_service() {
 	procd_open_instance
-	procd_set_param command $PROG -p /usr/lib/juci/api/
+	procd_set_param command $PROG -p /usr/lib/orange/api/
 	procd_close_instance
 }
 

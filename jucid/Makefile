@@ -39,7 +39,7 @@ define Package/jucid/install
 	$(INSTALL_DIR) $(1)/usr/lib/juci/lib/
 	$(CP) $(PKG_BUILD_DIR)/lualib/* $(1)/usr/lib/juci/lib/
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/jucid.init $(1)/etc/init.d/juci
+	$(INSTALL_BIN) ./files/jucid.init $(1)/etc/init.d/jucid
 endef
 
 $(eval $(call BuildPackage,jucid))

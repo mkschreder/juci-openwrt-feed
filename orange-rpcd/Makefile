@@ -4,7 +4,7 @@ PKG_NAME:=orange-rpcd
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/orangerpcd.git
-PKG_SOURCE_VERSION:=fd0af57bbef7b95a4a03e9de8278de943ae337d6
+PKG_SOURCE_VERSION:=ca2b420a66da90e5427dae6c21dfc7aa5dc8fdc9
 PKG_VERSION:=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
@@ -40,6 +40,8 @@ define Package/orange-rpcd/install
 	$(CP) $(PKG_BUILD_DIR)/lualib/* $(1)/usr/lib/orange/lib/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/orange.init $(1)/etc/init.d/orange
+	$(INSTALL_DIR) $(1)/etc/config/
+	$(INSTALL_BIN) ./files/orange.config $(1)/etc/config/orange
 endef
 
 $(eval $(call BuildPackage,orange-rpcd))

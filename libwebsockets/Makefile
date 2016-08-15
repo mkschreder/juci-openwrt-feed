@@ -44,7 +44,7 @@ define Package/libwebsockets
 	SECTION:=libs
 	CATEGORY:=Libraries
 	TITLE:=libwebsockets
-	DEPENDS:=+zlib +libpthread
+	DEPENDS:=+zlib +libpthread +PACKAGE_libwebsockets-openssl:libopenssl
 	URL:=https://libwebsockets.org
 	MAINTAINER:=Karl Palsson <karlp@remake.is>
 endef
@@ -56,7 +56,7 @@ endef
 define Package/libwebsockets-openssl
 	$(call Package/$(PKG_NAME)/Default)
 	TITLE += (OpenSSL)
-	DEPENDS += +libopenssl +libpthread
+	DEPENDS += +zlib +libopenssl +libpthread 
 	VARIANT:=openssl
 endef
 

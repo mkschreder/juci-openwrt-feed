@@ -4,7 +4,7 @@ PKG_NAME:=orange-rpcd
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/orangerpcd.git
-PKG_SOURCE_VERSION:=97a1679ed1176dac2e6b082078634a2753aebc45
+PKG_SOURCE_VERSION:=538f46a98e1eaad4019954ea15ae478d62c393f4
 PKG_VERSION:=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
@@ -45,7 +45,7 @@ define Package/orange-rpcd/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/orangectl.sh $(1)/usr/bin/orangectl
 	$(INSTALL_DIR) $(1)/usr/lib/orange/hooks/
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d/
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/files/access.json $(1)/usr/share/rpcd/acl.d/orange.json
+	$(INSTALL_DATA) ./files/access.json $(1)/usr/share/rpcd/acl.d/orange.json
 endef
 
 $(eval $(call BuildPackage,orange-rpcd))

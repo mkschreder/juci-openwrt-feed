@@ -33,6 +33,10 @@ define Package/speedtest-cli
 	DEPENDS:=+python
 endef
 
+define Build/Compile
+	echo "Done!"
+endef
+
 define Package/speedtest-cli/description
 	Speedtest utility based on speedtest.net
 endef

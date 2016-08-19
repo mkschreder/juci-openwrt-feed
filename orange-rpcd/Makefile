@@ -46,6 +46,8 @@ define Package/orange-rpcd/install
 	$(INSTALL_DIR) $(1)/usr/lib/orange/hooks/
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d/
 	$(INSTALL_DATA) ./files/access.json $(1)/usr/share/rpcd/acl.d/orange.json
+	$(INSTALL_DIR) $(1)/etc/uci-defaults/
+	$(INSTALL_DATA) ./files/uci-defaults.sh $(1)/etc/uci-defaults/00-orange-rpcd.sh
 endef
 
 $(eval $(call BuildPackage,orange-rpcd))

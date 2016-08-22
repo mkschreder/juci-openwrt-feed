@@ -10,7 +10,7 @@ local juci = require("orange/core");
 function macdb_lookup(opts)
 	local res = {}; 
 	local mac = ""; 
-	if(opts["mac"]) then mac = string.upper(opts["mac"]); end
+	if(opts["mac"]) then mac = string.upper(opts["mac"]); else return -1; end
 	local f = assert(io.open("/usr/share/macdb/db.txt", "r")); 
 	mac = string.gsub(mac, ":", ""); 
 	mac = mac:sub(0, 6);
@@ -20,6 +20,7 @@ function macdb_lookup(opts)
 		line = f:read("*l"); 
 	end
 	f:close(); 
+	if(not res.manufacturer) then return -1; end
 	return res; 
 end
 

@@ -40,6 +40,8 @@ define Package/oui-lookup/install
 	$(INSTALL_BIN) ./files/oui.sh $(1)/usr/bin/oui
 	$(INSTALL_DIR) $(1)/usr/lib/orange/api
 	$(INSTALL_DIR) $(1)/usr/lib/orange/acl
+	$(INSTALL_DIR) $(1)/usr/share/macdb/
+	$(INSTALL_DATA) ./files/macdb.txt $(1)/usr/share/macdb/db.txt
 	$(INSTALL_DATA) ./files/oui.lua $(1)/usr/lib/orange/api/oui.lua
 	$(INSTALL_DATA) ./files/oui.acl $(1)/usr/lib/orange/acl/
 endef

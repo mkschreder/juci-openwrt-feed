@@ -1,7 +1,7 @@
 local core = require("orange/core"); 
 
 local function speedtest_start(opts) 
-	local status = core.shell("speedtest start"); 
+	local status = core.shell("speedtest_cli start"); 
 	local result = {}; 
 	if (status == "" or status == nil) then
 		result["status"] = "Could not start speedtest!"; 
@@ -12,7 +12,7 @@ local function speedtest_start(opts)
 end
 
 local function speedtest_status(opts)
-	local status = core.shell("speedtest status"); 
+	local status = core.shell("speedtest_cli status"); 
 	local time = core.shell("date '+%s'", "%s"); 
 	local result = {}; 
 	if( not status or status == "" ) then 
@@ -31,7 +31,7 @@ local function speedtest_status(opts)
 end
 
 local function speedtest_stop(opts)
-	local status = core.shell("speedtest stop"); 
+	local status = core.shell("speedtest_cli stop"); 
 	local result = {}; 
 	if( not status or status == "" ) then 
 		result["status"] = "Could not retreive speedtest status!"; 

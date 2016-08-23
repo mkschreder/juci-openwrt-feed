@@ -1,13 +1,11 @@
 local core = require("orange/core"); 
 
 local function speedtest_start(opts) 
-	local status = core.shell("speedtest_cli start"); 
+	-- forkshell can not tell us if it actually succeeded or not. You have to check status!
+	CORE.forkshell("speedtest_cli start"); 
+
 	local result = {}; 
-	if (status == "" or status == nil) then
-		result["status"] = "Could not start speedtest!"; 
-	else 
-		result["status"] = status; 
-	end
+	result["status"] = "Speedtest started!"; 
 	return result; 
 end
 
@@ -36,7 +34,7 @@ local function speedtest_stop(opts)
 	if( not status or status == "" ) then 
 		result["status"] = "Could not retreive speedtest status!"; 
 	else
-		result["status"] = status; 
+		result["status"] = string.gsub(status, "\n", ""); 
 	end
 	return result; 
 end

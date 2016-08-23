@@ -47,7 +47,7 @@ define Package/speedtest-cli/install
 	$(INSTALL_BIN) ./files/speedtest.sh $(1)/usr/bin/speedtest_cli
 	$(INSTALL_DIR) $(1)/usr/lib/orange/api
 	$(INSTALL_DIR) $(1)/usr/lib/orange/acl
-	$(INSTALL_DATA) ./files/backend.lua $(1)/usr/lib/orange/api/speedtest.lua
+	$(INSTALL_DATA) ./files/speedtest.lua $(1)/usr/lib/orange/api/speedtest.lua
 	$(INSTALL_DATA) ./files/speedtest.acl $(1)/usr/lib/orange/acl/
 endef
 

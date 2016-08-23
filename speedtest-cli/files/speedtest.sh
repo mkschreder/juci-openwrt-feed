@@ -33,7 +33,8 @@ elif [ "$1" == "stop" ]; then
 		echo "Speedtest is not running!"; 
 	else
 		kill -SIGTERM `cat ${LOCKFILE}`
-		kill -SIGTERM `ps -ef | grep speedtest_cli | grep -v grep | awk '{print $2}'`
+		kill -SIGTERM `ps -ef | grep speedtest_cli.py | grep -v grep | awk '{print $2}'`
+		echo "Speedtest terminated!"; 
 	fi
 else
 	echo "Usage: speedtest <start|status|cancel>"

@@ -4,7 +4,7 @@ PKG_NAME:=orange-rpcd
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/orangerpcd.git
-PKG_SOURCE_VERSION:=bb9ac5b0f8eca6c2a58d157b4b02e94f53f4cdc6
+PKG_SOURCE_VERSION:=2a360a58cc0bd7752771e4d5e7a44d3c3065d025
 PKG_VERSION:=2.16.08-$(PKG_SOURCE_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
@@ -18,21 +18,33 @@ PKG_MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 
 include $(INCLUDE_DIR)/package.mk
 
+define Package/liborange
+  SECTION:=juci
+  CATEGORY:=JUCI
+  TITLE:=OrangeRPCD library
+  DEPENDS+=+iwinfo +rpcd +lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets
+endef
+
 define Package/orange-rpcd
   SECTION:=juci
   CATEGORY:=JUCI
   TITLE:=Websocket RPC server for OpenWRT
   #DEPENDS:=+BUSYBOX_DEFAULT_SHA1SUM <<- this one is necessary but it is not easily selectable TODO: fix it 
-  DEPENDS+=+iwinfo +rpcd +lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets
+  DEPENDS+=+iwinfo +rpcd +lua +liborange +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets
 endef
 
 define Build/Configure
 	$(call Build/Configure/Default)
 endef
 
+define Package/liborange/install
+	$(INSTALL_DIR) $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/src/.libs/*.so* $(1)/usr/lib/
+endef
+
 define Package/orange-rpcd/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) $(PKG_BUILD_DIR)/src/orangerpcd $(1)/usr/bin/
+	$(CP) $(PKG_BUILD_DIR)/src/.libs/orangerpcd $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/lib/orange/api/
 	$(CP) $(PKG_BUILD_DIR)/plugins/* $(1)/usr/lib/orange/api/
 	$(INSTALL_DIR) $(1)/usr/lib/orange/acl/
@@ -50,4 +62,5 @@ define Package/orange-rpcd/install
 	$(INSTALL_DATA) ./files/uci-defaults.sh $(1)/etc/uci-defaults/00-orange-rpcd.sh
 endef
 
+$(eval $(call BuildPackage,liborange))
 $(eval $(call BuildPackage,orange-rpcd))

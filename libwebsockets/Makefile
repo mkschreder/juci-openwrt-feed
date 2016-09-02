@@ -44,7 +44,7 @@ define Package/libwebsockets
 	SECTION:=libs
 	CATEGORY:=Libraries
 	TITLE:=libwebsockets
-	DEPENDS:=+zlib +libpthread
+	DEPENDS:=+zlib +libpthread +PACKAGE_libwebsockets-openssl:libopenssl
 	URL:=https://libwebsockets.org
 	MAINTAINER:=Karl Palsson <karlp@remake.is>
 endef
@@ -56,34 +56,34 @@ endef
 define Package/libwebsockets-openssl
 	$(call Package/$(PKG_NAME)/Default)
 	TITLE += (OpenSSL)
-	DEPENDS += +libopenssl
+	DEPENDS += +zlib +libopenssl +libpthread 
 	VARIANT:=openssl
 endef
 
 define Package/libwebsockets-cyassl
 	$(call Package/$(PKG_NAME)/Default)
 	TITLE += (CyaSSL)
-	DEPENDS += +libcyassl
+	DEPENDS += +libcyassl +libpthread
 	VARIANT:=cyassl
 endef
 
-#ifeq ($(BUILD_VARIANT),openssl)
-#    CMAKE_OPTIONS += -DLWS_OPENSSL_CLIENT_CERTS=/etc/ssl/certs
-#    CMAKE_OPTIONS += -DLWS_OPENSSL_SUPPORT=ON
-#    CMAKE_OPTIONS += -DLWS_WITH_SSL=ON
-#endif
+ifeq ($(BUILD_VARIANT),openssl)
+    CMAKE_OPTIONS += -DLWS_OPENSSL_CLIENT_CERTS=/etc/ssl/certs
+    CMAKE_OPTIONS += -DLWS_OPENSSL_SUPPORT=ON
+    CMAKE_OPTIONS += -DLWS_WITH_SSL=ON
+endif
 
-#ifeq ($(BUILD_VARIANT),cyassl)
-#    CMAKE_OPTIONS += -DLWS_OPENSSL_CLIENT_CERTS=/etc/ssl/certs
-#    CMAKE_OPTIONS += -DLWS_OPENSSL_SUPPORT=ON
-#    CMAKE_OPTIONS += -DLWS_WITH_SSL=ON
+ifeq ($(BUILD_VARIANT),cyassl)
+    CMAKE_OPTIONS += -DLWS_OPENSSL_CLIENT_CERTS=/etc/ssl/certs
+    CMAKE_OPTIONS += -DLWS_OPENSSL_SUPPORT=ON
+    CMAKE_OPTIONS += -DLWS_WITH_SSL=ON
 # for cyassl, edit package/libs/cyassl/Makefile to include --enable-opensslextra
 # NOTE: it will compile without it, untested whether it it's needed?!
-#    CMAKE_OPTIONS += -DLWS_USE_CYASSL=ON
-#    CMAKE_OPTIONS += -DLWS_CYASSL_LIB=$(STAGING_DIR)/usr/lib/libcyassl.so
-#    CMAKE_OPTIONS += -DLWS_CYASSL_LIBRARIES=$(STAGING_DIR)/usr/lib/
-#    CMAKE_OPTIONS += -DLWS_CYASSL_INCLUDE_DIRS=$(STAGING_DIR)/usr/include
-#endif
+    CMAKE_OPTIONS += -DLWS_USE_CYASSL=ON
+    CMAKE_OPTIONS += -DLWS_CYASSL_LIB=$(STAGING_DIR)/usr/lib/libcyassl.so
+    CMAKE_OPTIONS += -DLWS_CYASSL_LIBRARIES=$(STAGING_DIR)/usr/lib/
+    CMAKE_OPTIONS += -DLWS_CYASSL_INCLUDE_DIRS=$(STAGING_DIR)/usr/include
+endif
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include/
@@ -99,9 +99,9 @@ define Package/libwebsockets/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libwebsockets.so* $(1)/usr/lib/
 endef
 
-#Package/$(PKG_NAME)-cyassl/install = $(Package/$(PKG_NAME)/install)
-#Package/$(PKG_NAME)-openssl/install = $(Package/$(PKG_NAME)/install)
+Package/$(PKG_NAME)-cyassl/install = $(Package/$(PKG_NAME)/install)
+Package/$(PKG_NAME)-openssl/install = $(Package/$(PKG_NAME)/install)
 
 $(eval $(call BuildPackage,libwebsockets))
-#$(eval $(call BuildPackage,libwebsockets-openssl))
-#$(eval $(call BuildPackage,libwebsockets-cyassl))
+$(eval $(call BuildPackage,libwebsockets-openssl))
+$(eval $(call BuildPackage,libwebsockets-cyassl))

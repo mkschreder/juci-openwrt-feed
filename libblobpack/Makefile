@@ -4,13 +4,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libblobpack
-PKG_VERSION=1.0.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/mkschreder/libblobpack.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=d67ed0db60594ee634f0115b797064e9ca17b8c7
+PKG_SOURCE_VERSION:=4bb494cf13581c20e86981321470aa46dad46aa3
+PKG_VERSION=1.0.2-$(PKG_SOURCE_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_INSTALL:=1
@@ -30,8 +30,8 @@ libblobpack is a lightweight blob packing library with native json support
 endef
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/usr/include/
-	$(CP) $(PKG_INSTALL_DIR)/usr/include/* $(1)/usr/include/
+	$(INSTALL_DIR) $(1)/usr/include/blobpack/
+	$(CP) $(PKG_BUILD_DIR)/src/*.h $(1)/usr/include/blobpack/
 	
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libblobpack.so* $(1)/usr/lib/

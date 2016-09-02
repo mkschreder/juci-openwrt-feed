@@ -8,8 +8,7 @@ OUTPUT=/tmp/speedtest
 speedtest_run(){
 	trap "rm -f ${LOCKFILE}; exit" INT TERM EXIT
 	echo "timestamp $(date '+%s')" > ${OUTPUT}
-	/usr/bin/speedtest_cpp | grep Mbit | sed 's/://g' >> ${OUTPUT}
-	#cat /tmp/foo | grep Mbit | sed 's/://g' >> ${OUTPUT}
+	/usr/bin/speedtest_cpp >> ${OUTPUT}
 	rm -f ${LOCKFILE}
 }
 

@@ -13,7 +13,7 @@ PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/speedtest.git
-PKG_SOURCE_VERSION:=d28f43b452e042b3119a75d829962815ded4975a
+PKG_SOURCE_VERSION:=ff679918c82fd35dcb71efe25bbc2776df53193b
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
@@ -30,11 +30,7 @@ define Package/speedtest-cpp
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=Speedtest Utility (c++, NO python)
-	DEPENDS:=+libcurl +libxml2 
-endef
-
-define Build/Compile
-	autoreconf -fi && ./configure && make 
+	DEPENDS:=+libcurl +libxml2 +libopenssl +libstdcpp
 endef
 
 define Package/speedtest-cpp/description
@@ -44,7 +40,7 @@ endef
 define Package/speedtest-cpp/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/speedtest $(1)/usr/bin/speedtest_cpp
-	$(INSTALL_BIN) ./files/speedtest.sh $(1)/usr/bin/speedtest_cli
+	$(INSTALL_BIN) ./files/speedtest.sh $(1)/usr/bin/speedtest
 	$(INSTALL_DIR) $(1)/usr/lib/orange/api
 	$(INSTALL_DIR) $(1)/usr/lib/orange/acl
 	$(INSTALL_DATA) ./files/speedtest.lua $(1)/usr/lib/orange/api/speedtest.lua

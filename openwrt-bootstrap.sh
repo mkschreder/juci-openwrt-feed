@@ -2,7 +2,7 @@
 
 rm -rf feeds
 
-echo "src-git-full juci https://github.com/mkschreder/juci-openwrt-feed.git;v2.16.08" > feeds.conf
+echo "src-git-full juci https://github.com/mkschreder/juci-openwrt-feed.git" > feeds.conf
 cat feeds.conf.default >> feeds.conf
 
 ./scripts/feeds update -a

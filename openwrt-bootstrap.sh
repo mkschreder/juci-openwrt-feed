@@ -20,6 +20,7 @@ echo "Generating config.."
 # select default juci stuff
 cat <<END >> .config
 CONFIG_TARGET_uml=y
+CONFIG_TARGET_ROOTFS_SQUASHFS=y
 CONFIG_PACKAGE_juci-full-openwrt=y
 CONFIG_PACKAGE_orange-rpcd=y
 CONFIG_BUSYBOX_CUSTOM=y

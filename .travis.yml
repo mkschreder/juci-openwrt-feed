@@ -1,0 +1,9 @@
+language: c
+sudo: required
+install:
+script: ./travis-build.sh
+after_success:
+addons:
+  apt:
+    packages:
+    - lcov

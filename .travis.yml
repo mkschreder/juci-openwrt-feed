@@ -16,6 +16,12 @@ addons:
   apt:
     packages:
     - lcov
+    - bc
+    - binutils
+    - bzip2
+    - flex
+    - util-linux
+    - gawk
 cache:
   directories:
   - openwrt

@@ -1,11 +1,19 @@
 #!/bin/bash
 
+# always clean out the folder if it somehow was not a valid git repo
+if [ ! -d openwrt/.git ]; then 
+	rm -rf openwrt
+fi
+
+# checkout openwrt
 if [ -d openwrt ]; then 
 	echo "WARNING: not deleting existing working directory."; 
 else
 	git clone http://git.openwrt.org/15.05/openwrt.git openwrt
 fi
-cp openwrt-bootstrap.sh openwrt
+
+# build openwrt
+cp openwrt-bootstrap.sh openwrt/
 cd openwrt 
 
 ./openwrt-bootstrap.sh

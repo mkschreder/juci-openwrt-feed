@@ -17,7 +17,7 @@ cp openwrt-bootstrap.sh openwrt/
 cd openwrt 
 
 ./openwrt-bootstrap.sh
-make V=s
+make -j8
 cp bin/uml/openwrt-uml-vmlinux bin/uml/openwrt-uml-ext4.img ./
 tar -czf openwrt-juci-uml.tar.gz openwrt-uml*
 

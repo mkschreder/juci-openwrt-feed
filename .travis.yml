@@ -1,24 +1,16 @@
 language: c
 sudo: required
 install: 
-script: "./travis-build.sh"
+script: "./build-uml-image.sh"
 after_success: 
 deploy:
-  # Deploy the file(s) to the github release (other targets like amazon-aws or npm can be found here: http://docs.travis-ci.com/user/deployment/ )
   provider: releases
-  # The oauth token for github (used by travis to upload the file(s) to github)
   api_key:
-    # The api-key is encrypted like described here: http://docs.travis-ci.com/user/encryption-keys/  (only travis can decrypt the key)
     secure: o+hi70GbV0El011SFoEcR3TaqcRguObgfMnWkVO6P+4Sr3LnxTG3/hyMO40PJPLJDL7LCHzTXY+l/WJNvf9QqhqJH+vZpDVcx5MhQhJ3xKv66cmbgopB9bNsUE/FY/R+FsxIZr8RQxkVJffpRUSKHqExEmpUe5zVQWWWGp+4gu1T1Unj/9xIoISAXsgKgkCOZPcSxs3FLPaFfg/LFDxZhpMEscuFO2C8srsLkhZ+vQn83P1KpDk21aHU8X3SIfaXqxLJYIncGItTaNnxOeKdpAoa9qnAaFc9jZIZf3kbpm0SxJHVlhcZt+kLwgaiI2/XwF7Igec520V07yfCvM6KEZl7LC9vw+Jd4gv3V8HWXX3bVCQ03o1VcRknk2S36VkxzdnqFrz3N5thJWq7rx4VhxdZqSycyO7mU+d3BmL6bb1puY1AKNrAZN/PM8rMcjLRzxLnjRDnJpGpPlYsThFwe3HJQeIwarb5RhAmQRrs8lFTJxHz4mhqWDykAaQotgKe2sqQhEkm/0+yBC8c1609z1L6A1idCeEKNcJ6af8Q5XD98xz4OLbGwJlGpcUWgK8RRbBVMrLQ2npVCVgDcn7h7jnCyJ12LY3tJ9RGl5T5VgidjI8bT32tPYOIH3WIBLeyB717LFe0z/8XZall0LOflPaeornLXpT9DXT67M/agzM=
-  # Which file(s) to upload
   file: build_test.txt
-  # do not delete the files we're trying to upload
   skip_cleanup: true
-  # only deploy if
   on:
-    # we are on this repo
     repo: mkschreder/juci-openwrt-feed
-    # and we are building a tag
     tags: false
 addons:
   apt:

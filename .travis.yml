@@ -7,7 +7,7 @@ deploy:
   provider: releases
   api_key:
     secure: o+hi70GbV0El011SFoEcR3TaqcRguObgfMnWkVO6P+4Sr3LnxTG3/hyMO40PJPLJDL7LCHzTXY+l/WJNvf9QqhqJH+vZpDVcx5MhQhJ3xKv66cmbgopB9bNsUE/FY/R+FsxIZr8RQxkVJffpRUSKHqExEmpUe5zVQWWWGp+4gu1T1Unj/9xIoISAXsgKgkCOZPcSxs3FLPaFfg/LFDxZhpMEscuFO2C8srsLkhZ+vQn83P1KpDk21aHU8X3SIfaXqxLJYIncGItTaNnxOeKdpAoa9qnAaFc9jZIZf3kbpm0SxJHVlhcZt+kLwgaiI2/XwF7Igec520V07yfCvM6KEZl7LC9vw+Jd4gv3V8HWXX3bVCQ03o1VcRknk2S36VkxzdnqFrz3N5thJWq7rx4VhxdZqSycyO7mU+d3BmL6bb1puY1AKNrAZN/PM8rMcjLRzxLnjRDnJpGpPlYsThFwe3HJQeIwarb5RhAmQRrs8lFTJxHz4mhqWDykAaQotgKe2sqQhEkm/0+yBC8c1609z1L6A1idCeEKNcJ6af8Q5XD98xz4OLbGwJlGpcUWgK8RRbBVMrLQ2npVCVgDcn7h7jnCyJ12LY3tJ9RGl5T5VgidjI8bT32tPYOIH3WIBLeyB717LFe0z/8XZall0LOflPaeornLXpT9DXT67M/agzM=
-  file: build_test.txt
+  file: openwrt-juci-uml.tar.gz
   skip_cleanup: true
   on:
     repo: mkschreder/juci-openwrt-feed
@@ -16,3 +16,6 @@ addons:
   apt:
     packages:
     - lcov
+cache:
+  directories:
+  - openwrt

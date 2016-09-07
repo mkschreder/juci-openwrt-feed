@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libutype
-PKG_VERSION:=7a5c74c80c037ffebd4f10c61b31b186c8a22fed
+PKG_VERSION:=c6ef5d939e5ca37d557dd2a44720ffaef3a1cac1
 PKG_RELEASE:=1.0.0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz

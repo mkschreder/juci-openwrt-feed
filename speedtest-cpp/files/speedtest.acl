@@ -1,3 +1,4 @@
 rpc /speedtest start x
 rpc /speedtest status x
 rpc /speedtest stop x
+rpc /speedtest run x

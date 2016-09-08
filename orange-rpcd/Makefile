@@ -4,7 +4,7 @@ PKG_NAME:=orange-rpcd
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/orangerpcd.git
-PKG_SOURCE_VERSION:=53cbecd39994dcd58668af70f8d9308d59104868
+PKG_SOURCE_VERSION:=1dd4cc48e0103dd2d8be3e515ea6ff64b11fa210
 PKG_VERSION:=2.16.08-$(PKG_SOURCE_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
@@ -17,6 +17,8 @@ PKG_FIXUP:=autoreconf
 PKG_MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 
 include $(INCLUDE_DIR)/package.mk
+
+TARGET_CFLAGS += -ggdb3
 
 define Package/liborange
   SECTION:=juci

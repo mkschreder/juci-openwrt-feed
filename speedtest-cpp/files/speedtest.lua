@@ -30,6 +30,17 @@ local function speedtest_status(opts)
 	return result; 
 end
 
+-- runs speedtest in blocking fashion
+local function speedtest_run(opts)
+	local prev = speedtest_status(opts); 
+	local result = core.shell("speedtest run"); 	
+	local ret = speedtest_status(opts); 
+	if(ret.age < prev.age and (ret.download_mbits == nil or ret.upload_mbits == nil)) then 
+		ret.error = "Was unable to measure speed at this time!"; 
+	end
+	return ret; 
+end
+
 local function speedtest_stop(opts)
 	local status = core.shell("speedtest stop"); 
 	local result = {}; 
@@ -42,6 +53,7 @@ local function speedtest_stop(opts)
 end
 
 return {
+	["run"] = speedtest_run, 
 	["start"] = speedtest_start, 
 	["stop"] = speedtest_stop,
 	["status"] = speedtest_status

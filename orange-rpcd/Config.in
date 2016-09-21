@@ -1,0 +1,4 @@
+config ORANGE_PARALLEL
+	depends on PACKAGE_orange-rpcd
+	bool "Enable parallel processing of requests"
+	default y

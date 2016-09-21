@@ -33,15 +33,22 @@ define Package/orange-rpcd
   TITLE:=Websocket RPC server for OpenWRT
   #DEPENDS:=+BUSYBOX_DEFAULT_SHA1SUM <<- this one is necessary but it is not easily selectable TODO: fix it 
   DEPENDS+=+iwinfo +rpcd +lua +liborange +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets
+  MENU=1
 endef
 
 define Build/Configure
-	$(call Build/Configure/Default)
+	$(call Build/Configure/Default,\
+		$(if $(CONFIG_ORANGE_PARALLEL),--enable-parallel,--disable-parallel)\
+	)
 endef
 
 define Package/liborange/install
 	$(INSTALL_DIR) $(1)/usr/lib/
 	$(CP) $(PKG_BUILD_DIR)/src/.libs/*.so* $(1)/usr/lib/
+endef
+
+define Package/orange-rpcd/config
+	source "$(SOURCE)/Config.in"
 endef
 
 define Package/orange-rpcd/install

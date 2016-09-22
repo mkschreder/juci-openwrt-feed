@@ -61,7 +61,7 @@ export CONFIG_PACKAGE_$(2):=$(CONFIG_PACKAGE_$(2))
 define Package/$(2)
 	SECTION:=juci
 	CATEGORY:=JUCI
-	URL:=https://github.com/mkschreder/luci-express
+	URL:=https://github.com/mkschreder/juci.git
 	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 	SUBMENU:=$(1)
 	TITLE:=$(if $(3),$(3),JUCI $(2) plugin)
@@ -92,7 +92,7 @@ $(eval $(call RegisterAddon,Plugins,juci-event, JUCI Event Subsystem ))
 $(eval $(call RegisterAddon,Plugins,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
 $(eval $(call RegisterAddon,Plugins,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))
 $(eval $(call RegisterAddon,Plugins,juci-jquery-console, Quake Style Dropdown Console for JUCI in browser))
-$(eval $(call RegisterAddon,Plugins,juci-realtime-graphs,Realtime Graphs based on luci-bwc,+luci-bwc))
+$(eval $(call RegisterAddon,Plugins,juci-realtime-graphs,Realtime Graphs based on juci-bwc,+luci-bwc))
 $(eval $(call RegisterAddon,Plugins,juci-macdb, MAC Address to Manufacturer Name resolution for juci))
 $(eval $(call RegisterAddon,Plugins,juci-minidlna, MiniDLNA Configuration))
 $(eval $(call RegisterAddon,Plugins,juci-mod-status, Deprecated JUCI Status Reporting Module))

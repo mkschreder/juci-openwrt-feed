@@ -30,7 +30,7 @@ define Package/juci-bwc
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=Realtime Graphs utility
-  DEPENDS:=+libiwinfo
+  DEPENDS:=+libiwinfo +librt +libpthread
 endef
 
 define Package/juci-bwc/description

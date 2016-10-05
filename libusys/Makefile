@@ -4,7 +4,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libusys
-PKG_VERSION:=27c5f81c80a3ea113378f56d4fc0e8fd903e7abe
+PKG_VERSION:=dd7b53bf45baa1765f2163a81fd53a422e3b4fa8
 PKG_RELEASE:=1.0.0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz

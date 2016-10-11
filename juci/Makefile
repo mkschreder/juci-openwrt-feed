@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=89c48fdf3609d9612d53d2a4f7658accd165e21d
+PKG_SOURCE_VERSION:=d5d3d2b8537d830756eae2a6c895f83c2329f35a
 PKG_VERSION:=2.16.09
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -61,7 +61,7 @@ export CONFIG_PACKAGE_$(2):=$(CONFIG_PACKAGE_$(2))
 define Package/$(2)
 	SECTION:=juci
 	CATEGORY:=JUCI
-	URL:=https://github.com/mkschreder/luci-express
+	URL:=https://github.com/mkschreder/juci.git
 	MAINTAINER:=Martin K. Schröder <mkschreder.uk@gmail.com>
 	SUBMENU:=$(1)
 	TITLE:=$(if $(3),$(3),JUCI $(2) plugin)
@@ -92,7 +92,7 @@ $(eval $(call RegisterAddon,Plugins,juci-event, JUCI Event Subsystem ))
 $(eval $(call RegisterAddon,Plugins,juci-firewall-fw3, FW3 Firewall Configuration /etc/config/firewall ))
 $(eval $(call RegisterAddon,Plugins,juci-igmpinfo, IGMP Snooping Info through kernel snooping tables ))
 $(eval $(call RegisterAddon,Plugins,juci-jquery-console, Quake Style Dropdown Console for JUCI in browser))
-$(eval $(call RegisterAddon,Plugins,juci-realtime-graphs,Realtime Graphs based on luci-bwc,+luci-bwc))
+$(eval $(call RegisterAddon,Plugins,juci-realtime-graphs,Realtime Graphs based on juci-bwc,+luci-bwc))
 $(eval $(call RegisterAddon,Plugins,juci-macdb, MAC Address to Manufacturer Name resolution for juci))
 $(eval $(call RegisterAddon,Plugins,juci-minidlna, MiniDLNA Configuration))
 $(eval $(call RegisterAddon,Plugins,juci-mod-status, Deprecated JUCI Status Reporting Module))

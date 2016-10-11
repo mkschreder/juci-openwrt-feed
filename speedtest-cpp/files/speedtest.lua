@@ -13,8 +13,9 @@ local function speedtest_status(opts)
 	local status = core.shell("speedtest status"); 
 	local time = core.shell("date '+%s'", "%s"); 
 	local result = {}; 
-	if( not status or status == "" ) then 
-		result["status"] = "Could not retreive speedtest status!"; 
+	if( not status or status == "" or status:match("No (.*)")) then 
+		result["status"] = status or "Could not retreive speedtest status!"; 
+		return result; 
 	end
 	for line in status:gmatch("[^\r\n]+") do
 		local key, value = line:match("(%S+)%s+(.+)"); 
@@ -35,7 +36,7 @@ local function speedtest_run(opts)
 	local prev = speedtest_status(opts); 
 	local result = core.shell("speedtest run"); 	
 	local ret = speedtest_status(opts); 
-	if(ret.age < prev.age and (ret.download_mbits == nil or ret.upload_mbits == nil)) then 
+	if((ret.age and prev.age and (ret.age < prev.age)) and (ret.download_mbits == nil or ret.upload_mbits == nil)) then 
 		ret.error = "Was unable to measure speed at this time!"; 
 	end
 	return ret; 

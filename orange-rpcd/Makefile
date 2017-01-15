@@ -4,8 +4,8 @@ PKG_NAME:=orange-rpcd
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/orangerpcd.git
-PKG_SOURCE_VERSION:=326c72fa702939c33e0207a2b5e7bff2b0bbee8d
-PKG_VERSION:=2.16.08-$(PKG_SOURCE_VERSION)
+PKG_SOURCE_VERSION:=2e02cb0594b35e534c1e155d94d95ecf062d26c7
+PKG_VERSION:=3.16.01-$(PKG_SOURCE_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MIRROR_MD5SUM:=
@@ -54,6 +54,7 @@ endef
 define Package/orange-rpcd/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(CP) $(PKG_BUILD_DIR)/src/.libs/orangerpcd $(1)/usr/bin/
+	$(CP) $(PKG_BUILD_DIR)/src/.libs/orangerpcd-client $(1)/usr/bin/
 
 	$(INSTALL_DIR) $(1)/usr/lib/orange/api/
 	$(CP) $(PKG_BUILD_DIR)/plugins/* $(1)/usr/lib/orange/api/
@@ -66,7 +67,6 @@ define Package/orange-rpcd/install
 	$(INSTALL_BIN) ./files/orange.init $(1)/etc/init.d/orange
 
 	$(INSTALL_DIR) $(1)/etc/orange/
-	touch $(1)/etc/orange/shadow
 
 	$(INSTALL_DIR) $(1)/etc/config/
 	$(INSTALL_BIN) ./files/orange.config $(1)/etc/config/orange

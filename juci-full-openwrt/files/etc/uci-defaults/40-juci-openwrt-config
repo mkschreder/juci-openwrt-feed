@@ -392,4 +392,15 @@ config login
 EOF
 /etc/init.d/rpcd restart
 
+# create redirect cgi if luci exist
+[ -f /www/cgi-bin/luci ] && {
+  mv /www/cgi-bin/luci /www/cgi-bin/luci-original
+  cat >> /www/cgi-bin/luci << EOF
+#!/usr/sbin/bash
+echo "Content-type: text/html"
+echo
+echo "<html><head></head><body><a href="/">Click here to go to new JUCI webgui.</a></body></html>"
+EOF
+}
+
 exit 0

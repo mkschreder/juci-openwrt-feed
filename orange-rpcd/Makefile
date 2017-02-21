@@ -3,8 +3,8 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=orange-rpcd
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/p4u/orangerpcd.git
-PKG_SOURCE_VERSION:=5f0a2740da3c9c0d3e11b0611f12006e2a03b09f
+PKG_SOURCE_URL:=https://github.com/mkschreder/orangerpcd.git
+PKG_SOURCE_VERSION:=2e02cb0594b35e534c1e155d94d95ecf062d26c7
 PKG_VERSION:=3.16.01-$(PKG_SOURCE_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz

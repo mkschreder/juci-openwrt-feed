@@ -5,7 +5,7 @@ PKG_NAME:=juci
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/mkschreder/juci.git
-PKG_SOURCE_VERSION:=80e74d5285d46ca1848971c5a084d101fb8f2098
+PKG_SOURCE_VERSION:=592e32a1bdbc5498c0bfd2a038fcc3fced407e3a
 PKG_VERSION:=3.17.01
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
@@ -38,6 +38,7 @@ endef
 
 define Package/juci/install
 	$(INSTALL_DIR) $(1)/
+	rm -f $(PKG_BUILD_DIR)/bin/www/index.html
 	$(CP) $(PKG_BUILD_DIR)/bin/* $(1)/
 	$(INSTALL_DIR) $(1)/www/cgi-bin/
 	$(INSTALL_DIR) $(1)/sbin/

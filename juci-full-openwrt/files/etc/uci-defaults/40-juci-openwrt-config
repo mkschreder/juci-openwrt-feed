@@ -403,4 +403,10 @@ echo "<html><head></head><body><a href="/">Click here to go to new JUCI webgui.<
 EOF
 }
 
+# move luci index.html and create juci index.html
+[ -f /www/index.html ] && {
+  mv /www/index.html /www/luci-index.html
+  juci-update
+}
+
 exit 0

@@ -38,6 +38,7 @@ endef
 
 define Package/juci/install
 	$(INSTALL_DIR) $(1)/
+	rm -f $(PKG_BUILD_DIR)/bin/www/index.html
 	$(CP) $(PKG_BUILD_DIR)/bin/* $(1)/
 	$(INSTALL_DIR) $(1)/www/cgi-bin/
 	$(INSTALL_DIR) $(1)/sbin/

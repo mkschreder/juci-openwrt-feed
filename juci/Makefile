@@ -24,7 +24,7 @@ define Package/juci
   CATEGORY:=JUCI
   MENU:=1
   TITLE:=JUCI Web Interface
-  DEPENDS:=+lighttpd +lighttpd-mod-websocket +lighttpd-mod-proxy +lighttpd-mod-cgi 
+  DEPENDS:=+juci-lighttpd +juci-lighttpd-mod-proxy +juci-lighttpd-mod-alias +juci-lighttpd-mod-cgi
 endef
 
 define Build/InstallDev 

@@ -2,3 +2,12 @@ config ORANGE_PARALLEL
 	depends on PACKAGE_orange-rpcd
 	bool "Enable parallel processing of requests"
 	default y
+
+config ORANGE_BUSYBOX_OPTIONS
+	depends on PACKAGE_orange-rpcd
+	bool "Enable busybox sha1sum support for orange-rpcd"
+	default y
+	select BUSYBOX_CUSTOM
+	select BUSYBOX_CONFIG_SHA1SUM
+	help
+	  Select needed busybox sha1sum option for orange-rpcd.

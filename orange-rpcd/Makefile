@@ -24,15 +24,14 @@ define Package/liborange
   SECTION:=juci
   CATEGORY:=JUCI
   TITLE:=OrangeRPCD library
-  DEPENDS+=+iwinfo +rpcd +lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets
+  DEPENDS+=+iwinfo +rpcd +lua +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets-openssl
 endef
 
 define Package/orange-rpcd
   SECTION:=juci
   CATEGORY:=JUCI
   TITLE:=Websocket RPC server for OpenWRT
-  #DEPENDS:=+BUSYBOX_DEFAULT_SHA1SUM <<- this one is necessary but it is not easily selectable TODO: fix it 
-  DEPENDS+=+iwinfo +rpcd +lua +liborange +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets
+  DEPENDS+=+iwinfo +rpcd +lua +liborange +libuci-lua +libubus-lua +libubox-lua +luaposix33 +libblobpack +libuci +libusys +libutype +liblua +libwebsockets-openssl
   MENU=1
 endef
 
